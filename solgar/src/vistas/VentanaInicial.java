@@ -60,6 +60,7 @@ public class VentanaInicial extends JFrame{
 	private JSeparator separator_1;
 	private JPanel panelTitulo;
 	private JLabel lblNewLabel;
+	private JMenuItem mntmGraficosEstadisticos;
 	
 		
 	public VentanaInicial(){
@@ -236,6 +237,11 @@ public class VentanaInicial extends JFrame{
 		mntmInventario_1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		mntmInventario_1.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		mnReportes.add(mntmInventario_1);
+		
+		mntmGraficosEstadisticos = new JMenuItem("Gr\u00E1ficos Estad\u00EDsticos");
+		mntmGraficosEstadisticos.setIcon(new ImageIcon(VentanaInicial.class.getResource("/imagenes/iconos/iconos_32x32/chart_pie.png")));
+		mntmGraficosEstadisticos.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		mnReportes.add(mntmGraficosEstadisticos);
 		
 		mnUtilidades = new JMenu("Utilidades");
 		mnUtilidades.setFont(new Font("Segoe UI", Font.BOLD, 14));
