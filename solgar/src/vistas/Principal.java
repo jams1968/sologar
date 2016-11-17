@@ -19,7 +19,7 @@ public class Principal {
 		} catch (Exception e) {
 		    // If Nimbus is not available, you can set the GUI to another look and feel.
 		}
-		new VistaPrincipal();
+		new VentanaInicial();
 	}
 
 }
