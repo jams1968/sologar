@@ -113,6 +113,7 @@ public class VentanaInicial extends JFrame{
 		btnEntrega.setIcon(new ImageIcon(VentanaInicial.class.getResource("/imagenes/iconos/btnEntrega_1.png")));
 		
 		btnServicios = new JButton("");
+		btnServicios.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnServicios.setToolTipText("M\u00F3dulo de Estatus de Servicios de los Artefactos");
 		panel.add(btnServicios);
 		btnServicios.setRolloverIcon(new ImageIcon(VentanaInicial.class.getResource("/imagenes/iconos/btnServicios_2.png")));
@@ -122,7 +123,7 @@ public class VentanaInicial extends JFrame{
 		btnSalir.setToolTipText("Salir del Sistema");
 		panel.add(btnSalir);
 		btnSalir.setRolloverIcon(new ImageIcon(VentanaInicial.class.getResource("/imagenes/iconos/btnSalir_2.png")));
-		btnSalir.setIcon(new ImageIcon(VentanaInicial.class.getResource("/imagenes/iconos/btnSalir_2.png")));
+		btnSalir.setIcon(new ImageIcon(VentanaInicial.class.getResource("/imagenes/iconos/btnSalir_1.png")));
 		btnSalir.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		
 		panelTitulo = new JPanel();
