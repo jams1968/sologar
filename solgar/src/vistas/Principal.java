@@ -4,6 +4,8 @@ package vistas;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
+import modelos.Usuario;
+
 
 
 public class Principal {
@@ -19,7 +21,12 @@ public class Principal {
 		} catch (Exception e) {
 		    // If Nimbus is not available, you can set the GUI to another look and feel.
 		}
-		new VentanaInicial();
+		Usuario registroUsuario=new Usuario();
+		registroUsuario.setNombre("Admin");
+		registroUsuario.setApellido("Admin");
+		registroUsuario.setNivel_usuario(1);
+		
+		new VentanaInicial(registroUsuario);
 	}
 
 }

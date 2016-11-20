@@ -11,78 +11,182 @@ import java.awt.GridLayout;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import javax.swing.ImageIcon;
+import java.awt.Insets;
+import java.awt.Font;
+import javax.swing.SwingConstants;
+import javax.swing.border.TitledBorder;
+
+import controladoresVistas.ControladorVistaLogin;
+
+import javax.swing.border.LineBorder;
+import java.awt.Color;
+import javax.swing.border.MatteBorder;
 
 public class VistaLogin extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
-	private JTextField textField;
-	private JPasswordField passwordField;
+	private JLabel lblSamasforoR;
+	private JTextField textUsuario;
+	private JPasswordField textClave;
+	private JButton btnOk,btnCancel;
+	private JLabel lblMensaje;
+	private JPanel panelTotal;
 
 	public VistaLogin() {
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 277, 156);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(new BorderLayout(0, 0));
 		{
-			JPanel panelCampos = new JPanel();
-			contentPanel.add(panelCampos);
-			panelCampos.setLayout(new GridLayout(2, 1, 0, 0));
+			panelTotal = new JPanel();
+			contentPanel.add(panelTotal, BorderLayout.NORTH);
+			panelTotal.setBorder(new MatteBorder(1, 1, 1, 1, (Color) Color.BLUE));
+			panelTotal.setLayout(new BorderLayout(0, 0));
 			{
-				JPanel panelLogin = new JPanel();
-				FlowLayout fl_panelLogin = (FlowLayout) panelLogin.getLayout();
-				fl_panelLogin.setAlignment(FlowLayout.LEFT);
-				panelCampos.add(panelLogin);
+				JPanel panelCampos = new JPanel();
+				panelTotal.add(panelCampos, BorderLayout.NORTH);
+				panelCampos.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 255), 2, true), "Acceso al Sistema", TitledBorder.RIGHT, TitledBorder.TOP, null, Color.BLUE));
+				GridBagLayout gbl_panelCampos = new GridBagLayout();
+				gbl_panelCampos.columnWidths = new int[]{0, 0, 0, 0};
+				gbl_panelCampos.rowHeights = new int[]{0, 0, 0, 0};
+				gbl_panelCampos.columnWeights = new double[]{0.0, 0.0, 1.0, Double.MIN_VALUE};
+				gbl_panelCampos.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
+				panelCampos.setLayout(gbl_panelCampos);
+				{
+					lblSamasforoR = new JLabel("");
+					lblSamasforoR.setIcon(new ImageIcon(VistaLogin.class.getResource("/imagenes/iconos/full.png")));
+					GridBagConstraints gbc_lblSamasforoR = new GridBagConstraints();
+					gbc_lblSamasforoR.gridheight = 2;
+					gbc_lblSamasforoR.insets = new Insets(0, 0, 5, 5);
+					gbc_lblSamasforoR.gridx = 0;
+					gbc_lblSamasforoR.gridy = 0;
+					panelCampos.add(lblSamasforoR, gbc_lblSamasforoR);
+				}
 				{
 					JLabel lblUsuario = new JLabel("Usuario:");
-					panelLogin.add(lblUsuario);
+					lblUsuario.setFont(new Font("Tahoma", Font.BOLD, 12));
+					GridBagConstraints gbc_lblUsuario = new GridBagConstraints();
+					gbc_lblUsuario.anchor = GridBagConstraints.EAST;
+					gbc_lblUsuario.insets = new Insets(0, 0, 5, 5);
+					gbc_lblUsuario.gridx = 1;
+					gbc_lblUsuario.gridy = 0;
+					panelCampos.add(lblUsuario, gbc_lblUsuario);
 				}
 				{
-					textField = new JTextField();
-					panelLogin.add(textField);
-					textField.setColumns(10);
+					textUsuario = new JTextField();
+					GridBagConstraints gbc_textUsuario = new GridBagConstraints();
+					gbc_textUsuario.fill = GridBagConstraints.HORIZONTAL;
+					gbc_textUsuario.insets = new Insets(0, 0, 5, 0);
+					gbc_textUsuario.gridx = 2;
+					gbc_textUsuario.gridy = 0;
+					panelCampos.add(textUsuario, gbc_textUsuario);
+					textUsuario.setColumns(10);
+				}
+				{
+					JLabel lblClave = new JLabel("Clave:");
+					lblClave.setHorizontalAlignment(SwingConstants.LEFT);
+					lblClave.setFont(new Font("Tahoma", Font.BOLD, 12));
+					GridBagConstraints gbc_lblClave = new GridBagConstraints();
+					gbc_lblClave.anchor = GridBagConstraints.WEST;
+					gbc_lblClave.insets = new Insets(0, 0, 5, 5);
+					gbc_lblClave.gridx = 1;
+					gbc_lblClave.gridy = 1;
+					panelCampos.add(lblClave, gbc_lblClave);
+				}
+				{
+					textClave = new JPasswordField();
+					textClave.setEchoChar('*');
+					textClave.setColumns(10);
+					GridBagConstraints gbc_textClave = new GridBagConstraints();
+					gbc_textClave.insets = new Insets(0, 0, 5, 0);
+					gbc_textClave.fill = GridBagConstraints.HORIZONTAL;
+					gbc_textClave.gridx = 2;
+					gbc_textClave.gridy = 1;
+					panelCampos.add(textClave, gbc_textClave);
+				}
+				{
+					lblMensaje = new JLabel("");
+					lblMensaje.setForeground(Color.RED);
+					lblMensaje.setFont(new Font("Tahoma", Font.BOLD, 12));
+					GridBagConstraints gbc_lblMensaje = new GridBagConstraints();
+					gbc_lblMensaje.gridwidth = 3;
+					gbc_lblMensaje.insets = new Insets(0, 0, 0, 5);
+					gbc_lblMensaje.gridx = 0;
+					gbc_lblMensaje.gridy = 2;
+					panelCampos.add(lblMensaje, gbc_lblMensaje);
 				}
 			}
 			{
-				JPanel panelClave = new JPanel();
-				FlowLayout flowLayout = (FlowLayout) panelClave.getLayout();
-				flowLayout.setAlignment(FlowLayout.LEFT);
-				panelCampos.add(panelClave);
+				JPanel buttonPane = new JPanel();
+				panelTotal.add(buttonPane, BorderLayout.SOUTH);
+				buttonPane.setBackground(Color.GRAY);
+				buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 				{
-					JLabel lblNewLabel = new JLabel("CLave:   ");
-					panelClave.add(lblNewLabel);
+					btnOk = new JButton("OK");
+					btnOk.setActionCommand("OK");
+					buttonPane.add(btnOk);
+					getRootPane().setDefaultButton(btnOk);
 				}
 				{
-					passwordField = new JPasswordField();
-					passwordField.setColumns(10);
-					panelClave.add(passwordField);
+					btnCancel = new JButton("Cancel");
+					btnCancel.setActionCommand("Cancel");
+					buttonPane.add(btnCancel);
 				}
 			}
+			
 		}
-		{
-			JPanel buttonPane = new JPanel();
-			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
-			getContentPane().add(buttonPane, BorderLayout.SOUTH);
-			{
-				JButton okButton = new JButton("OK");
-				okButton.setActionCommand("OK");
-				buttonPane.add(okButton);
-				getRootPane().setDefaultButton(okButton);
-			}
-			{
-				JButton cancelButton = new JButton("Cancel");
-				cancelButton.setActionCommand("Cancel");
-				buttonPane.add(cancelButton);
-			}
-		}
+		//--------->enlaces<-------------
+		ControladorVistaLogin eco=new ControladorVistaLogin(this);
+		btnOk.addActionListener(eco);
+		btnCancel.addActionListener(eco);
+		textUsuario.addFocusListener(eco);
+		textClave.addFocusListener(eco);
+		textUsuario.addKeyListener(eco);
+		
+		textClave.addKeyListener(eco);
+		
+		textUsuario.requestFocus();
 		this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		this.pack();
+		//this.pack();
+		btnOk.setEnabled(false);
+		textClave.setEditable(false);
+		this.setAlwaysOnTop(true);
 		this.setLocationRelativeTo(null);
+		this.setUndecorated(true);
 		this.setVisible(true);
 	}//fin cosntructor
 	
+	public JLabel getLblSamasforoR() {
+		return lblSamasforoR;
+	}
+
+	public JTextField getTextUsuario() {
+		return textUsuario;
+	}
+
+	public JPasswordField getTextClave() {
+		return textClave;
+	}
+
+	public JButton getBtnOk() {
+		return btnOk;
+	}
+
+	public JButton getBtnCancel() {
+		return btnCancel;
+	}
+
+	public JLabel getLblMensaje() {
+		return lblMensaje;
+	}
+
 	public static void main(String[] args) {
 		new VistaLogin();
 	}
 
 }//fin d ela clase
+

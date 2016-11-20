@@ -2,44 +2,50 @@ package modelos;
 
 public class TipoAparato {
 	private int id;
-	private String nombre;
-	private char status;
+	private String tipo;
 	//------------>constructor<--------------
-	public TipoAparato() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-	public TipoAparato(int id, String nombre, char status) {
-		super();
-		this.id = id;
-		this.nombre = nombre;
-		this.status = status;
-	}
-	//----->setter<---------------
-	public void setId(int id) {
-		this.id = id;
-	}
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-	public void setStatus(char status) {
-		this.status = status;
-	}
-	//------->getters<-------------
-	public int getId() {
-		return id;
-	}
-	public String getNombre() {
-		return nombre;
-	}
-	public char getStatus() {
-		return status;
-	}
+	
+	
+	
 	
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return this.id+"-"+this.nombre;
+		return this.id+"-"+this.tipo;
 	}
+
+
+	public TipoAparato() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+
+	public TipoAparato(int id, String tipo) {
+		super();
+		this.id = id;
+		this.tipo = tipo;
+	}
+
+
+	public int getId() {
+		return id;
+	}
+
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+
+	public String getTipo() {
+		return tipo;
+	}
+
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+
 
 }

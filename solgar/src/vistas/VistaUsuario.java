@@ -292,8 +292,8 @@ public class VistaUsuario extends JDialog {
 			cancelButton.setBounds(589, 17, 65, 41);
 			panelBotones.add(cancelButton);
 			cancelButton.setToolTipText("Cerrar Ventana");
-			cancelButton.setIcon(new ImageIcon(VistaPersona.class.getResource("/imagenes/iconos/iconos_32x32/door.png")));
-			cancelButton.setRolloverIcon(new ImageIcon(VistaPersona.class.getResource("/imagenes/iconos/iconos_32x32/door_out.png")));
+			cancelButton.setIcon(new ImageIcon(VistaUsuario.class.getResource("/imagenes/iconos/iconos_32x32/door.png")));
+			cancelButton.setRolloverIcon(new ImageIcon(VistaUsuario.class.getResource("/imagenes/iconos/iconos_32x32/door_out.png")));
 			cancelButton.setCursor(new Cursor(12));
 			cancelButton.setActionCommand("Cancel");
 		}
@@ -301,16 +301,16 @@ public class VistaUsuario extends JDialog {
 		btnRegistrar = new JButton("");
 		btnRegistrar.setToolTipText("Registrar Usuario");
 		btnRegistrar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnRegistrar.setRolloverIcon(new ImageIcon(VistaPersona.class.getResource("/imagenes/iconos/iconos_32x32/plus.png")));
-		btnRegistrar.setIcon(new ImageIcon(VistaPersona.class.getResource("/imagenes/iconos/iconos_32x32/group_add.png")));
+		btnRegistrar.setRolloverIcon(new ImageIcon(VistaUsuario.class.getResource("/imagenes/iconos/iconos_32x32/plus.png")));
+		btnRegistrar.setIcon(new ImageIcon(VistaUsuario.class.getResource("/imagenes/iconos/iconos_32x32/group_add.png")));
 		btnRegistrar.setBounds(10, 17, 65, 41);
 		panelBotones.add(btnRegistrar);
 		{
 			btnModificar = new JButton("");
 			btnModificar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-			btnModificar.setRolloverIcon(new ImageIcon(VistaPersona.class.getResource("/imagenes/iconos/iconos_32x32/pencil2.png")));
+			btnModificar.setRolloverIcon(new ImageIcon(VistaUsuario.class.getResource("/imagenes/iconos/iconos_32x32/pencil2.png")));
 			btnModificar.setToolTipText("Modicar Usuario");
-			btnModificar.setIcon(new ImageIcon(VistaPersona.class.getResource("/imagenes/iconos/iconos_32x32/group_edit.png")));
+			btnModificar.setIcon(new ImageIcon(VistaUsuario.class.getResource("/imagenes/iconos/iconos_32x32/group_edit.png")));
 			btnModificar.setBounds(85, 17, 65, 41);
 			panelBotones.add(btnModificar);
 		}
@@ -318,8 +318,8 @@ public class VistaUsuario extends JDialog {
 			btnEliminar = new JButton("");
 			btnEliminar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 			btnEliminar.setToolTipText("Eliminar Usuario");
-			btnEliminar.setRolloverIcon(new ImageIcon(VistaPersona.class.getResource("/imagenes/iconos/iconos_32x32/busy.png")));
-			btnEliminar.setIcon(new ImageIcon(VistaPersona.class.getResource("/imagenes/iconos/iconos_32x32/group_delete.png")));
+			btnEliminar.setRolloverIcon(new ImageIcon(VistaUsuario.class.getResource("/imagenes/iconos/iconos_32x32/busy.png")));
+			btnEliminar.setIcon(new ImageIcon(VistaUsuario.class.getResource("/imagenes/iconos/iconos_32x32/group_delete.png")));
 			btnEliminar.setBounds(160, 17, 65, 41);
 			panelBotones.add(btnEliminar);
 		}
@@ -327,17 +327,17 @@ public class VistaUsuario extends JDialog {
 			btnVaciar = new JButton("");
 			btnVaciar.setToolTipText("Vaciar Formulario");
 			btnVaciar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-			btnVaciar.setRolloverIcon(new ImageIcon(VistaPersona.class.getResource("/imagenes/iconos/iconos_32x32/refresh.png")));
-			btnVaciar.setIcon(new ImageIcon(VistaPersona.class.getResource("/imagenes/iconos/iconos_32x32/page_refresh.png")));
+			btnVaciar.setRolloverIcon(new ImageIcon(VistaUsuario.class.getResource("/imagenes/iconos/iconos_32x32/refresh.png")));
+			btnVaciar.setIcon(new ImageIcon(VistaUsuario.class.getResource("/imagenes/iconos/iconos_32x32/page_refresh.png")));
 			btnVaciar.setBounds(231, 17, 65, 41);
 			panelBotones.add(btnVaciar);
 		}
 		{
 			btnReportePantalla = new JButton("");
 			btnReportePantalla.setToolTipText("Reporte Usuario por pantalla");
-			btnReportePantalla.setRolloverIcon(new ImageIcon(VistaPersona.class.getResource("/imagenes/iconos/iconos_32x32/application_view_detail.png")));
+			btnReportePantalla.setRolloverIcon(new ImageIcon(VistaUsuario.class.getResource("/imagenes/iconos/iconos_32x32/application_view_detail.png")));
 			btnReportePantalla.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-			btnReportePantalla.setIcon(new ImageIcon(VistaPersona.class.getResource("/imagenes/iconos/iconos_32x32/graphic-design.png")));
+			btnReportePantalla.setIcon(new ImageIcon(VistaUsuario.class.getResource("/imagenes/iconos/iconos_32x32/graphic-design.png")));
 			btnReportePantalla.setBounds(306, 17, 65, 41);
 			panelBotones.add(btnReportePantalla);
 		}

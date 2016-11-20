@@ -3,73 +3,109 @@
  * objetivo: clase del modelo usuario
  ****************************************************************************/
 package modelos;
-public class Usuario extends Persona{
+public class Usuario{
 	private int id;
-	private int persona_id;
+	private String cedula;
+	private String nombre;
+	private String apellido;
+	private String telefono;
+	private String email;
+	private String direccion;
 	private String login;
 	private String clave;
 	private int nivel_usuario;
-	private char status;
+	
 	//---------------------contructor-------------------
 	public Usuario() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Usuario(int id, int cedula, String apellidos, String nombres, String direccion, String telefono1,
-			String telefono2, String correo, char status, int id2, int persona_id, String login, String clave,
-			int nivel_usuario, char status2) {
-		super(id, cedula, apellidos, nombres, direccion, telefono1, telefono2, correo, status);
-		id = id2;
-		this.persona_id = persona_id;
-		this.login = login;
-		this.clave = clave;
-		this.nivel_usuario = nivel_usuario;
-		status = status2;
-	}
-	//---------->setter<-------------
-	public void setId(int id) {
-		this.id = id;
-	}
-	public void setPersona_id(int persona_id) {
-		this.persona_id = persona_id;
-	}
-	public void setLogin(String login) {
-		this.login = login;
-	}
-	public void setClave(String clave) {
-		this.clave = clave;
-	}
-	public void setNivel_usuario(int nivel_usuario) {
-		this.nivel_usuario = nivel_usuario;
-	}
-	public void setStatus(char status) {
-		this.status = status;
-	}
-	//----------------->getetr<------------
+
 	public int getId() {
 		return id;
 	}
-	public int getPersona_id() {
-		return persona_id;
+
+	public void setId(int id) {
+		this.id = id;
 	}
+
+	public String getCedula() {
+		return cedula;
+	}
+
+	public void setCedula(String cedula) {
+		this.cedula = cedula;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public String getApellido() {
+		return apellido;
+	}
+
+	public void setApellido(String apellido) {
+		this.apellido = apellido;
+	}
+
+	public String getTelefono() {
+		return telefono;
+	}
+
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getDireccion() {
+		return direccion;
+	}
+
+	public void setDireccion(String direccion) {
+		this.direccion = direccion;
+	}
+
 	public String getLogin() {
 		return login;
 	}
+
+	public void setLogin(String login) {
+		this.login = login;
+	}
+
 	public String getClave() {
 		return clave;
 	}
+
+	public void setClave(String clave) {
+		this.clave = clave;
+	}
+
 	public int getNivel_usuario() {
 		return nivel_usuario;
 	}
-	public char getStatus() {
-		return status;
+
+	public void setNivel_usuario(int nivel_usuario) {
+		this.nivel_usuario = nivel_usuario;
 	}
 	
 	@Override
 	public String toString() {
-		return this.login;
+		
+		return id+"-"+nombre+"-"+apellido;
 	}
-	
 	
 	
 

@@ -19,6 +19,7 @@ import java.awt.Color;
 import javax.swing.UIManager;
 
 import controladoresVistas.ControladorVistaInicial;
+import modelos.Usuario;
 
 import java.awt.Toolkit;
 import java.awt.Font;
@@ -63,7 +64,7 @@ public class VentanaInicial extends JFrame{
 	private JMenuItem mntmGraficosEstadisticos;
 	
 		
-	public VentanaInicial(){
+	public VentanaInicial(Usuario registroUsuario){
 		setTitle("Control y Seguimiento de Artefactos Electricos en Reparaci\u00F3n");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaInicial.class.getResource("/imagenes/iconos/ventilador.png")));
 		getContentPane().setBackground(SystemColor.inactiveCaption);
