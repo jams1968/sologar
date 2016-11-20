@@ -26,6 +26,7 @@ public class ControladorVistaInicial implements ActionListener{
 
              if(dialogButton == JOptionPane.YES_OPTION){
             	 System.exit(0);
+            	 
              }
 		}
 		
