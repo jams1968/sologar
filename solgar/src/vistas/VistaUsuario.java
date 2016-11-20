@@ -2,7 +2,8 @@
  * programa: VistaUsuario.java
  * objetivo: interface del modelo usuario
  ****************************************************************************/
-package vistas;
+package vistas; 
+
 
 import java.awt.EventQueue;
 
