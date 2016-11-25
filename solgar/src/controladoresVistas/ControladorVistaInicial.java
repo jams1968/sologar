@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 
 import vistas.VentanaInicial;
+import vistas.VistaUsuario;
 
 public class ControladorVistaInicial implements ActionListener{
 	private VentanaInicial vista;
@@ -32,7 +33,9 @@ public class ControladorVistaInicial implements ActionListener{
 		else if (accion.getSource().equals(vista.getBtnClientes())||accion.getSource().equals(vista.getMntmClientesR())){
 			
 		}
-		
+		else if (accion.getSource().equals(vista.getMntmUsuarios())){
+			new VistaUsuario();
+		}
 	}//fin action
 
 }//fin clase

@@ -12,7 +12,7 @@ public class Usuario{
 	private String email;
 	private String direccion;
 	private String login;
-	private String clave;
+	private char[] clave;
 	private int nivel_usuario;
 	
 	//---------------------contructor-------------------
@@ -85,12 +85,12 @@ public class Usuario{
 		this.login = login;
 	}
 
-	public String getClave() {
+	public char[] getClave() {
 		return clave;
 	}
 
-	public void setClave(String clave) {
-		this.clave = clave;
+	public void setClave(char[] cs) {
+		this.clave = cs;
 	}
 
 	public int getNivel_usuario() {

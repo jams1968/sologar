@@ -36,7 +36,23 @@ public class ControladorVistaUsuario implements ActionListener,KeyListener {
 	public void actionPerformed(ActionEvent accion) {
 		if(accion.getSource().equals(vista.getCancelButton())){
 			vista.dispose();
-		}
+		}// fin cerrar
+		else if((vista.getTextCedula().getText().trim().length()>0)&&
+				(vista.getTextNombres().getText().trim().length()>0)&&
+				(vista.getTextApellidos().getText().trim().length()>0)&&
+				(vista.getTextTelefono1().getText().trim().length()>0)&&
+				(vista.getTextDireccion().getText().trim().length()>0)&&
+				(vista.getTextLogin().getText().trim().length()>0)&&
+				(vista.getTextClave().getPassword().toString().trim().length()>0)&&
+				(vista.getComboNivel().getSelectedIndex()>=0)){
+				llenarModelo();
+				agregarUsuario();
+				vaciarFormulario();
+			
+		}// fin agregar usuario
+		
+		
+		
 	}//fin actionlisterne
 	//------------->keyListerner<-----------------------
 	@Override
@@ -47,8 +63,17 @@ public class ControladorVistaUsuario implements ActionListener,KeyListener {
 			validarNumeros = patronNumero.matcher(vista.getTextCedula().getText().trim());	
 			if(validarNumeros.find()){
 				
-				vista.getTextNombres().setEditable(true);
-				vista.getTextNombres().requestFocus();
+				nuevoUsuario=buscarUsuarioCedula(vista.getTextCedula().getText());
+				if(nuevoUsuario.getCedula()==null){
+				
+					vista.getTextNombres().setEditable(true);
+					vista.getTextNombres().requestFocus();
+				}
+				else{
+					vista.getLblMensaje().setText("Cedula se encuentra registrada");
+					llenarFormulario(nuevoUsuario);
+				}
+					
 				
 			}else 
 				vista.getLblMensaje().setText("Valor invalido");
@@ -99,14 +124,19 @@ public class ControladorVistaUsuario implements ActionListener,KeyListener {
 		else if(accion.getSource().equals(vista.getTextDireccion())&&
 				(accion.getKeyCode()== KeyEvent.VK_ENTER)&&
 				!(vista.getTextDireccion().getText().trim().isEmpty())){
+			vista.getComboNivel().setEnabled(true);
 			vista.getTextLogin().setEditable(true);
 			vista.getTextLogin().requestFocus();
 		}//fin direccion
 		else if(accion.getSource().equals(vista.getTextLogin())&&
 				(accion.getKeyCode()== KeyEvent.VK_ENTER)&&
 				!(vista.getTextLogin().getText().trim().isEmpty())){
-			vista.getTextClave().setEditable(true);
-			vista.getTextClave().requestFocus();
+			if(!buscarUsuario(vista.getTextLogin().getText())){
+				vista.getTextClave().setEditable(true);
+				vista.getTextClave().requestFocus();
+			}else
+				vista.getLblMensaje().setText("login ya existe, intente con otro");
+				
 		}//fin login
 		else if(accion.getSource().equals(vista.getTextClave())&&
 				(accion.getKeyCode()== KeyEvent.VK_ENTER)){
@@ -150,12 +180,13 @@ public class ControladorVistaUsuario implements ActionListener,KeyListener {
 		vista.getTextLogin().setText(null);
 		vista.getTextClave().setText(null);
 		vista.getTextClave2().setText(null);
+		vista.getBtnRegistrar().setEnabled(false);
 	}//vaciar
 //------------------->buscar por cedula<---------------
-	public Usuario buscarUsuarioCedula(int xCedula){
+	public Usuario buscarUsuarioCedula(String xCedula){
 		Usuario registro=new Usuario();
 		
-		String sentenciaSql = "SELECT * FROM usuarios where cedula="+xCedula ;
+		String sentenciaSql = "SELECT * FROM usuarios where cedula='"+xCedula+"'" ;
 		
 		SqlBD codigoSql = new SqlBD();
 		
@@ -170,7 +201,7 @@ public class ControladorVistaUsuario implements ActionListener,KeyListener {
 				registro.setEmail(consulta.getString("email"));
 				registro.setDireccion(consulta.getString("direccion"));
 				registro.setLogin(consulta.getString("login"));
-				registro.setClave(consulta.getString("clave"));
+				registro.setClave(consulta.getString("clave").toCharArray());
 				registro.setNivel_usuario(consulta.getInt("nivele_usuario_id"));
 			}
 		}catch (SQLException e) {
@@ -185,7 +216,7 @@ public class ControladorVistaUsuario implements ActionListener,KeyListener {
 		
 	}	
 //------->buscar por login<-------------------	
-	public Usuario buscarUsuario(String xLogin){
+	public boolean buscarUsuario(String xLogin){
 		Usuario registro=new Usuario();
 		
 		String sentenciaSql = "SELECT * FROM usuarios where login='"+xLogin+ "'";
@@ -203,7 +234,7 @@ public class ControladorVistaUsuario implements ActionListener,KeyListener {
 				registro.setEmail(consulta.getString("email"));
 				registro.setDireccion(consulta.getString("direccion"));
 				registro.setLogin(consulta.getString("login"));
-				registro.setClave(consulta.getString("clave"));
+				registro.setClave(consulta.getString("clave").toCharArray());
 				registro.setNivel_usuario(consulta.getInt("nivele_usuario_id"));
 			}
 		}catch (SQLException e) {
@@ -214,7 +245,9 @@ public class ControladorVistaUsuario implements ActionListener,KeyListener {
 		
 		
 		codigoSql.Desconectar();
-		return registro;
+		if(registro.getLogin()!=null)
+			return true;
+		else return false;
 		
 	}//fin buscar login
 	
@@ -222,15 +255,48 @@ public class ControladorVistaUsuario implements ActionListener,KeyListener {
 	public void llenarModelo(){
 		nuevoUsuario=new Usuario();
 		this.nuevoUsuario.setCedula(vista.getTextCedula().getText());
-		this.nuevoUsuario.setNombre(vista.getTextNombres().getText());
-		this.nuevoUsuario.setApellido(vista.getTextApellidos().getText());
+		this.nuevoUsuario.setNombre(vista.getTextNombres().getText().toUpperCase());
+		this.nuevoUsuario.setApellido(vista.getTextApellidos().getText().toUpperCase());
 		this.nuevoUsuario.setTelefono(vista.getTextTelefono1().getText());
-		this.nuevoUsuario.setDireccion(vista.getTextDireccion().getText());
-		this.nuevoUsuario.setEmail(vista.getTextDireccion().getText());
+		this.nuevoUsuario.setDireccion(vista.getTextDireccion().getText().toUpperCase());
+		this.nuevoUsuario.setEmail(vista.getTextCorreo().getText().toUpperCase());
+		this.nuevoUsuario.setLogin(vista.getTextLogin().getText().toLowerCase());
+		this.nuevoUsuario.setClave(vista.getTextClave().getPassword());
+		this.nuevoUsuario.setNivel_usuario(vista.getComboNivel().getSelectedIndex());
 		
 		
+	}
+	//------------>llevar campos formulario<-----------
+	public void llenarFormulario(Usuario registro){
+		vista.getTextNombres().setText(registro.getNombre());
+		vista.getTextApellidos().setText(registro.getApellido());
+		vista.getTextTelefono1().setText(registro.getTelefono());
+		vista.getTextDireccion().setText(registro.getDireccion());
+		vista.getTextCorreo().setText(registro.getEmail());
+		vista.getTextLogin().setText(registro.getLogin());
+		vista.getTextClave().setText(registro.getClave().toString());
+	
+		vista.getComboNivel().setSelectedIndex(registro.getNivel_usuario());
 		
-		
+	}
+	
+	//-------------->registrarUsuario<------------------
+	public void agregarUsuario(){
+		if((buscarUsuarioCedula(nuevoUsuario.getCedula()).getCedula()==null)&&
+				(!buscarUsuario(nuevoUsuario.getLogin()))){
+			String sentenciaSql="INSERT INTO usuarios (cedula,nombre,apellido,telefono,email,direccion,login,clave,nivele_usuario_id) "
+					+ "VALUES ('"+nuevoUsuario.getCedula()+"','"+nuevoUsuario.getNombre()+"','"
+							+ nuevoUsuario.getApellido()+"','"+nuevoUsuario.getTelefono()+"','"
+							+nuevoUsuario.getEmail()+"','"+nuevoUsuario.getDireccion()
+							+"','"+nuevoUsuario.getLogin()+"','"+nuevoUsuario.getClave()+"',"
+							+nuevoUsuario.getNivel_usuario()+")";
+			System.out.println(sentenciaSql);
+			SqlBD codigoSql = new SqlBD();
+			if(codigoSql.agregarRegistro(sentenciaSql))
+				vista.getLblMensaje().setText("Usuario Registrado Exitosamente");
+			else
+				vista.getLblMensaje().setText("No se pudo registrar el usuario");
+		}
 	}
 	
 	

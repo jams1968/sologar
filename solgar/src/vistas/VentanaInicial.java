@@ -67,7 +67,7 @@ public class VentanaInicial extends JFrame{
 		
 	public VentanaInicial(Usuario registroUsuario){
 		this.registroUsuario=registroUsuario;
-		setTitle("Usuario:"+this.registroUsuario.getNombre()+" "+this.registroUsuario.getApellido());
+		setTitle("Usuario:   "+this.registroUsuario.getNombre()+" "+this.registroUsuario.getApellido());
 		setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaInicial.class.getResource("/imagenes/iconos/ventilador.png")));
 		getContentPane().setBackground(SystemColor.inactiveCaption);
 		
@@ -286,6 +286,7 @@ public class VentanaInicial extends JFrame{
 		
 		btnSalir.addActionListener(eco);
 		mntmSalirDelSistema.addActionListener(eco);
+		mntmUsuarios.addActionListener(eco);
 		
 		
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);//maximar automaticamente

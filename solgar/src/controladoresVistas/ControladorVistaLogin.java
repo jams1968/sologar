@@ -63,8 +63,8 @@ public class ControladorVistaLogin implements ActionListener,FocusListener,KeyLi
 			vista.getTextClave().requestFocus();
 		}
 		else if(accion.getSource().equals(vista.getTextClave())
-				&&(accion.getKeyCode()== KeyEvent.VK_ENTER)&&(!vista.getTextClave().getText().isEmpty())){
-			registroUsuario=buscarUsuario(vista.getTextUsuario().getText(),vista.getTextClave().getText());
+				&&(accion.getKeyCode()== KeyEvent.VK_ENTER)){
+			registroUsuario=buscarUsuario(vista.getTextUsuario().getText(),vista.getTextClave().getPassword());
 			if(registroUsuario.getCedula()==null){
 				vista.getLblMensaje().setText("Usuario o Clave incorrecta");
 			}else{
@@ -91,7 +91,7 @@ public class ControladorVistaLogin implements ActionListener,FocusListener,KeyLi
 	}
 		
 
-public Usuario buscarUsuario(String xLogin,String xClave){
+public Usuario buscarUsuario(String xLogin,char[] xClave){
 	Usuario registro=new Usuario();
 	
 	String sentenciaSql = "SELECT * FROM usuarios where login='"+xLogin+ "'";
@@ -109,7 +109,7 @@ public Usuario buscarUsuario(String xLogin,String xClave){
 			registro.setEmail(consulta.getString("email"));
 			registro.setDireccion(consulta.getString("direccion"));
 			registro.setLogin(consulta.getString("login"));
-			registro.setClave(consulta.getString("clave"));
+			registro.setClave(consulta.getString("clave").toCharArray());
 			registro.setNivel_usuario(consulta.getInt("nivele_usuario_id"));
 		}
 	}catch (SQLException e) {
@@ -117,7 +117,7 @@ public Usuario buscarUsuario(String xLogin,String xClave){
 			e.printStackTrace();
 	}
 
-	if(registro.getClave().compareTo(xClave)!=0)
+	if(registro.getClave()==xClave)
 		registro=new Usuario();
 	
 	codigoSql.Desconectar();

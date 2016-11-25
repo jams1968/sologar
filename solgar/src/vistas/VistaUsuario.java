@@ -35,6 +35,7 @@ import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+import java.awt.Toolkit;
 
 
 public class VistaUsuario extends JDialog {
@@ -81,9 +82,7 @@ public class VistaUsuario extends JDialog {
 	 * Create the dialog.
 	 */
 	public VistaUsuario() {
-		
-		
-		setResizable(false);
+		setIconImage(Toolkit.getDefaultToolkit().getImage(VistaUsuario.class.getResource("/imagenes/iconos/ventilador.png")));
 		setTitle("REGISTRO DE USUARIOS");
 		
 		setBounds(100, 100, 700, 422);
@@ -179,13 +178,13 @@ public class VistaUsuario extends JDialog {
 		
 		JLabel labelLogin = new JLabel("Login:");
 		labelLogin.setFont(new Font("Tahoma", Font.BOLD, 12));
-		labelLogin.setBounds(178, 19, 46, 14);
+		labelLogin.setBounds(181, 19, 43, 14);
 		panelDU.add(labelLogin);
 		
 		textLogin = new JTextField();
 		textLogin.setEditable(false);
 		textLogin.setColumns(10);
-		textLogin.setBounds(218, 17, 105, 26);
+		textLogin.setBounds(222, 17, 101, 26);
 		panelDU.add(textLogin);
 		
 		JLabel labelClave = new JLabel("Clave:");
@@ -212,13 +211,13 @@ public class VistaUsuario extends JDialog {
 		
 		JLabel labelNivel = new JLabel("Nivel Usuario:");
 		labelNivel.setFont(new Font("Tahoma", Font.BOLD, 12));
-		labelNivel.setBounds(10, 19, 91, 14);
+		labelNivel.setBounds(6, 19, 81, 14);
 		panelDU.add(labelNivel);
 		
 		comboNivel = new JComboBox();
-		comboNivel.setModel(new DefaultComboBoxModel(new String[] {"Admin", "Asistente"}));
+		comboNivel.setModel(new DefaultComboBoxModel(new String[] {"Seleccione","Admin", "Asistente"}));
 		comboNivel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		comboNivel.setBounds(92, 17, 79, 26);
+		comboNivel.setBounds(89, 17, 91, 26);
 		comboNivel.setEnabled(false);
 		panelDU.add(comboNivel);
 		
@@ -302,6 +301,7 @@ public class VistaUsuario extends JDialog {
 		ControladorVistaUsuario eco=new ControladorVistaUsuario(this);
 		cancelButton.addActionListener(eco);
 		btnVaciar.addActionListener(eco);
+		btnRegistrar.addActionListener(eco);
 		
 		textCedula.addKeyListener(eco);
 		textNombres.addKeyListener(eco);
@@ -313,7 +313,11 @@ public class VistaUsuario extends JDialog {
 		textClave.addKeyListener(eco);
 		textClave2.addKeyListener(eco);
 		
+		this.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+		
 		this.setLocationRelativeTo(null);
+		this.setAlwaysOnTop(true);
+		this.setVisible(true);
 	
 	}//fin del constructor
 
@@ -408,4 +412,9 @@ public class VistaUsuario extends JDialog {
 	public JLabel getLblMensaje() {
 		return lblMensaje;
 	}
+
+	public JComboBox getComboNivel() {
+		return comboNivel;
+	}
+	
 }//fin  de la clase
