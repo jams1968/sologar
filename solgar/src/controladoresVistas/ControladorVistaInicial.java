@@ -28,8 +28,11 @@ public class ControladorVistaInicial implements ActionListener{
             	 System.exit(0);
             	 
              }
+		}//fin salir
+		else if (accion.getSource().equals(vista.getBtnClientes())||accion.getSource().equals(vista.getMntmClientesR())){
+			
 		}
 		
-	}
+	}//fin action
 
-}
+}//fin clase

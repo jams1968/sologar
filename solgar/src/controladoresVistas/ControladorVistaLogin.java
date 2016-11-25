@@ -42,7 +42,8 @@ public class ControladorVistaLogin implements ActionListener,FocusListener,KeyLi
 			 vista.getTextClave().setText(null);
 			 vista.getBtnOk().setEnabled(false);
 		 }
-		 else  if(accion.getSource().equals(vista.getTextClave())){
+		 else  if(accion.getSource().equals(vista.getTextClave())&&(!vista.getTextUsuario().getText().trim().isEmpty())
+				 &&(vista.getTextClave().isEditable())){
 			 vista.getLblMensaje().setText("Ingrese clave, presione enter");
 			// vista.getBtnOk().setEnabled(true);
 		 }

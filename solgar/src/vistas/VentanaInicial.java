@@ -62,10 +62,12 @@ public class VentanaInicial extends JFrame{
 	private JPanel panelTitulo;
 	private JLabel lblNewLabel;
 	private JMenuItem mntmGraficosEstadisticos;
+	private Usuario registroUsuario;
 	
 		
 	public VentanaInicial(Usuario registroUsuario){
-		setTitle("Control y Seguimiento de Artefactos Electricos en Reparaci\u00F3n");
+		this.registroUsuario=registroUsuario;
+		setTitle("Usuario:"+this.registroUsuario.getNombre()+" "+this.registroUsuario.getApellido());
 		setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaInicial.class.getResource("/imagenes/iconos/ventilador.png")));
 		getContentPane().setBackground(SystemColor.inactiveCaption);
 		
@@ -273,6 +275,11 @@ public class VentanaInicial extends JFrame{
 				(KeyEvent.VK_Q, ActionEvent.CTRL_MASK)); 
 		mnUtilidades.add(mntmSalirDelSistema);
 		
+		//------------>control de usuario<------------
+		if(registroUsuario.getNivel_usuario()==2){
+			mntmUsuarios.setEnabled(false);
+			mntmRepuestos.setEnabled(false);
+		}
 		
 		//------------->enlaces <-----------------------------
 		ControladorVistaInicial eco=new ControladorVistaInicial(this);
@@ -423,6 +430,21 @@ public class VentanaInicial extends JFrame{
 
 	public JMenuItem getMntmSalirDelSistema() {
 		return mntmSalirDelSistema;
+	}
+
+
+	public JMenuItem getMntmGraficosEstadisticos() {
+		return mntmGraficosEstadisticos;
+	}
+
+
+	public void setMntmGraficosEstadisticos(JMenuItem mntmGraficosEstadisticos) {
+		this.mntmGraficosEstadisticos = mntmGraficosEstadisticos;
+	}
+
+
+	public Usuario getRegistroUsuario() {
+		return registroUsuario;
 	}
 	
 
