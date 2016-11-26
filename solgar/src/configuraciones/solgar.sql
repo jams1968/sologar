@@ -1,9 +1,10 @@
+  
 -- phpMyAdmin SQL Dump
 -- version 4.4.14
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 21-11-2016 a las 13:52:48
+-- Tiempo de generación: 26-11-2016 a las 14:11:59
 -- Versión del servidor: 5.6.26
 -- Versión de PHP: 5.5.28
 
@@ -190,7 +191,7 @@ INSERT INTO `tipos_aparato` (`id`, `tipo`) VALUES
 
 CREATE TABLE IF NOT EXISTS `usuarios` (
   `id` int(11) NOT NULL,
-  `cedula` int(8) NOT NULL,
+  `cedula` varchar(10) NOT NULL,
   `nombre` varchar(30) NOT NULL,
   `apellido` varchar(30) NOT NULL,
   `telefono` varchar(20) NOT NULL,
@@ -199,14 +200,16 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `login` varchar(10) NOT NULL,
   `clave` varchar(20) NOT NULL,
   `nivele_usuario_id` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `usuarios`
 --
 
 INSERT INTO `usuarios` (`id`, `cedula`, `nombre`, `apellido`, `telefono`, `email`, `direccion`, `login`, `clave`, `nivele_usuario_id`) VALUES
-(1, 12345678, 'ERICK', 'GUERRA', '(0414)-144-94-55', 'erick.guerra.ing@gmail.com', 'la morera', 'admin', 'admin', 1);
+(3, '6331034', 'JAIRO', 'MOLINA', '(0416)-942-12-12', 'PROFESOR@JAIROMOLINA.COM.VE', 'NUEVA ESPERANZA\n', 'jams', '[C@4dcfdd', 1),
+(4, '12345678', 'ADMIN', 'ADMIN', '(1111)-111-11-11', 'ADMIN@ADMIN.COM', 'ADMINISTRADOR\n', 'admin', '[C@ee8e67', 1),
+(5, '22222222', 'SECRETARIA', 'SECRE', '(1111)-111-11-11', 'S@S.COM', 'SASAS\n', 'secre', '[C@71e0f8', 2);
 
 --
 -- Índices para tablas volcadas
@@ -354,7 +357,7 @@ ALTER TABLE `tipos_aparato`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
 -- Restricciones para tablas volcadas
 --
