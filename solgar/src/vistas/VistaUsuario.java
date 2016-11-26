@@ -310,6 +310,7 @@ public class VistaUsuario extends JDialog {
 		btnRegistrar.addActionListener(eco);
 		btnModificar.addActionListener(eco);
 		btnEliminar.addActionListener(eco);
+		btnReportePantalla.addActionListener(eco);
 		
 		
 		textCedula.addKeyListener(eco);

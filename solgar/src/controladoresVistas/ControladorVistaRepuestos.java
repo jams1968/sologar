@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
 
 import controladoresBD.SqlBD;
 import vistas.VistaRepuestos;
+import vistasReportes.VistaReporteRepuestosPP;
 import modelos.Repuestos;
 import modelos.Usuario;
 
@@ -36,8 +37,13 @@ public class ControladorVistaRepuestos implements ActionListener , KeyListener{
 
 	@Override
 	public void actionPerformed(ActionEvent accion) {
-		
-		if (accion.getSource().equals(vista.getBtnRegistrar())) {
+		if(accion.getSource().equals(vista.getCancelButton())){
+			vista.dispose();
+		}// fin cerrar
+		if(accion.getSource().equals(vista.getBtnReportePantalla())){
+			new VistaReporteRepuestosPP();
+		}// fin cerrar
+		else if (accion.getSource().equals(vista.getBtnRegistrar())) {
 			
 			if (vista.getComboTipoAparatos().getSelectedIndex()<1) {
 				

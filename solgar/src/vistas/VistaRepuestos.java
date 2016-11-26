@@ -19,9 +19,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.text.MaskFormatter;
 
 import controladoresVistas.ControladorVistaRepuestos;
-
-
-
+import modelos.Usuario;
 
 import java.awt.Color;
 
@@ -60,23 +58,17 @@ public class VistaRepuestos extends JDialog {
 	private JTextField textPrecioVenta;
 	private JTextArea textDescripcion;
 	private ComboTipoAparatos comboTipoAparatos;
+	private Usuario registroUsuario;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		try {
-			VistaRepuestos dialog = new VistaRepuestos();
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
+	
 	/**
 	 * Create the dialog.
 	 */
 	public VistaRepuestos() {
+		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(VistaRepuestos.class.getResource("/imagenes/iconos/ventilador.png")));
 		setTitle("REGISTRO DE REPUESTOS");
 		setResizable(false);
@@ -277,6 +269,8 @@ public class VistaRepuestos extends JDialog {
 		btnEliminar.addActionListener(eco);
 		btnModificar.addActionListener(eco);
 		btnVaciar.addActionListener(eco);
+		btnReportePantalla.addActionListener(eco);
+		cancelButton.addActionListener(eco);
 		
 		textCodigo.addKeyListener(eco);
 		textRepuesto.addKeyListener(eco);
@@ -287,7 +281,7 @@ public class VistaRepuestos extends JDialog {
 		
 		
 		
-		
+		this.setAlwaysOnTop(true);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		this.setVisible(true);
@@ -360,5 +354,8 @@ public class VistaRepuestos extends JDialog {
 	
 	public JButton getBtnAgregarCantidad() {
 		return btnAgregarCantidad;
+	}
+	public static void main(String[] args) {
+		new VistaRepuestos();
 	}
 }//fin de la clase

@@ -11,7 +11,9 @@ import javax.swing.JOptionPane;
 
 import vistas.VentanaInicial;
 import vistas.VistaCambioClave;
+import vistas.VistaRepuestos;
 import vistas.VistaUsuario;
+import vistasReportes.VistaReporteRepuestosPP;
 
 public class ControladorVistaInicial implements ActionListener{
 	private VentanaInicial vista;
@@ -39,6 +41,10 @@ public class ControladorVistaInicial implements ActionListener{
 		}
 		else if (accion.getSource().equals(vista.getMntmCambioDeClave())){
 			new VistaCambioClave(vista.getRegistroUsuario());
+		}
+		else if (accion.getSource().equals(vista.getMntmRepuestos())){
+			new VistaRepuestos();
+			
 		}
 	}//fin action
 

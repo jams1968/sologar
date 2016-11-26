@@ -10,6 +10,7 @@ public class Repuestos {
 	private double precio_venta;
 	private String descripcion;
 	private int tipo_aparato_id;
+	private String aparato_tipo;
 	
 	public Repuestos() {
 		super();
@@ -84,6 +85,14 @@ public class Repuestos {
 
 	public void setTipo_aparato_id(int tipo_aparato_id) {
 		this.tipo_aparato_id = tipo_aparato_id;
+	}
+
+	public String getAparato_tipo() {
+		return aparato_tipo;
+	}
+
+	public void setAparato_tipo(String aparato_tipo) {
+		this.aparato_tipo = aparato_tipo;
 	}
 
 	@Override

@@ -289,6 +289,7 @@ public class VentanaInicial extends JFrame{
 		if(registroUsuario.getNivel_usuario()==2){
 			mntmUsuarios.setEnabled(false);
 			mntmRepuestos.setEnabled(false);
+			mntmTiposAparatos.setEnabled(false);
 		}
 		
 		//------------->enlaces <-----------------------------
@@ -297,6 +298,7 @@ public class VentanaInicial extends JFrame{
 		btnSalir.addActionListener(eco);
 		mntmSalirDelSistema.addActionListener(eco);
 		mntmUsuarios.addActionListener(eco);
+		mntmRepuestos.addActionListener(eco);
 		mntmCambioDeClave.addActionListener(eco);
 		
 		

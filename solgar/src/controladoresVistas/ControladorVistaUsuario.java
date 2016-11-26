@@ -19,6 +19,7 @@ import controladoresBD.SqlBD;
 import librerias.Funciones;
 import modelos.Usuario;
 import vistas.VistaUsuario;
+import vistasReportes.VistaReporteRepuestosPP;
 
 public class ControladorVistaUsuario implements ActionListener,KeyListener {
 	private Pattern patronLetras,patronNumero,patronTelefono,patronCorreo,patronLogin;
@@ -44,6 +45,9 @@ public class ControladorVistaUsuario implements ActionListener,KeyListener {
 	public void actionPerformed(ActionEvent accion) {
 		if(accion.getSource().equals(vista.getCancelButton())){
 			vista.dispose();
+		}// fin cerrar
+		else if(accion.getSource().equals(vista.getBtnReportePantalla())){
+			new VistaReporteRepuestosPP();
 		}// fin cerrar
 		else if(accion.getSource().equals(vista.getBtnVaciar())){
 			vaciarFormulario();
