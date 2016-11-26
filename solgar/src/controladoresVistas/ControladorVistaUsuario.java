@@ -13,7 +13,10 @@ import java.sql.SQLException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.swing.JOptionPane;
+
 import controladoresBD.SqlBD;
+import librerias.Funciones;
 import modelos.Usuario;
 import vistas.VistaUsuario;
 
@@ -22,6 +25,8 @@ public class ControladorVistaUsuario implements ActionListener,KeyListener {
 	private Matcher validarNumeros,validarLetras,validarTelefono,validarCorreo,validarLogin;
 	private VistaUsuario vista;
 	private Usuario nuevoUsuario;
+	private Funciones funcion;
+	
 	public ControladorVistaUsuario(VistaUsuario vista){
 		this.vista=vista;
 		patronLetras = Pattern.compile("[A-Za-z ]");
@@ -30,6 +35,9 @@ public class ControladorVistaUsuario implements ActionListener,KeyListener {
 		patronCorreo=Pattern.compile("^[A-Za-z0-9]+@[a-z]+\\.[a-z]+");
 		patronLogin=Pattern.compile("[A-Za-z0-9]{5,10}");
 		nuevoUsuario=new Usuario(); 
+		funcion=new Funciones();
+	
+		
 	}
 	//-------------->actionlisterner <--------------
 	@Override
@@ -37,19 +45,46 @@ public class ControladorVistaUsuario implements ActionListener,KeyListener {
 		if(accion.getSource().equals(vista.getCancelButton())){
 			vista.dispose();
 		}// fin cerrar
-		else if((vista.getTextCedula().getText().trim().length()>0)&&
+		else if(accion.getSource().equals(vista.getBtnVaciar())){
+			vaciarFormulario();
+		}// fin cerrar
+		else if((accion.getSource().equals(vista.getBtnRegistrar())
+				&&((vista.getTextCedula().getText().trim().length()>0)&&
 				(vista.getTextNombres().getText().trim().length()>0)&&
 				(vista.getTextApellidos().getText().trim().length()>0)&&
 				(vista.getTextTelefono1().getText().trim().length()>0)&&
 				(vista.getTextDireccion().getText().trim().length()>0)&&
 				(vista.getTextLogin().getText().trim().length()>0)&&
 				(vista.getTextClave().getPassword().toString().trim().length()>0)&&
-				(vista.getComboNivel().getSelectedIndex()>=0)){
+				(vista.getComboNivel().getSelectedIndex()>=0)))){
 				llenarModelo();
 				agregarUsuario();
 				vaciarFormulario();
 			
 		}// fin agregar usuario
+		else if((accion.getSource().equals(vista.getBtnModificar())
+				&&((vista.getTextCedula().getText().trim().length()>0)&&
+				(vista.getTextNombres().getText().trim().length()>0)&&
+				(vista.getTextApellidos().getText().trim().length()>0)&&
+				(vista.getTextTelefono1().getText().trim().length()>0)&&
+				(vista.getTextDireccion().getText().trim().length()>0)&&
+				(vista.getTextLogin().getText().trim().length()>0)&&
+				(vista.getTextClave().getPassword().toString().trim().length()>0)&&
+				(vista.getComboNivel().getSelectedIndex()>=0)))){
+				llenarModelo();
+				modificarUsuario();
+				
+			
+		}// modficar usuario
+		 else if(accion.getSource().equals(vista.getBtnEliminar())){
+			 int dialogButton = JOptionPane.showConfirmDialog
+					 (vista, "Desea Eliminar el Usuario ","Mensaje del Sistema",JOptionPane.YES_NO_OPTION);
+
+	         if(dialogButton == JOptionPane.YES_OPTION){
+	        	 eliminarUsuario();
+	        	 vaciarFormulario();
+	         }
+		 }
 		
 		
 		
@@ -72,6 +107,19 @@ public class ControladorVistaUsuario implements ActionListener,KeyListener {
 				else{
 					vista.getLblMensaje().setText("Cedula se encuentra registrada");
 					llenarFormulario(nuevoUsuario);
+					vista.getTextCedula().setEditable(false);
+					vista.getTextLogin().setEditable(false);
+					vista.getTextNombres().setEditable(true);
+					vista.getTextNombres().requestFocus();
+					vista.getTextApellidos().setEditable(true);
+					vista.getTextTelefono1().setEditable(true);
+					vista.getTextDireccion().setEditable(true);
+					vista.getTextCorreo().setEditable(true);
+					vista.getTextClave().setEditable(true);
+				
+					vista.getComboNivel().setEnabled(true);
+					habilitarBotones();
+					
 				}
 					
 				
@@ -172,6 +220,7 @@ public class ControladorVistaUsuario implements ActionListener,KeyListener {
 	//--->funcion vaciar<--------------
 	public void vaciarFormulario(){
 		vista.getTextCedula().setText(null);
+		vista.getTextCedula().setEditable(true);
 		vista.getTextNombres().setText(null);
 		vista.getTextApellidos().setText(null);
 		vista.getTextTelefono1().setText(null);
@@ -181,6 +230,19 @@ public class ControladorVistaUsuario implements ActionListener,KeyListener {
 		vista.getTextClave().setText(null);
 		vista.getTextClave2().setText(null);
 		vista.getBtnRegistrar().setEnabled(false);
+		vista.getBtnModificar().setEnabled(false);
+		vista.getBtnEliminar().setEnabled(false);
+		
+		vista.getTextNombres().setEditable(false);
+		vista.getTextApellidos().setEditable(false);
+		vista.getTextTelefono1().setEditable(false);
+		vista.getTextDireccion().setEditable(false);
+		vista.getTextCorreo().setEditable(false);
+		vista.getTextLogin().setEditable(false);
+		vista.getTextClave().setEditable(false);
+		vista.getTextClave2().setEditable(false);
+		vista.getComboNivel().setEnabled(false);
+		vista.getComboNivel().setSelectedIndex(0);
 	}//vaciar
 //------------------->buscar por cedula<---------------
 	public Usuario buscarUsuarioCedula(String xCedula){
@@ -201,14 +263,14 @@ public class ControladorVistaUsuario implements ActionListener,KeyListener {
 				registro.setEmail(consulta.getString("email"));
 				registro.setDireccion(consulta.getString("direccion"));
 				registro.setLogin(consulta.getString("login"));
-				registro.setClave(consulta.getString("clave").toCharArray());
+				registro.setClave(consulta.getString("clave"));
 				registro.setNivel_usuario(consulta.getInt("nivele_usuario_id"));
 			}
 		}catch (SQLException e) {
 
 				e.printStackTrace();
 		}
-
+		
 	
 		
 		codigoSql.Desconectar();
@@ -234,7 +296,7 @@ public class ControladorVistaUsuario implements ActionListener,KeyListener {
 				registro.setEmail(consulta.getString("email"));
 				registro.setDireccion(consulta.getString("direccion"));
 				registro.setLogin(consulta.getString("login"));
-				registro.setClave(consulta.getString("clave").toCharArray());
+				registro.setClave(funcion.Desencriptar(consulta.getString("clave")));
 				registro.setNivel_usuario(consulta.getInt("nivele_usuario_id"));
 			}
 		}catch (SQLException e) {
@@ -245,8 +307,11 @@ public class ControladorVistaUsuario implements ActionListener,KeyListener {
 		
 		
 		codigoSql.Desconectar();
-		if(registro.getLogin()!=null)
+		if(registro.getLogin()!=null){
+			
 			return true;
+			
+		}
 		else return false;
 		
 	}//fin buscar login
@@ -254,15 +319,17 @@ public class ControladorVistaUsuario implements ActionListener,KeyListener {
 //--------> guardar en modelo<----------
 	public void llenarModelo(){
 		nuevoUsuario=new Usuario();
-		this.nuevoUsuario.setCedula(vista.getTextCedula().getText());
-		this.nuevoUsuario.setNombre(vista.getTextNombres().getText().toUpperCase());
-		this.nuevoUsuario.setApellido(vista.getTextApellidos().getText().toUpperCase());
-		this.nuevoUsuario.setTelefono(vista.getTextTelefono1().getText());
-		this.nuevoUsuario.setDireccion(vista.getTextDireccion().getText().toUpperCase());
-		this.nuevoUsuario.setEmail(vista.getTextCorreo().getText().toUpperCase());
-		this.nuevoUsuario.setLogin(vista.getTextLogin().getText().toLowerCase());
-		this.nuevoUsuario.setClave(vista.getTextClave().getPassword());
-		this.nuevoUsuario.setNivel_usuario(vista.getComboNivel().getSelectedIndex());
+			this.nuevoUsuario.setCedula(vista.getTextCedula().getText());
+			this.nuevoUsuario.setLogin(vista.getTextLogin().getText().toLowerCase());
+					
+			
+			this.nuevoUsuario.setNombre(vista.getTextNombres().getText().toUpperCase());
+			this.nuevoUsuario.setApellido(vista.getTextApellidos().getText().toUpperCase());
+			this.nuevoUsuario.setTelefono(vista.getTextTelefono1().getText());
+			this.nuevoUsuario.setDireccion(vista.getTextDireccion().getText().toUpperCase());
+			this.nuevoUsuario.setEmail(vista.getTextCorreo().getText());
+			this.nuevoUsuario.setClave(vista.getTextClave().getText());
+			this.nuevoUsuario.setNivel_usuario(vista.getComboNivel().getSelectedIndex());
 		
 		
 	}
@@ -282,6 +349,8 @@ public class ControladorVistaUsuario implements ActionListener,KeyListener {
 	
 	//-------------->registrarUsuario<------------------
 	public void agregarUsuario(){
+		
+		nuevoUsuario.setClave(funcion.Encriptar(nuevoUsuario.getClave()));
 		if((buscarUsuarioCedula(nuevoUsuario.getCedula()).getCedula()==null)&&
 				(!buscarUsuario(nuevoUsuario.getLogin()))){
 			String sentenciaSql="INSERT INTO usuarios (cedula,nombre,apellido,telefono,email,direccion,login,clave,nivele_usuario_id) "
@@ -290,18 +359,57 @@ public class ControladorVistaUsuario implements ActionListener,KeyListener {
 							+nuevoUsuario.getEmail()+"','"+nuevoUsuario.getDireccion()
 							+"','"+nuevoUsuario.getLogin()+"','"+nuevoUsuario.getClave()+"',"
 							+nuevoUsuario.getNivel_usuario()+")";
-			System.out.println(sentenciaSql);
+			
+ 			
 			SqlBD codigoSql = new SqlBD();
 			if(codigoSql.agregarRegistro(sentenciaSql))
 				vista.getLblMensaje().setText("Usuario Registrado Exitosamente");
 			else
 				vista.getLblMensaje().setText("No se pudo registrar el usuario");
 		}
+	}//fin regitrar
+	
+	public void modificarUsuario(){
+		nuevoUsuario.setClave(funcion.Encriptar(nuevoUsuario.getClave()));
+		String sentenciaSql="UPDATE usuarios SET "
+				+ "clave='"+ nuevoUsuario.getClave()+"', nombre='"+nuevoUsuario.getNombre()
+				+"', apellido='"+nuevoUsuario.getApellido()
+				+"', telefono='"+nuevoUsuario.getTelefono()
+				+"',email='"+nuevoUsuario.getEmail()
+				+"',direccion='"+nuevoUsuario.getDireccion()
+				+"',clave='"+nuevoUsuario.getClave()
+				+"',nivele_usuario_id="+nuevoUsuario.getNivel_usuario()
+				+ " where cedula='"+nuevoUsuario.getCedula()+"'";
+		
+		 		
+		SqlBD codigoSql = new SqlBD();
+		if(codigoSql.agregarRegistro(sentenciaSql)){
+			vista.getLblMensaje().setText("usuario modificado Exitosamente");
+			codigoSql.Desconectar();
+		}
+		else
+			vista.getLblMensaje().setText("No se pudo modificar los datos del usuario");
+
+		
+		
 	}
+	//-------------->modificar Usuario<------------------	
+	public void habilitarBotones(){
+		vista.getBtnModificar().setEnabled(true);
+		if(vista.getRegistroUsuario().getCedula().compareTo(vista.getTextCedula().getText())!=0)
+		vista.getBtnEliminar().setEnabled(true);
+	}//fin habilitar botones
 	
-	
-	
-	
+	public void eliminarUsuario(){
+		String sentenciaSql="DELETE from usuarios where cedula='"+nuevoUsuario.getCedula()+"'";
+		SqlBD codigoSql = new SqlBD();
+		if(codigoSql.agregarRegistro(sentenciaSql)){
+			vista.getLblMensaje().setText("usuario eliminado Exitosamente");
+			codigoSql.Desconectar();
+		}
+		else
+			vista.getLblMensaje().setText("No se pudo eliminar el usuario");
+	}
 	
 	
 	

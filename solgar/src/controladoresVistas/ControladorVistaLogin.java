@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import javax.swing.ImageIcon;
 
 import controladoresBD.SqlBD;
+import librerias.Funciones;
 import modelos.Usuario;
 import vistas.VentanaInicial;
 import vistas.VistaLogin;
@@ -20,10 +21,12 @@ public class ControladorVistaLogin implements ActionListener,FocusListener,KeyLi
 
 	VistaLogin vista;
 	Usuario registroUsuario;
+	Funciones funcion;
 	public ControladorVistaLogin(VistaLogin vista) {
 
 		this.vista=vista;
 		registroUsuario=new Usuario();
+		funcion=new Funciones();
 	}
 	public void actionPerformed(ActionEvent accion) {
 		if(accion.getSource().equals(vista.getBtnOk())){
@@ -64,7 +67,7 @@ public class ControladorVistaLogin implements ActionListener,FocusListener,KeyLi
 		}
 		else if(accion.getSource().equals(vista.getTextClave())
 				&&(accion.getKeyCode()== KeyEvent.VK_ENTER)){
-			registroUsuario=buscarUsuario(vista.getTextUsuario().getText(),vista.getTextClave().getPassword());
+			registroUsuario=buscarUsuario(vista.getTextUsuario().getText(),vista.getTextClave().getText());
 			if(registroUsuario.getCedula()==null){
 				vista.getLblMensaje().setText("Usuario o Clave incorrecta");
 			}else{
@@ -91,7 +94,7 @@ public class ControladorVistaLogin implements ActionListener,FocusListener,KeyLi
 	}
 		
 
-public Usuario buscarUsuario(String xLogin,char[] xClave){
+public Usuario buscarUsuario(String xLogin,String xClave){
 	Usuario registro=new Usuario();
 	
 	String sentenciaSql = "SELECT * FROM usuarios where login='"+xLogin+ "'";
@@ -109,16 +112,20 @@ public Usuario buscarUsuario(String xLogin,char[] xClave){
 			registro.setEmail(consulta.getString("email"));
 			registro.setDireccion(consulta.getString("direccion"));
 			registro.setLogin(consulta.getString("login"));
-			registro.setClave(consulta.getString("clave").toCharArray());
+			registro.setClave(funcion.Desencriptar(consulta.getString("clave")));
 			registro.setNivel_usuario(consulta.getInt("nivele_usuario_id"));
 		}
 	}catch (SQLException e) {
 
 			e.printStackTrace();
 	}
+		
 
-	if(registro.getClave()==xClave)
+	if(registro.getClave().compareTo(xClave)!=0)
 		registro=new Usuario();
+	
+		
+	
 	
 	codigoSql.Desconectar();
 	return registro;

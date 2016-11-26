@@ -63,6 +63,7 @@ public class VentanaInicial extends JFrame{
 	private JLabel lblNewLabel;
 	private JMenuItem mntmGraficosEstadisticos;
 	private Usuario registroUsuario;
+	private JMenuItem mntmCambioDeClave;
 	
 		
 	public VentanaInicial(Usuario registroUsuario){
@@ -173,6 +174,7 @@ public class VentanaInicial extends JFrame{
 		mnRegistrar.add(mntmRepuestos);
 		
 		mnArtefactos = new JMenu("Artefactos");
+		mnArtefactos.setMnemonic(KeyEvent.VK_A);
 		mnArtefactos.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		mnArtefactos.setFont(new Font("Segoe UI", Font.BOLD, 14));
 		menuBarra.add(mnArtefactos);
@@ -205,6 +207,7 @@ public class VentanaInicial extends JFrame{
 		mnArtefactos.add(mntmDevolucion);
 		
 		mnServicios = new JMenu("Servicios");
+		mnServicios.setMnemonic(KeyEvent.VK_S);
 		mnServicios.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		mnServicios.setFont(new Font("Segoe UI", Font.BOLD, 14));
 		menuBarra.add(mnServicios);
@@ -222,6 +225,7 @@ public class VentanaInicial extends JFrame{
 		mnServicios.add(mntmReparados);
 		
 		mnReportes = new JMenu("Reportes");
+		mnReportes.setMnemonic(KeyEvent.VK_E);
 		mnReportes.setFont(new Font("Segoe UI", Font.BOLD, 14));
 		mnReportes.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		menuBarra.add(mnReportes);
@@ -248,6 +252,7 @@ public class VentanaInicial extends JFrame{
 		mnReportes.add(mntmGraficosEstadisticos);
 		
 		mnUtilidades = new JMenu("Utilidades");
+		mnUtilidades.setMnemonic(KeyEvent.VK_U);
 		mnUtilidades.setFont(new Font("Segoe UI", Font.BOLD, 14));
 		mnUtilidades.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		menuBarra.add(mnUtilidades);
@@ -263,6 +268,11 @@ public class VentanaInicial extends JFrame{
 		mntmAyuda.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		mntmAyuda.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		mnUtilidades.add(mntmAyuda);
+		
+		mntmCambioDeClave = new JMenuItem("Cambio de Clave");
+		mntmCambioDeClave.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		mntmCambioDeClave.setIcon(new ImageIcon(VentanaInicial.class.getResource("/imagenes/iconos/iconos_32x32/key_go.png")));
+		mnUtilidades.add(mntmCambioDeClave);
 		
 		separator_1 = new JSeparator();
 		mnUtilidades.add(separator_1);
@@ -287,6 +297,7 @@ public class VentanaInicial extends JFrame{
 		btnSalir.addActionListener(eco);
 		mntmSalirDelSistema.addActionListener(eco);
 		mntmUsuarios.addActionListener(eco);
+		mntmCambioDeClave.addActionListener(eco);
 		
 		
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);//maximar automaticamente
@@ -446,6 +457,26 @@ public class VentanaInicial extends JFrame{
 
 	public Usuario getRegistroUsuario() {
 		return registroUsuario;
+	}
+
+
+	public JSeparator getSeparator() {
+		return separator;
+	}
+
+
+	public JSeparator getSeparator_1() {
+		return separator_1;
+	}
+
+
+	public JPanel getPanelTitulo() {
+		return panelTitulo;
+	}
+
+
+	public JMenuItem getMntmCambioDeClave() {
+		return mntmCambioDeClave;
 	}
 	
 

@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 
 import vistas.VentanaInicial;
+import vistas.VistaCambioClave;
 import vistas.VistaUsuario;
 
 public class ControladorVistaInicial implements ActionListener{
@@ -34,7 +35,10 @@ public class ControladorVistaInicial implements ActionListener{
 			
 		}
 		else if (accion.getSource().equals(vista.getMntmUsuarios())){
-			new VistaUsuario();
+			new VistaUsuario(vista.getRegistroUsuario());
+		}
+		else if (accion.getSource().equals(vista.getMntmCambioDeClave())){
+			new VistaCambioClave(vista.getRegistroUsuario());
 		}
 	}//fin action
 

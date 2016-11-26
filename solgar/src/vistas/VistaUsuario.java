@@ -22,6 +22,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.text.MaskFormatter;
 
 import controladoresVistas.ControladorVistaUsuario;
+import modelos.Usuario;
 
 import java.awt.Color;
 import java.awt.Cursor;
@@ -60,6 +61,7 @@ public class VistaUsuario extends JDialog {
 	private JButton btnVaciar;
 	private JButton btnReportePantalla;
 	private JComboBox comboNivel;
+	private Usuario registroUsuario;
 
 	/**
 	 * Launch the application.
@@ -68,7 +70,10 @@ public class VistaUsuario extends JDialog {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VistaUsuario dialog = new VistaUsuario();
+					Usuario registroUsuario=new Usuario();
+					registroUsuario.setCedula("6331034");
+					
+					VistaUsuario dialog = new VistaUsuario(registroUsuario);
 					dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 					dialog.setVisible(true);
 				} catch (Exception e) {
@@ -81,7 +86,8 @@ public class VistaUsuario extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public VistaUsuario() {
+	public VistaUsuario(Usuario registroUsuario) {
+		this.registroUsuario=registroUsuario;
 		setIconImage(Toolkit.getDefaultToolkit().getImage(VistaUsuario.class.getResource("/imagenes/iconos/ventilador.png")));
 		setTitle("REGISTRO DE USUARIOS");
 		
@@ -302,6 +308,9 @@ public class VistaUsuario extends JDialog {
 		cancelButton.addActionListener(eco);
 		btnVaciar.addActionListener(eco);
 		btnRegistrar.addActionListener(eco);
+		btnModificar.addActionListener(eco);
+		btnEliminar.addActionListener(eco);
+		
 		
 		textCedula.addKeyListener(eco);
 		textNombres.addKeyListener(eco);
@@ -415,6 +424,10 @@ public class VistaUsuario extends JDialog {
 
 	public JComboBox getComboNivel() {
 		return comboNivel;
+	}
+
+	public Usuario getRegistroUsuario() {
+		return registroUsuario;
 	}
 	
 }//fin  de la clase
