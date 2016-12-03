@@ -12,6 +12,7 @@ public class Recepcion {
 	private String detalles_reparacion;
 	private String status;
 	
-	private String sentecia_sql_id_auto_increment = "SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA='solgar' AND TABLE_NAME= 'recepciones' ";
+	private String sentecia_sql_id_auto_increment = "SELECT AUTO_INCREMENT FROM information_schema.TABLES "
+			+ "WHERE TABLE_SCHEMA='solgar' AND TABLE_NAME= 'recepciones' ";
 
 }
