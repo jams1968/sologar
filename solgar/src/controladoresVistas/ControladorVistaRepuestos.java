@@ -115,6 +115,7 @@ public class ControladorVistaRepuestos implements ActionListener , KeyListener{
 			
 			if(eliminar == 0){
 				JOptionPane.showMessageDialog(vista, "Repuesto eliminado");
+				nuevoRepuestos.eliminar(vista.getTextCodigo().getText());				
 				vaciarFrm();
 			}
 			

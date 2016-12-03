@@ -188,6 +188,21 @@ public class Repuesto {
 		else return true;
 	}//fin buscar
 	
-	
+	//-------->eliminar<------------
+	public boolean eliminar(String xCodigo){
+
+		String sentenciaSql = "DELETE FROM repuestos where codigo='"+xCodigo+ "'";
+			
+		SqlBD codigoSql = new SqlBD();
+			
+		ResultSet consulta = codigoSql.ConsultaTabla(sentenciaSql);
+		
+		System.out.println(consulta);
+		
+		codigoSql.Desconectar();
+			
+		return true;
+	}
+	// fin eliminar
 
 }
