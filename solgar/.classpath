@@ -2,12 +2,13 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
-	<classpathentry kind="lib" path="D:/git/solgar/src/configuraciones/iText-5.0.5.jar"/>
-	<classpathentry kind="lib" path="D:/git/solgar/src/configuraciones/javax.mail.jar"/>
-	<classpathentry kind="lib" path="D:/git/solgar/src/configuraciones/jcommon-1.0.17.jar"/>
-	<classpathentry kind="lib" path="D:/git/solgar/src/configuraciones/jfreechart-1.0.14.jar"/>
-	<classpathentry kind="lib" path="D:/git/solgar/src/configuraciones/mysql-connector-java-5.1.39-bin.jar"/>
-	<classpathentry kind="lib" path="D:/git/solgar/src/configuraciones/mysql-connector-java-5.1.40-bin.jar"/>
-	<classpathentry kind="lib" path="D:/git/solgar/src/configuraciones/nimbus-jose-jwt-2.12.0-sources.jar"/>
+	<classpathentry kind="lib" path="src/configuraciones/ejecutableSologar.jar"/>
+	<classpathentry kind="lib" path="src/configuraciones/iText-5.0.5.jar"/>
+	<classpathentry kind="lib" path="src/configuraciones/javax.mail.jar"/>
+	<classpathentry kind="lib" path="src/configuraciones/jcommon-1.0.17.jar"/>
+	<classpathentry kind="lib" path="src/configuraciones/jfreechart-1.0.14.jar"/>
+	<classpathentry kind="lib" path="src/configuraciones/mysql-connector-java-5.1.39-bin.jar"/>
+	<classpathentry kind="lib" path="src/configuraciones/mysql-connector-java-5.1.40-bin.jar"/>
+	<classpathentry kind="lib" path="src/configuraciones/nimbus-jose-jwt-2.12.0-sources.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -182,14 +182,16 @@ public class VistaTipoAparato extends JDialog {
 		
 		ControladorVistaTiposAparatos eco = new ControladorVistaTiposAparatos(this);
 		comboTipoAparatos.addActionListener(eco);
-		/*	
+		cancelButton.addActionListener(eco);
 		btnRegistrar.addActionListener(eco);
+		
+		textTipo.addKeyListener(eco);
+		/*	
 		btnAgregarCantidad.addActionListener(eco);
 		btnEliminar.addActionListener(eco);
 		btnModificar.addActionListener(eco);
 		btnVaciar.addActionListener(eco);
 		btnReportePantalla.addActionListener(eco);
-		cancelButton.addActionListener(eco);
 		
 		textCodigo.addKeyListener(eco);
 		textRepuesto.addKeyListener(eco);
