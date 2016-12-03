@@ -11,7 +11,7 @@ import javax.swing.table.DefaultTableModel;
 import controladoresBD.SqlBD;
 import controladoresVistas.ControladorVistaReporteRepuestosPP;
 
-import modelos.Repuestos;
+import modelos.Repuesto;
 import vistas.VistaLogin;
 
 import java.awt.Font;
@@ -130,7 +130,7 @@ public class VistaReporteRepuestosPP extends JDialog {
 	// **************>llenar tabla general<------------------------
 	public void llenarTabla(int opcion, int clave) {
 
-		Repuestos registro = new Repuestos();
+		Repuesto registro = new Repuesto();
 		// datosTabla = new DefaultTableModel();
 
 		datosTabla = new DefaultTableModel(new Object[][] {},

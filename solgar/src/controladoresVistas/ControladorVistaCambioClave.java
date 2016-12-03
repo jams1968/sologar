@@ -5,10 +5,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import javax.swing.JOptionPane;
+
 import controladoresBD.SqlBD;
 import librerias.Funciones;
 import modelos.Usuario;
 import vistas.VistaCambioClave;
+import vistas.VistaLogin;
 
 public class ControladorVistaCambioClave implements ActionListener,KeyListener {
 
@@ -72,6 +75,7 @@ public class ControladorVistaCambioClave implements ActionListener,KeyListener {
 	public void cambiarClave(){
 			
 		Usuario nuevoUsuario=vista.getRegistroUsuario();
+		vista.getRegistroUsuario().setClave(vista.getTxtNuevaClave().getText());
 		
 		nuevoUsuario.setClave(funcion.Encriptar(vista.getTxtNuevaClave().getText()));
 		
@@ -84,6 +88,9 @@ public class ControladorVistaCambioClave implements ActionListener,KeyListener {
 					vista.getTextClaveActual().setText(null);
 					vista.getTxtNuevaClave().setText(null);
 					vista.getTxtConfirmar().setText(null);
+					JOptionPane.showMessageDialog(vista,"La clave fue cambiada con éxito,\n"
+							+ "El sistema se cerrara y debe\n reiniciar para aplicar los cambios", "Mensaje del Sistema",1 );
+					System.exit(0);
 				}
 				else
 					vista.getLblMensaje().setText("No se pudo cambiar la clave");

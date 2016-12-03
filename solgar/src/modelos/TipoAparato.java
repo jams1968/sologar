@@ -1,5 +1,10 @@
 package modelos;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import controladoresBD.SqlBD;
+
 public class TipoAparato {
 	private int id;
 	private String tipo;
@@ -46,6 +51,53 @@ public class TipoAparato {
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
+	//------------------->buscar>------------
+	public boolean buscar(int xId){
+		String sentenciaSql = "SELECT * FROM tipos_Aparato where id="+xId;
+			
+		SqlBD codigoSql = new SqlBD();
+			
+			ResultSet consulta = codigoSql.ConsultaTabla(sentenciaSql);
+			try {
+				
+				while (consulta.next()) {
+					setId(consulta.getInt("id"));
+					setTipo(consulta.getString("tipo"));
+				}
+			}catch (SQLException e) {
 
+					e.printStackTrace();
+			}
+		
+			codigoSql.Desconectar();
+			if(this.id==0)
+				return false;
+			else return true;
+		}//fin buscar
+	
+	//------------------------> create<----------------
+	public boolean create(){
+		if((tipo!=null)){
+			String sentenciaSql="INSERT INTO tipos_aparato (tipo) VALUES ('"+tipo+"')";
+			SqlBD codigoSql = new SqlBD();
+			if(codigoSql.agregarRegistro(sentenciaSql))
+				return true;
+			else
+				return false;
+		}
+		else return false;
+	}//fin create
+	//------------------------>update<----------------
+	public boolean update(){
+		if((tipo!=null)){
+			String sentenciaSql="UPDATE tipos_aparato SET tipo='"+tipo+" where id="+id;
+			SqlBD codigoSql = new SqlBD();
+			if(codigoSql.agregarRegistro(sentenciaSql))
+				return true;
+			else
+				return false;
+		}
+		else return false;
+	}//fin create
 
-}
+}//fin da la clase

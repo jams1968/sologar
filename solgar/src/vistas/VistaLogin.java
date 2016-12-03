@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.GridLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import java.awt.GridBagLayout;
@@ -158,6 +159,7 @@ public class VistaLogin extends JDialog {
 		this.setLocationRelativeTo(null);
 		this.setUndecorated(true);
 		this.setVisible(true);
+		
 	}//fin cosntructor
 	
 	public JLabel getLblSamasforoR() {

@@ -15,16 +15,18 @@ import javax.swing.JOptionPane;
 import controladoresBD.SqlBD;
 import vistas.VistaRepuestos;
 import vistasReportes.VistaReporteRepuestosPP;
-import modelos.Repuestos;
+import modelos.Repuesto;
+import modelos.TipoAparato;
 import modelos.Usuario;
 
 public class ControladorVistaRepuestos implements ActionListener , KeyListener{
 	
 	private VistaRepuestos vista;
 	private int cantidadNueva;
-	private Repuestos nuevoRepuestos;
+	private Repuesto nuevoRepuestos;
 	private Pattern patronLetras,patronNumero,patronTelefono,patronCorreo,patronLogin,patronLetraNumeros;
 	private Matcher validarNumeros,validarLetras,validarTelefono,validarCorreo,validarLogin,validarLetrasNumeros;
+	
 	public ControladorVistaRepuestos(VistaRepuestos vista) {
 		this.vista = vista;
 		patronLetras = Pattern.compile("[A-Za-z ]");
@@ -33,6 +35,7 @@ public class ControladorVistaRepuestos implements ActionListener , KeyListener{
 		patronTelefono = Pattern.compile("[0-9()-]");
 		patronCorreo=Pattern.compile("^[A-Za-z0-9]+@[a-z]+\\.[a-z]+");
 		patronLogin=Pattern.compile("[A-Za-z0-9]{5,10}");
+		nuevoRepuestos=new Repuesto();
 	}
 
 	@Override
@@ -44,64 +47,32 @@ public class ControladorVistaRepuestos implements ActionListener , KeyListener{
 			new VistaReporteRepuestosPP();
 		}// fin cerrar
 		else if (accion.getSource().equals(vista.getBtnRegistrar())) {
+			llenarModelo();
+			  
+			if(!nuevoRepuestos.buscar(vista.getTextCodigo().getText())&&(nuevoRepuestos.create()))
+					vista.getLblMensaje().setText("Repuesto registrado exitosamente ");
+				else
+					vista.getLblMensaje().setText("No se pudo registrar el repuesto ");
 			
-			if (vista.getComboTipoAparatos().getSelectedIndex()<1) {
-				
-				vista.getLblMensaje().setText("Seleccione el tipo de aparato");
-				
-			}else if (vista.getTextCodigo().getText().trim().isEmpty()) {
-				
-				vista.getTextCodigo().setEnabled(true);
-				vista.getTextCodigo().setEditable(true);
-				vista.getTextCodigo().requestFocus();
-				
-				vista.getLblMensaje().setText("El codigo es requerido");
-				
-			}else if (vista.getTextRepuesto().getText().trim().isEmpty()) {
-				
-				vista.getTextRepuesto().setEnabled(true);
-				vista.getTextRepuesto().setEditable(true);
-				vista.getTextRepuesto().requestFocus();
-				
-				vista.getLblMensaje().setText("El repuesto es requerido");
-				
-			}else if (vista.getTextMarca().getText().trim().isEmpty()) {
-				
-				vista.getTextMarca().setEnabled(true);
-				vista.getTextMarca().setEditable(true);
-				vista.getTextMarca().requestFocus();
-				
-				vista.getLblMensaje().setText("La marca es requerida");
-				
-			}else if (vista.getTextCantidad().getText().trim().isEmpty()) {
-				
-				vista.getTextCantidad().setEnabled(true);
-				vista.getTextCantidad().setEditable(true);
-				vista.getTextCantidad().requestFocus();
-				
-				vista.getLblMensaje().setText("La cantidad es requerida");
-				
-			}else if (vista.getTextPrecioVenta().getText().trim().isEmpty()) {
-				
-				vista.getTextPrecioVenta().setEnabled(true);
-				vista.getTextPrecioVenta().setEditable(true);
-				vista.getTextPrecioVenta().requestFocus();
-				
-				vista.getLblMensaje().setText("El precio de venta es requerido");
-				
-			}else if (vista.getTextDescripcion().getText().trim().isEmpty()) {
-				
-				vista.getTextDescripcion().setEnabled(true);
-				vista.getTextDescripcion().setEditable(true);
-				vista.getTextDescripcion().requestFocus();
-				
-				vista.getLblMensaje().setText("La descripción es requerida");
-				
-			}else{
-				vista.getLblMensaje().setText(":)");
 			}
+		else if (accion.getSource().equals(vista.getBtnModificar())) {
 			
-		}else if ( accion.getSource().equals(vista.getBtnAgregarCantidad()) ){
+			  
+			if(nuevoRepuestos.buscar(vista.getTextCodigo().getText())){
+				llenarModelo();
+				if(nuevoRepuestos.update())
+						vista.getLblMensaje().setText("Repuesto modificado exitosamente ");
+					else
+						vista.getLblMensaje().setText("No se pudo modificar el repuesto ");
+				}
+			}//fin modificar
+		
+		else if(accion.getSource().equals(vista.getComboTipoAparatos())&&(vista.getComboTipoAparatos().getSelectedIndex()>0)){
+			vista.getTextRepuesto().setEditable(true);
+			vista.getTextRepuesto().requestFocus();
+		}//fin combo
+			
+		else if ( accion.getSource().equals(vista.getBtnAgregarCantidad()) ){
 			
 			String valor; 
 			
@@ -132,20 +103,22 @@ public class ControladorVistaRepuestos implements ActionListener , KeyListener{
 			
 			vista.getTextCantidad().setText( ""+cantidad );
 			
-		}else if ( accion.getSource().equals(vista.getBtnVaciar()) ){
+		}//fin agregar cantidad
+		else if ( accion.getSource().equals(vista.getBtnVaciar()) ){
 			
 			vaciarFrm();
 			
 		}else if (accion.getSource().equals(vista.getBtnEliminar())){
 			
-			int eliminar = JOptionPane.showConfirmDialog(vista, " Seguro quiere eliminar el  repuesto", null, JOptionPane.YES_NO_OPTION);
+			int eliminar = JOptionPane.showConfirmDialog(vista, " Desea eliminar el  repuesto",
+					"Mensaje del Sistema", JOptionPane.YES_NO_OPTION);
 			
 			if(eliminar == 0){
 				JOptionPane.showMessageDialog(vista, "Repuesto eliminado");
 				vaciarFrm();
 			}
 			
-		}
+		}//fin eliminar
 		
 		
 	}
@@ -159,22 +132,23 @@ public class ControladorVistaRepuestos implements ActionListener , KeyListener{
 				(accion.getKeyCode()== KeyEvent.VK_ENTER)&&
 				!(vista.getTextCodigo().getText().trim().isEmpty())){
 			
-			nuevoRepuestos=buscarCodigo(vista.getTextCodigo().getText());
-			if(nuevoRepuestos.getCodigo()==null){
 			
-				vista.getTextRepuesto().setEditable(true);
-				vista.getTextRepuesto().setEnabled(true);
-				vista.getTextRepuesto().requestFocus();
+			if(!nuevoRepuestos.buscar(vista.getTextCodigo().getText())){
+				vista.getComboTipoAparatos().setEnabled(true);
+				vista.getComboTipoAparatos().llenar();
+				
 				vista.getLblMensaje().setText("");
 				
 			}
 			else{
 				vista.getLblMensaje().setText("Codigo se encuentra registrado");
+				
 				llenarFormulario(nuevoRepuestos);
-				abilitarBoton(vista.getBtnAgregarCantidad());
-				abilitarBoton(vista.getBtnModificar());
-				abilitarBoton(vista.getBtnEliminar());
-				desabilitarBoton(vista.getBtnRegistrar());
+				vista.getTextCantidad().setEditable(false);
+				habilitarBoton(vista.getBtnAgregarCantidad());
+				habilitarBoton(vista.getBtnModificar());
+				habilitarBoton(vista.getBtnEliminar());
+				deshabilitarBoton(vista.getBtnRegistrar());
 			}
 
 				
@@ -183,7 +157,6 @@ public class ControladorVistaRepuestos implements ActionListener , KeyListener{
 				!(vista.getTextRepuesto().getText().trim().isEmpty())){
 			
 				vista.getTextMarca().setEditable(true);
-				vista.getTextMarca().setEnabled(true);
 				vista.getTextMarca().requestFocus();
 				
 		}else if(accion.getSource().equals(vista.getTextMarca())&&
@@ -191,7 +164,6 @@ public class ControladorVistaRepuestos implements ActionListener , KeyListener{
 				!(vista.getTextMarca().getText().trim().isEmpty())){
 			
 				vista.getTextCantidad().setEditable(true);
-				vista.getTextCantidad().setEnabled(true);
 				vista.getTextCantidad().requestFocus();
 				
 		}else if(accion.getSource().equals(vista.getTextCantidad())&&
@@ -202,7 +174,6 @@ public class ControladorVistaRepuestos implements ActionListener , KeyListener{
 			
 			if(validarNumeros.find()){
 				vista.getTextPrecioVenta().setEditable(true);
-				vista.getTextPrecioVenta().setEnabled(true);
 				vista.getTextPrecioVenta().requestFocus();
 				vista.getLblMensaje().setText("");
 			}else 
@@ -240,7 +211,7 @@ public class ControladorVistaRepuestos implements ActionListener , KeyListener{
 				&& vista.getComboTipoAparatos().getSelectedIndex() != 0
 				){
 			
-			abilitarBoton(vista.getBtnRegistrar());
+			habilitarBoton(vista.getBtnRegistrar());
 			
 			vista.getLblMensaje().setText("");
 			
@@ -263,60 +234,31 @@ public class ControladorVistaRepuestos implements ActionListener , KeyListener{
 	}
 	
 	
-	//------->buscar por codigo repuesto<-------------------	
-		public Repuestos buscarCodigo(String xCodigo){
-			
-			Repuestos registro = new Repuestos();
-			
-			String sentenciaSql = "SELECT * FROM repuestos where codigo='"+xCodigo+ "'";
-			
-			SqlBD codigoSql = new SqlBD();
-			
-			ResultSet consulta = codigoSql.ConsultaTabla(sentenciaSql);
-			
-			try {
-				
-				while (consulta.next()) {
-					registro.setId(consulta.getInt("id"));
-					registro.setCodigo(consulta.getString("id"));
-					registro.setRepuesto(consulta.getString("repuesto"));
-					registro.setMarca(consulta.getString("marca"));
-					registro.setCantidad(consulta.getInt("cantidad"));
-					registro.setPrecio_venta(consulta.getDouble("precio_venta"));
-					registro.setDescripcion(consulta.getString("descripcion"));
-					registro.setTipo_aparato_id(consulta.getInt("tipo_aparato_id"));
-				}
-			}catch (SQLException e) {
-
-					e.printStackTrace();
-			}
-
-			codigoSql.Desconectar();
-			
-			return registro;
-			
-		}
-		
+	
 		//------------>llevar campos formulario<-----------
-		public void llenarFormulario(Repuestos registro){
+		public void llenarFormulario(Repuesto registro){
+		
 			vista.getTextRepuesto().setText(registro.getRepuesto());
 			vista.getTextMarca().setText(registro.getMarca());
 			vista.getTextCantidad().setText(""+registro.getCantidad());
 			vista.getTextPrecioVenta().setText(""+registro.getPrecio_venta());
 			vista.getTextDescripcion().setText(registro.getDescripcion());
-		
+			vista.getComboTipoAparatos().setEnabled(true);
+			vista.getComboTipoAparatos().llenar();
 			vista.getComboTipoAparatos().setSelectedIndex(registro.getTipo_aparato_id());
 			
-			desabilitarCampos();
+			
+			deshabilitarCampos();
 			vista.getTextCodigo().setEditable(false);
-			vista.getTextCodigo().setEnabled(false);
+			
 			
 		}
 		
 		//--------> guardar en modelo<----------
 		public void llenarModelo(){
-			nuevoRepuestos=new Repuestos();
-			this.nuevoRepuestos.setTipo_aparato_id( vista.getComboTipoAparatos().getItemCount());
+			nuevoRepuestos=new Repuesto();
+			this.nuevoRepuestos.setTipo_aparato_id(vista.getComboTipoAparatos().getSelectedIndex());
+			
 			this.nuevoRepuestos.setCodigo(vista.getTextCodigo().getText());
 			this.nuevoRepuestos.setRepuesto(vista.getTextRepuesto().getText());
 			this.nuevoRepuestos.setMarca(vista.getTextMarca().getText());
@@ -325,42 +267,28 @@ public class ControladorVistaRepuestos implements ActionListener , KeyListener{
 			this.nuevoRepuestos.setDescripcion( vista.getTextDescripcion().getText() );
 		}
 		
-		public void agregarRepuesto(){
-			
-		}
-		
-		public void desabilitarCampos(){
+	
+	//------>deshabilitar campos<--------------	
+		public void deshabilitarCampos(){
 			vista.getTextCodigo().setEditable(true);
-			vista.getTextCodigo().setEnabled(true);
 			vista.getTextRepuesto().setEditable(true);
-			vista.getTextRepuesto().setEnabled(true);
 			vista.getTextMarca().setEditable(true);
-			vista.getTextMarca().setEnabled(true);
 			vista.getTextCantidad().setEditable(true);
-			vista.getTextCantidad().setEnabled(true);
 			vista.getTextCantidad().setEditable(true);
-			vista.getTextCantidad().setEnabled(true);
 			vista.getTextPrecioVenta().setEditable(true);
-			vista.getTextPrecioVenta().setEnabled(true);
 			vista.getTextDescripcion().setEditable(true);
-			vista.getTextDescripcion().setEnabled(true);
+			vista.getComboTipoAparatos().setEnabled(true);
 		}
-		
-		public void abilitarCampos(){
+	//-->habilitar campos<----------	
+		public void habilitarCampos(){
 			vista.getTextCodigo().setEditable(false);
-			vista.getTextCodigo().setEnabled(false);
 			vista.getTextRepuesto().setEditable(false);
-			vista.getTextRepuesto().setEnabled(false);
 			vista.getTextMarca().setEditable(false);
-			vista.getTextMarca().setEnabled(false);
 			vista.getTextCantidad().setEditable(false);
-			vista.getTextCantidad().setEnabled(false);
 			vista.getTextCantidad().setEditable(false);
-			vista.getTextCantidad().setEnabled(false);
 			vista.getTextPrecioVenta().setEditable(false);
-			vista.getTextPrecioVenta().setEnabled(false);
 			vista.getTextDescripcion().setEditable(false);
-			vista.getTextDescripcion().setEnabled(false);
+			vista.getComboTipoAparatos().setEnabled(false);
 		}
 		
 		private void vaciarFrm() {
@@ -370,25 +298,26 @@ public class ControladorVistaRepuestos implements ActionListener , KeyListener{
 			vista.getTextCantidad().setText("");
 			vista.getTextPrecioVenta().setText("");
 			vista.getTextDescripcion().setText("");
-			vista.getComboTipoAparatos().setSelectedIndex(0);
-			abilitarCampos();
+			TipoAparato regi=new TipoAparato();
+			vista.getComboTipoAparatos().setSelectedItem(regi);
+			habilitarCampos();
 			vista.getTextCodigo().setEditable(true);
 			vista.getTextCodigo().setEnabled(true);
 			
-			desabilitarBoton(vista.getBtnAgregarCantidad());
-			desabilitarBoton(vista.getBtnModificar());
-			desabilitarBoton(vista.getBtnAgregarCantidad());
-			desabilitarBoton(vista.getBtnEliminar());
+			deshabilitarBoton(vista.getBtnAgregarCantidad());
+			deshabilitarBoton(vista.getBtnModificar());
+			deshabilitarBoton(vista.getBtnAgregarCantidad());
+			deshabilitarBoton(vista.getBtnEliminar());
 			
 			vista.getLblMensaje().setText("");
 			
 		}
 		
-		public void abilitarBoton( JButton btn ){
+		public void habilitarBoton( JButton btn ){
 			btn.setEnabled(true);
 		}
 		
-		public void desabilitarBoton( JButton btn ){
+		public void deshabilitarBoton( JButton btn ){
 			btn.setEnabled(false);
 		}
 	

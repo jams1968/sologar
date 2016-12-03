@@ -57,13 +57,17 @@ public class VistaRepuestos extends JDialog {
 	private JTextField textCantidad;
 	private JTextField textPrecioVenta;
 	private JTextArea textDescripcion;
-	private ComboTipoAparatos comboTipoAparatos;
 	private Usuario registroUsuario;
+	private ComboTipoAparatos comboTipoAparatos;
 
 	/**
 	 * Launch the application.
 	 */
 	
+	public ComboTipoAparatos getComboTipoAparatos() {
+		return comboTipoAparatos;
+	}
+
 	/**
 	 * Create the dialog.
 	 */
@@ -97,10 +101,10 @@ public class VistaRepuestos extends JDialog {
 			
 			btnRegistrar = new JButton("");
 			btnRegistrar.setEnabled(false);
-			btnRegistrar.setToolTipText("Registrar Cliente");
+			btnRegistrar.setToolTipText("Registrar repuestos en el Inventario");
 			btnRegistrar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 			btnRegistrar.setRolloverIcon(new ImageIcon(VistaRepuestos.class.getResource("/imagenes/iconos/iconos_32x32/plus.png")));
-			btnRegistrar.setIcon(new ImageIcon(VistaRepuestos.class.getResource("/imagenes/iconos/iconos_32x32/group_add.png")));
+			btnRegistrar.setIcon(new ImageIcon(VistaRepuestos.class.getResource("/imagenes/iconos/iconos_32x32/iconoRepuesto.png")));
 			btnRegistrar.setBounds(10, 17, 65, 41);
 			panelBotones.add(btnRegistrar);
 			{
@@ -108,8 +112,8 @@ public class VistaRepuestos extends JDialog {
 				btnModificar.setEnabled(false);
 				btnModificar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 				btnModificar.setRolloverIcon(new ImageIcon(VistaRepuestos.class.getResource("/imagenes/iconos/iconos_32x32/pencil2.png")));
-				btnModificar.setToolTipText("Modicar Cliente");
-				btnModificar.setIcon(new ImageIcon(VistaRepuestos.class.getResource("/imagenes/iconos/iconos_32x32/group_edit.png")));
+				btnModificar.setToolTipText("Modicar Datos del Repuesto");
+				btnModificar.setIcon(new ImageIcon(VistaRepuestos.class.getResource("/imagenes/iconos/iconos_32x32/iconoRepuestoModificar.png")));
 				btnModificar.setBounds(85, 17, 65, 41);
 				panelBotones.add(btnModificar);
 			}
@@ -117,9 +121,9 @@ public class VistaRepuestos extends JDialog {
 				btnEliminar = new JButton("");
 				btnEliminar.setEnabled(false);
 				btnEliminar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-				btnEliminar.setToolTipText("Eliminar Cliente");
+				btnEliminar.setToolTipText("Eliminar Repuesto del Inventario");
 				btnEliminar.setRolloverIcon(new ImageIcon(VistaRepuestos.class.getResource("/imagenes/iconos/iconos_32x32/busy.png")));
-				btnEliminar.setIcon(new ImageIcon(VistaRepuestos.class.getResource("/imagenes/iconos/iconos_32x32/group_delete.png")));
+				btnEliminar.setIcon(new ImageIcon(VistaRepuestos.class.getResource("/imagenes/iconos/iconos_32x32/iconoRepuestoEliminar.png")));
 				btnEliminar.setBounds(160, 17, 65, 41);
 				panelBotones.add(btnEliminar);
 			}
@@ -134,7 +138,7 @@ public class VistaRepuestos extends JDialog {
 			}
 			{
 				btnReportePantalla = new JButton("");
-				btnReportePantalla.setToolTipText("Reporte Clientes por pantalla");
+				btnReportePantalla.setToolTipText("Reporte Repuestos por pantalla");
 				btnReportePantalla.setRolloverIcon(new ImageIcon(VistaRepuestos.class.getResource("/imagenes/iconos/iconos_32x32/application_view_detail.png")));
 				btnReportePantalla.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 				btnReportePantalla.setIcon(new ImageIcon(VistaRepuestos.class.getResource("/imagenes/iconos/iconos_32x32/graphic-design.png")));
@@ -145,11 +149,11 @@ public class VistaRepuestos extends JDialog {
 		
 		JLabel lblCedula = new JLabel("Codigo:");
 		lblCedula.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblCedula.setBounds(369, 13, 50, 24);
+		lblCedula.setBounds(10, 11, 50, 24);
 		contentPanel.add(lblCedula);
 		
 		textCodigo = new JTextField();
-		textCodigo.setBounds(418, 14, 256, 25);
+		textCodigo.setBounds(59, 12, 256, 25);
 		contentPanel.add(textCodigo);
 		textCodigo.setColumns(10);
 		
@@ -159,7 +163,6 @@ public class VistaRepuestos extends JDialog {
 		contentPanel.add(lblNombres);
 		
 		textRepuesto = new JTextField();
-		textRepuesto.setEnabled(false);
 		textRepuesto.setEditable(false);
 		textRepuesto.setBounds(77, 52, 277, 25);
 		contentPanel.add(textRepuesto);
@@ -196,7 +199,6 @@ public class VistaRepuestos extends JDialog {
 			
 			textMarca = new JTextField();
 			textMarca.setEditable(false);
-			textMarca.setEnabled(false);
 			textMarca.setColumns(10);
 			textMarca.setBounds(418, 52, 256, 25);
 			contentPanel.add(textMarca);
@@ -208,30 +210,19 @@ public class VistaRepuestos extends JDialog {
 			
 			textCantidad = new JTextField();
 			textCantidad.setEditable(false);
-			textCantidad.setEnabled(false);
 			textCantidad.setColumns(10);
 			textCantidad.setBounds(77, 99, 180, 25);
 			contentPanel.add(textCantidad);
 			
-			comboTipoAparatos = new ComboTipoAparatos();
-			comboTipoAparatos.setBounds(91, 16, 263, 25);
-			contentPanel.add(comboTipoAparatos);
-			
-			JLabel lblTipoEquipo = new JLabel("Tipo Equipo:");
-			lblTipoEquipo.setFont(new Font("Tahoma", Font.BOLD, 12));
-			lblTipoEquipo.setBounds(10, 13, 84, 24);
-			contentPanel.add(lblTipoEquipo);
-			
 			textPrecioVenta = new JTextField();
 			textPrecioVenta.setEditable(false);
-			textPrecioVenta.setEnabled(false);
 			textPrecioVenta.setColumns(10);
 			textPrecioVenta.setBounds(418, 99, 256, 25);
 			contentPanel.add(textPrecioVenta);
 			
 			JLabel lblPrecioVenta = new JLabel("Precio Venta:");
 			lblPrecioVenta.setFont(new Font("Tahoma", Font.BOLD, 12));
-			lblPrecioVenta.setBounds(325, 103, 110, 14);
+			lblPrecioVenta.setBounds(335, 103, 84, 14);
 			contentPanel.add(lblPrecioVenta);
 			
 			JLabel lblDescripcion = new JLabel("Descripci\u00F3n:");
@@ -241,19 +232,30 @@ public class VistaRepuestos extends JDialog {
 			
 			textDescripcion = new JTextArea();
 			textDescripcion.setEditable(false);
-			textDescripcion.setEnabled(false);
 			textDescripcion.setCaretColor(Color.BLACK);
 			textDescripcion.setBorder(new LineBorder(Color.GRAY, 1, true));
 			textDescripcion.setBounds(91, 147, 583, 86);
 			contentPanel.add(textDescripcion);
 			
 			btnAgregarCantidad = new JButton("");
+			btnAgregarCantidad.setRolloverIcon(new ImageIcon(VistaRepuestos.class.getResource("/imagenes/iconos/iconos_32x32/calculator_add.png")));
+			btnAgregarCantidad.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 			btnAgregarCantidad.setEnabled(false);
-			btnAgregarCantidad.setToolTipText("Agregar Cantidad");
-			btnAgregarCantidad.setIcon(new ImageIcon(VistaRepuestos.class.getResource("/imagenes/iconos/iconos_16x16/plus.png")));
-			btnAgregarCantidad.setBounds(265, 100, 50, 25);
+			btnAgregarCantidad.setToolTipText("Agregar Cantidad de repuestos en el inventario ");
+			btnAgregarCantidad.setIcon(new ImageIcon(VistaRepuestos.class.getResource("/imagenes/iconos/iconos_32x32/calculator.png")));
+			btnAgregarCantidad.setBounds(260, 88, 65, 41);
 			contentPanel.add(btnAgregarCantidad);
-			comboTipoAparatos.llenar();
+			
+			JLabel label = new JLabel("Tipo Equipo:");
+			label.setFont(new Font("Tahoma", Font.BOLD, 12));
+			label.setBounds(330, 11, 84, 24);
+			contentPanel.add(label);
+			
+			comboTipoAparatos = new ComboTipoAparatos();
+			comboTipoAparatos.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+			comboTipoAparatos.setEnabled(false);
+			comboTipoAparatos.setBounds(411, 14, 263, 25);
+			contentPanel.add(comboTipoAparatos);
 			
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
@@ -271,6 +273,7 @@ public class VistaRepuestos extends JDialog {
 		btnVaciar.addActionListener(eco);
 		btnReportePantalla.addActionListener(eco);
 		cancelButton.addActionListener(eco);
+		comboTipoAparatos.addActionListener(eco);
 		
 		textCodigo.addKeyListener(eco);
 		textRepuesto.addKeyListener(eco);
@@ -348,9 +351,7 @@ public class VistaRepuestos extends JDialog {
 		return textDescripcion;
 	}
 
-	public ComboTipoAparatos getComboTipoAparatos() {
-		return comboTipoAparatos;
-	}
+
 	
 	public JButton getBtnAgregarCantidad() {
 		return btnAgregarCantidad;

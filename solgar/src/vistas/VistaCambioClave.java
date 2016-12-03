@@ -10,6 +10,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.ImageIcon;
 import java.awt.Toolkit;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JPasswordField;
 import javax.swing.border.TitledBorder;
@@ -120,6 +122,8 @@ public class VistaCambioClave extends JDialog {
 		this.setAlwaysOnTop(true);
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
+		JOptionPane.showMessageDialog(this,"Al cambiar la clave el sistema\n "
+				+ "se cerrara y debe reinciar con la nueva clave", "Mensaje del Sistema",1 );
 	}//fin del constructor
 
 	public JButton getCancelButton() {

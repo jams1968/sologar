@@ -46,9 +46,7 @@ public class ControladorVistaUsuario implements ActionListener,KeyListener {
 		if(accion.getSource().equals(vista.getCancelButton())){
 			vista.dispose();
 		}// fin cerrar
-		else if(accion.getSource().equals(vista.getBtnReportePantalla())){
-			new VistaReporteRepuestosPP();
-		}// fin cerrar
+		
 		else if(accion.getSource().equals(vista.getBtnVaciar())){
 			vaciarFormulario();
 		}// fin cerrar
