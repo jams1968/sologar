@@ -110,7 +110,7 @@ CREATE TABLE IF NOT EXISTS `reparaciones` (
   `diagnostico_cliente` varchar(150) NOT NULL,
   `detalles_recepcion` varchar(150) NOT NULL,
   `diagnostico_tecnico` varchar(150) NOT NULL,
-  `precio_repustos` float NOT NULL,
+  `precio_repuestos` float NOT NULL,
   `precio_mano_obra` float NOT NULL,
   `detalles_reparacion` varchar(150) NOT NULL,
   `status` int(1) NOT NULL
