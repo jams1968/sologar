@@ -189,19 +189,21 @@ public class Repuesto {
 	}//fin buscar
 	
 	//-------->eliminar<------------
-	public boolean eliminar(String xCodigo){
+	public boolean eliminar(){
 
-		String sentenciaSql = "DELETE FROM repuestos where codigo='"+xCodigo+ "'";
+		String sentenciaSql = "DELETE FROM repuestos where codigo='"+codigo+ "'";
 			
-		SqlBD codigoSql = new SqlBD();
-			
-		ResultSet consulta = codigoSql.ConsultaTabla(sentenciaSql);
+		if((codigo!=null)){
 		
-		System.out.println(consulta);
+			SqlBD codigoSql = new SqlBD();
+			if(codigoSql.agregarRegistro(sentenciaSql))
+				return true;
+			else
+				return false;
+		}
+		else return false;
+	
 		
-		codigoSql.Desconectar();
-			
-		return true;
 	}
 	// fin eliminar
 
