@@ -48,7 +48,6 @@ public class VentanaInicial extends JFrame{
 	private JSeparator separator;
 	private JMenu mnServicios;
 	private JMenuItem mntmPendientes;
-	private JMenuItem mntmInventario;
 	private JMenuItem mntmReparados;
 	private JMenu mnUtilidades;
 	private JMenuItem mntmAutor;
@@ -191,12 +190,6 @@ public class VentanaInicial extends JFrame{
 		mntmEntrega.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		mnArtefactos.add(mntmEntrega);
 		
-		mntmInventario = new JMenuItem("Inventario");
-		mntmInventario.setIcon(new ImageIcon(VentanaInicial.class.getResource("/imagenes/iconos/iconos_32x32/inventario.png")));
-		mntmInventario.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		mntmInventario.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		mnArtefactos.add(mntmInventario);
-		
 		separator = new JSeparator();
 		mnArtefactos.add(separator);
 		
@@ -296,10 +289,14 @@ public class VentanaInicial extends JFrame{
 		ControladorVistaInicial eco=new ControladorVistaInicial(this);
 		
 		btnSalir.addActionListener(eco);
+		btnRecepcion.addActionListener(eco);
 		mntmSalirDelSistema.addActionListener(eco);
 		mntmUsuarios.addActionListener(eco);
 		mntmRepuestos.addActionListener(eco);
 		mntmCambioDeClave.addActionListener(eco);
+		mntmTiposAparatos.addActionListener(eco);
+		mntmRecepcion.addActionListener(eco);
+		mntmInventario_1.addActionListener(eco);
 		
 		
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);//maximar automaticamente
@@ -397,9 +394,6 @@ public class VentanaInicial extends JFrame{
 	}
 
 
-	public JMenuItem getMntmInventario() {
-		return mntmInventario;
-	}
 
 
 	public JMenuItem getMntmReparados() {

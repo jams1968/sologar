@@ -11,8 +11,6 @@ public class TipoAparato {
 	//------------>constructor<--------------
 	
 	
-	
-	
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
@@ -52,8 +50,8 @@ public class TipoAparato {
 		this.tipo = tipo;
 	}
 	//------------------->buscar>------------
-	public boolean buscar(int xId){
-		String sentenciaSql = "SELECT * FROM tipos_Aparato where id="+xId;
+	public boolean buscar(){
+		String sentenciaSql = "SELECT * FROM tipos_Aparato where tipo='"+tipo+ "'";
 			
 		SqlBD codigoSql = new SqlBD();
 			
@@ -99,5 +97,25 @@ public class TipoAparato {
 		}
 		else return false;
 	}//fin create
+	
+	//eliminar 
+
+	public boolean eliminar(){
+
+		String sentenciaSql = "DELETE FROM tipos_aparato where tipo ='"+tipo+ "'";
+			
+		if((tipo!=null)){
+					
+			SqlBD codigoSql = new SqlBD();
+			if(codigoSql.agregarRegistro(sentenciaSql))
+				return true;
+			else
+				return false;
+		}
+		else return false;
+	
+		
+	}
+	// fin eliminar
 
 }//fin da la clase

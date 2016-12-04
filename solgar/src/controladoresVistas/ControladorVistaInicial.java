@@ -11,7 +11,9 @@ import javax.swing.JOptionPane;
 
 import vistas.VentanaInicial;
 import vistas.VistaCambioClave;
+import vistas.VistaRecepcion;
 import vistas.VistaRepuestos;
+import vistas.VistaTipoAparato;
 import vistas.VistaUsuario;
 import vistasReportes.VistaReporteRepuestosPP;
 
@@ -44,6 +46,19 @@ public class ControladorVistaInicial implements ActionListener{
 		}
 		else if (accion.getSource().equals(vista.getMntmRepuestos())){
 			new VistaRepuestos();
+			
+		}
+		else if (accion.getSource().equals(vista.getMntmTiposAparatos())){
+			new VistaTipoAparato();
+			
+		}
+		else if (accion.getSource().equals(vista.getMntmRecepcion())||
+				(accion.getSource().equals(vista.getBtnRecepcion()))){
+			new VistaRecepcion();
+			
+		}
+		else if (accion.getSource().equals(vista.getMntmInventario_1())){
+			new VistaReporteRepuestosPP();
 			
 		}
 	}//fin action

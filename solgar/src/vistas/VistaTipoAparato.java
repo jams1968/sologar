@@ -184,6 +184,9 @@ public class VistaTipoAparato extends JDialog {
 		comboTipoAparatos.addActionListener(eco);
 		cancelButton.addActionListener(eco);
 		btnRegistrar.addActionListener(eco);
+		btnEliminar.addActionListener(eco);
+		btnModificar.addActionListener(eco);
+		btnVaciar.addActionListener(eco);
 		
 		textTipo.addKeyListener(eco);
 		/*	

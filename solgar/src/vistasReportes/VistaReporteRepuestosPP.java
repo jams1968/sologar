@@ -157,7 +157,7 @@ public class VistaReporteRepuestosPP extends JDialog {
 				registro.setDescripcion(consulta.getString("descripcion"));
 				registro.setAparato_tipo(consulta.getString("tipo"));
 								
-				System.out.println(c2);
+				
 				datosTabla.insertRow(c, new String[] { registro.getCodigo(), registro.getRepuesto(),
 						"" + registro.getMarca(), "" + registro.getCantidad(),""+ registro.getPrecio_venta(),
 						registro.getDescripcion(), registro.getAparato_tipo()});
