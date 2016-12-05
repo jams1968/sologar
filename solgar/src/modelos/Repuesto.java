@@ -104,7 +104,7 @@ public class Repuesto {
 	public String toString() {
 		return id+"-"+codigo+"-"+repuesto;
 	}
-	//------------------>update<---------------------
+	//------------------>create<---------------------
 	public boolean create(){
 		
 		if((codigo!=null)&&

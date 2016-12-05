@@ -4,6 +4,11 @@
  ****************************************************************************/
 package modelos;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import controladoresBD.SqlBD;
+
 public class Cliente {
 	protected int id;
 	protected String documentoIdentidad;
@@ -111,4 +116,95 @@ public class Cliente {
 		return this.documentoIdentidad+"-"+this.cliente;
 	}
 	
-}
+	//-------->buscar<------------
+		public boolean buscar(String xDocumento){
+		
+			Repuesto registro=new Repuesto();
+			String sentenciaSql = "SELECT * FROM clientes where doc_identidad='"+xDocumento+ "'";
+			
+			SqlBD codigoSql = new SqlBD();
+			
+			ResultSet consulta = codigoSql.ConsultaTabla(sentenciaSql);
+			try {
+				
+				while (consulta.next()) {
+					setId(consulta.getInt("id"));
+					setDocumentoIdentidad(consulta.getString("doc_identidad"));
+					setCliente(consulta.getString("cliente"));
+					setTelefono1(consulta.getString("telefono1"));
+					setTelefono2(consulta.getString("telefono2"));
+					setDireccion(consulta.getString("direccion"));
+					setCorreo(consulta.getString("correo"));
+					
+					
+				}
+			}catch (SQLException e) {
+
+					e.printStackTrace();
+			}
+		
+			codigoSql.Desconectar();
+			if(this.id==0)
+				return false;
+			else return true;
+		}//fin buscar
+		//------------------>create<---------------------
+		public boolean create(){
+			
+			if((documentoIdentidad!=null)&&
+				(cliente!=null)&&
+				(telefono1!=null)&&
+				(direccion!=null)){
+				
+					String sentenciaSql="INSERT INTO clientes (doc_identidad,cliente,telefono1,telefono2,direccion,correo)"
+							+ "VALUES ('"+documentoIdentidad+"','"+cliente+"','"+telefono1+"','"+telefono2+"','"+direccion+"','"
+							+correo+"')";
+					SqlBD codigoSql = new SqlBD();
+					if(codigoSql.agregarRegistro(sentenciaSql))
+						return true;
+					else
+						return false;
+			}
+			else return false;
+		}//fin create
+		//-------------->modificar<-------------------
+		public  boolean update(){
+			if((documentoIdentidad!=null)&&
+					(cliente!=null)&&
+					(telefono1!=null)&&
+					(direccion!=null)){
+				
+				
+				String sentenciaSql="UPDATE clientes SET "
+						+ "cliente='"+ cliente+"', telefono1='"+telefono1
+						+"',telefono2='"+telefono2+"',direccion='"+direccion
+						+"',correo='"+correo+"'";
+			
+				SqlBD codigoSql = new SqlBD();
+				if(codigoSql.agregarRegistro(sentenciaSql))
+					return true;
+				else
+					return false;
+			}
+			else return false;
+		}
+		//-------->delete<------------
+		public boolean delete(){
+
+			String sentenciaSql = "DELETE FROM clientes where doc_identidad='"+documentoIdentidad+ "'";
+				
+			if((documentoIdentidad!=null)){
+			
+				SqlBD codigoSql = new SqlBD();
+				if(codigoSql.agregarRegistro(sentenciaSql))
+					return true;
+				else
+					return false;
+			}
+			else return false;
+		
+			
+		}
+		// fin delete
+				
+}//fin de la clase

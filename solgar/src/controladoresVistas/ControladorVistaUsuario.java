@@ -17,6 +17,7 @@ import javax.swing.JOptionPane;
 
 import controladoresBD.SqlBD;
 import librerias.Funciones;
+import modelos.Cliente;
 import modelos.Usuario;
 import vistas.VistaUsuario;
 import vistasReportes.VistaReporteRepuestosPP;
@@ -27,6 +28,7 @@ public class ControladorVistaUsuario implements ActionListener,KeyListener {
 	private VistaUsuario vista;
 	private Usuario nuevoUsuario;
 	private Funciones funcion;
+
 	
 	public ControladorVistaUsuario(VistaUsuario vista){
 		this.vista=vista;
@@ -37,6 +39,7 @@ public class ControladorVistaUsuario implements ActionListener,KeyListener {
 		patronLogin=Pattern.compile("[A-Za-z0-9]{5,10}");
 		nuevoUsuario=new Usuario(); 
 		funcion=new Funciones();
+	
 	
 		
 	}
