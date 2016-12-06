@@ -25,6 +25,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import controladoresVistas.ControladorVistaRecepcion;
+import modelos.Usuario;
 
 import javax.swing.border.LineBorder;
 import java.awt.Color;
@@ -55,6 +56,8 @@ public class VistaRecepcion extends JDialog {
 	private JButton btnReporteP;
 	private JButton btnVaciar;
 	private JButton btnCerrar;
+	private JLabel lblMensaje;
+	private Usuario registroUsuario;
 
 
 	/**
@@ -64,7 +67,11 @@ public class VistaRecepcion extends JDialog {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VistaRecepcion dialog = new VistaRecepcion();
+					Usuario registroUsuario=new Usuario();
+					registroUsuario.setNombre("Erick");
+					registroUsuario.setApellido("Guerra");
+					
+					VistaRecepcion dialog = new VistaRecepcion(registroUsuario);
 					dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 					dialog.setLocationRelativeTo(null);
 					dialog.setVisible(true);
@@ -78,7 +85,8 @@ public class VistaRecepcion extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public VistaRecepcion() {
+	public VistaRecepcion(Usuario registroUsuario) {
+		this.registroUsuario=registroUsuario;
 		
 		//---->hora y fecha de la recepcion<--------------
 		Calendar calendario = Calendar.getInstance();
@@ -93,7 +101,7 @@ public class VistaRecepcion extends JDialog {
 		
 		setTitle("RECEPCI\u00D3N DE ARTEFACTOS");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(VistaRecepcion.class.getResource("/imagenes/iconos/ventilador.png")));
-		setBounds(100, 100, 585, 505);
+		setBounds(100, 100, 741, 505);
 		
 		JPanel panelCabecera = new JPanel();
 		FlowLayout fl_panelCabecera = (FlowLayout) panelCabecera.getLayout();
@@ -143,7 +151,7 @@ public class VistaRecepcion extends JDialog {
 		GridBagLayout gbl_panelCliente = new GridBagLayout();
 		gbl_panelCliente.columnWidths = new int[]{0, 0, 0};
 		gbl_panelCliente.rowHeights = new int[]{0, 0, 0, 0, 0};
-		gbl_panelCliente.columnWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
+		gbl_panelCliente.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
 		gbl_panelCliente.rowWeights = new double[]{1.0, 1.0, 1.0, 1.0, Double.MIN_VALUE};
 		panelCliente.setLayout(gbl_panelCliente);
 		
@@ -171,6 +179,7 @@ public class VistaRecepcion extends JDialog {
 		panelLinea1.add(lblCliente);
 		
 		textCliente = new JTextField();
+		textCliente.setEditable(false);
 		panelLinea1.add(textCliente);
 		textCliente.setColumns(37);
 		
@@ -190,6 +199,7 @@ public class VistaRecepcion extends JDialog {
 		panelLinea2.add(lblTelefono1);
 		
 		textTelefono1 = new JTextField();
+		textTelefono1.setEditable(false);
 		panelLinea2.add(textTelefono1);
 		textTelefono1.setColumns(16);
 		
@@ -198,6 +208,7 @@ public class VistaRecepcion extends JDialog {
 		panelLinea2.add(lblTelefono2);
 		
 		textTelefono2 = new JTextField();
+		textTelefono2.setEditable(false);
 		panelLinea2.add(textTelefono2);
 		textTelefono2.setColumns(16);
 		
@@ -217,6 +228,7 @@ public class VistaRecepcion extends JDialog {
 		panelLinea3.add(lblDireccion);
 		
 		textDireccion = new JTextField();
+		textDireccion.setEditable(false);
 		panelLinea3.add(textDireccion);
 		textDireccion.setColumns(30);
 		
@@ -225,6 +237,7 @@ public class VistaRecepcion extends JDialog {
 		panelLinea3.add(lblCorreo);
 		
 		textCorreo = new JTextField();
+		textCorreo.setEditable(false);
 		panelLinea3.add(textCorreo);
 		textCorreo.setColumns(20);
 		
@@ -243,6 +256,8 @@ public class VistaRecepcion extends JDialog {
 		labelUsuario.setFont(new Font("Tahoma", Font.BOLD, 12));
 		
 		textUsuario = new JTextField();
+		textUsuario.setText(registroUsuario.getNombre()+" "+registroUsuario.getApellido());
+		textUsuario.setEditable(false);
 		panel.add(textUsuario);
 		textUsuario.setColumns(30);
 		
@@ -312,57 +327,74 @@ public class VistaRecepcion extends JDialog {
 		gbc_panelScroll.gridy = 0;
 		panelTecnico.add(panelScroll, gbc_panelScroll);
 		
+		JPanel panelPie = new JPanel();
+		getContentPane().add(panelPie, BorderLayout.SOUTH);
+		panelPie.setLayout(new BorderLayout(0, 0));
+		
 		JPanel panelBotones = new JPanel();
-		getContentPane().add(panelBotones, BorderLayout.SOUTH);
+		panelPie.add(panelBotones);
+		panelBotones.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		btnRegistrar = new JButton("");
+		panelBotones.add(btnRegistrar);
 		btnRegistrar.setBounds(new Rectangle(0, 0, 65, 41));
 		btnRegistrar.setToolTipText("Registrar Recibo de Recepci\u00F3n de Artefactos");
 		btnRegistrar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnRegistrar.setRolloverIcon(new ImageIcon(VistaRecepcion.class.getResource("/imagenes/iconos/iconos_32x32/plus.png")));
 		btnRegistrar.setIcon(new ImageIcon(VistaRecepcion.class.getResource("/imagenes/iconos/iconos_32x32/recepcionRegistrar.png")));
-		panelBotones.add(btnRegistrar);
 		
 		btnModificar = new JButton("");
+		panelBotones.add(btnModificar);
 		btnModificar.setBounds(new Rectangle(0, 0, 65, 41));
 		btnModificar.setToolTipText("Modificar Recibo");
 		btnModificar.setRolloverIcon(new ImageIcon(VistaRecepcion.class.getResource("/imagenes/iconos/iconos_32x32/pencil2.png")));
 		btnModificar.setIcon(new ImageIcon(VistaRecepcion.class.getResource("/imagenes/iconos/iconos_32x32/recepcionModificar.png")));
 		btnModificar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		panelBotones.add(btnModificar);
 		
 		btnEliminar = new JButton("");
+		panelBotones.add(btnEliminar);
 		btnEliminar.setBounds(new Rectangle(0, 0, 65, 41));
 		btnEliminar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnEliminar.setToolTipText("Eliminar Recibo de Recepci\u00F3n");
 		btnEliminar.setRolloverIcon(new ImageIcon(VistaRecepcion.class.getResource("/imagenes/iconos/iconos_32x32/busy.png")));
 		btnEliminar.setIcon(new ImageIcon(VistaRecepcion.class.getResource("/imagenes/iconos/iconos_32x32/recepcionEliminar.png")));
-		panelBotones.add(btnEliminar);
 		
 		btnVaciar = new JButton("");
+		panelBotones.add(btnVaciar);
 		btnVaciar.setToolTipText("Vaciar campos del Formulario");
 		btnVaciar.setRolloverIcon(new ImageIcon(VistaRecepcion.class.getResource("/imagenes/iconos/iconos_32x32/refresh.png")));
 		btnVaciar.setIcon(new ImageIcon(VistaRecepcion.class.getResource("/imagenes/iconos/iconos_32x32/page_refresh.png")));
 		btnVaciar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		panelBotones.add(btnVaciar);
 		
 		btnReporteP = new JButton("");
+		panelBotones.add(btnReporteP);
 		btnReporteP.setToolTipText("Reporte por pantalla");
 		btnReporteP.setRolloverIcon(new ImageIcon(VistaRecepcion.class.getResource("/imagenes/iconos/iconos_32x32/application_view_detail.png")));
 		btnReporteP.setIcon(new ImageIcon(VistaRecepcion.class.getResource("/imagenes/iconos/iconos_32x32/graphic-design.png")));
 		btnReporteP.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		panelBotones.add(btnReporteP);
 		
 		btnCerrar = new JButton("");
+		panelBotones.add(btnCerrar);
 		btnCerrar.setToolTipText("Cerrar Ventana");
 		btnCerrar.setRolloverIcon(new ImageIcon(VistaRecepcion.class.getResource("/imagenes/iconos/iconos_32x32/door_out.png")));
 		btnCerrar.setIcon(new ImageIcon(VistaRecepcion.class.getResource("/imagenes/iconos/iconos_32x32/door.png")));
 		btnCerrar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		panelBotones.add(btnCerrar);
+		
+		JPanel panelMensaje = new JPanel();
+		panelMensaje.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 255), 2, true), "Mensaje del Sistema", TitledBorder.RIGHT, TitledBorder.TOP, null, Color.BLUE));
+		panelPie.add(panelMensaje, BorderLayout.NORTH);
+		
+		lblMensaje = new JLabel("");
+		lblMensaje.setForeground(Color.RED);
+		lblMensaje.setFont(new Font("Tahoma", Font.BOLD, 12));
+		panelMensaje.add(lblMensaje);
 				 
 		//----------------->enlaces controlador <-------------------
 		ControladorVistaRecepcion eco=new ControladorVistaRecepcion(this);
 		btnCerrar.addActionListener(eco);
+		
+		textCedula.addKeyListener(eco);
+		
 		this.setAlwaysOnTop(true);
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
@@ -438,6 +470,14 @@ public class VistaRecepcion extends JDialog {
 
 	public JButton getBtnCerrar() {
 		return btnCerrar;
+	}
+
+	public JLabel getLblMensaje() {
+		return lblMensaje;
+	}
+
+	public Usuario getRegistroUsuario() {
+		return registroUsuario;
 	}
 	
 

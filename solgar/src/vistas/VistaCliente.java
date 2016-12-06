@@ -58,6 +58,7 @@ public class VistaCliente extends JDialog {
 	private JButton btnReportePantalla;
 	private Usuario registroUsuario;
 	private JFormattedTextField textTelefono2;
+	private MaskFormatter mascaraTelefono,mascaraCorreo;
 
 	/**
 	 * Launch the application.
@@ -119,7 +120,7 @@ public class VistaCliente extends JDialog {
 		textCliente.setColumns(30);
 		textCliente.setBounds(267, 23, 360, 25);
 		panelDP.add(textCliente);
-		MaskFormatter mascaraTelefono,mascaraCorreo;
+		
 		try {
 			mascaraTelefono = new MaskFormatter("(####)-###-##-##");
 			mascaraTelefono.setPlaceholderCharacter('_');
@@ -347,4 +348,13 @@ public class VistaCliente extends JDialog {
 	public Usuario getRegistroUsuario() {
 		return registroUsuario;
 	}
+
+	public MaskFormatter getMascaraTelefono() {
+		return mascaraTelefono;
+	}
+
+	public MaskFormatter getMascaraCorreo() {
+		return mascaraCorreo;
+	}
+	
 }//fin  de la clase

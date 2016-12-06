@@ -5,7 +5,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import javax.swing.JOptionPane;
+
 import modelos.Cliente;
+import modelos.Repuesto;
 import modelos.Usuario;
 import vistas.VistaCliente;
 
@@ -31,7 +34,35 @@ public class ControladorVistaCliente implements ActionListener,KeyListener {
 				else
 					vista.getLblMensaje().setText("No se pudo registrar el cliente ");
 			
+		}//fin registrar
+		else if (accion.getSource().equals(vista.getBtnModificar())) {
+			
+			  
+			if(nuevoRegistro.buscar(vista.getTextCedula().getText())){
+				llenarModelo();
+				if(nuevoRegistro.update())
+						vista.getLblMensaje().setText("Datos del Cliente  Modificado exitosamente ");
+					else
+						vista.getLblMensaje().setText("No se pudo modificar los datos del cliente ");
+				}
+			}//fin modificar
+		else if (accion.getSource().equals(vista.getBtnEliminar())){
+			
+			int eliminar = JOptionPane.showConfirmDialog(vista, " Desea eliminar el  Cliente",
+					"Mensaje del Sistema", JOptionPane.YES_NO_OPTION);
+			
+			if(eliminar == 0){
+				JOptionPane.showMessageDialog(vista, "Repuesto eliminado");
+				nuevoRegistro.setDocumentoIdentidad(vista.getTextCedula().getText());
+				nuevoRegistro.delete();
+				nuevoRegistro=new Cliente();
+				vaciarFormulario();
 			}
+			
+		}//fin eliminar
+		else if ( accion.getSource().equals(vista.getBtnVaciar()) )
+			
+			vaciarFormulario();
 		
 	}//fin action
 	
@@ -98,7 +129,7 @@ public class ControladorVistaCliente implements ActionListener,KeyListener {
 		
 	}
 
-	//------------>llevar campos formulario<-----------
+	//------------>llenar campos formulario<-----------
 	public void llenarFormulario(Cliente registro){
 		vista.getTextCliente().setText(registro.getCliente());
 		vista.getTextTelefono1().setText(registro.getTelefono1());
@@ -138,5 +169,18 @@ public class ControladorVistaCliente implements ActionListener,KeyListener {
 		vista.getTextDireccion().setEditable(false);
 		vista.getTextCorreo().setEditable(false);
 		
+	}
+	public void vaciarFormulario(){
+		vista.getTextCedula().setText(null);
+		vista.getTextCliente().setText(null);
+		vista.getTextTelefono1().setText(null);
+		vista.getTextTelefono2().setText(null);
+		
+		vista.getTextDireccion().setText(null);
+		vista.getTextCorreo().setText(null);
+		bloquear();
+		vista.getBtnRegistrar().setEnabled(false);
+		vista.getBtnModificar().setEnabled(false);
+		vista.getBtnEliminar().setEnabled(false);
 	}
 }//fin clase

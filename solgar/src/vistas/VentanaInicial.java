@@ -29,6 +29,7 @@ import javax.swing.JMenuItem;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import javax.swing.JSeparator;
+import java.awt.event.InputEvent;
 public class VentanaInicial extends JFrame{
 	private JButton btnServicios;
 	private JButton btnSalir;
@@ -149,6 +150,7 @@ public class VentanaInicial extends JFrame{
 		menuBarra.add(mnRegistrar);
 		
 		mntmClientes = new JMenuItem("Clientes");
+		mntmClientes.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.CTRL_MASK));
 		mntmClientes.setIcon(new ImageIcon(VentanaInicial.class.getResource("/imagenes/iconos/iconos_32x32/group_add.png")));
 		mntmClientes.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		mntmClientes.setFont(new Font("Segoe UI", Font.PLAIN, 14));
@@ -179,12 +181,14 @@ public class VentanaInicial extends JFrame{
 		menuBarra.add(mnArtefactos);
 		
 		mntmRecepcion = new JMenuItem("Recepci\u00F3n");
+		mntmRecepcion.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.CTRL_MASK));
 		mntmRecepcion.setIcon(new ImageIcon(VentanaInicial.class.getResource("/imagenes/iconos/iconos_32x32/inconoEntregaR.png")));
 		mntmRecepcion.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		mntmRecepcion.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		mnArtefactos.add(mntmRecepcion);
 		
 		mntmEntrega = new JMenuItem("Entrega");
+		mntmEntrega.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, InputEvent.CTRL_MASK));
 		mntmEntrega.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		mntmEntrega.setIcon(new ImageIcon(VentanaInicial.class.getResource("/imagenes/iconos/iconos_32x32/inconoReciR.png")));
 		mntmEntrega.setFont(new Font("Segoe UI", Font.PLAIN, 14));
@@ -290,8 +294,11 @@ public class VentanaInicial extends JFrame{
 		
 		btnSalir.addActionListener(eco);
 		btnRecepcion.addActionListener(eco);
+		btnClientes.addActionListener(eco);
+		
 		mntmSalirDelSistema.addActionListener(eco);
 		mntmUsuarios.addActionListener(eco);
+		mntmClientes.addActionListener(eco);
 		mntmRepuestos.addActionListener(eco);
 		mntmCambioDeClave.addActionListener(eco);
 		mntmTiposAparatos.addActionListener(eco);
