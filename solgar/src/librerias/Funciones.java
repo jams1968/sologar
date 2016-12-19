@@ -1,7 +1,12 @@
 package librerias;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+
+import controladoresBD.SqlBD;
 
 public class Funciones {
 	//--------------_>metodo para encriptar<-----------
@@ -58,7 +63,26 @@ public class Funciones {
 				return salida;
 				
 			}	
-	
+//---------------> proximo Id<--------------------------
+public int proximoID(String sentenciaSql){
+					
+				
+	SqlBD codigoSql = new SqlBD();
+						
+	ResultSet consulta = codigoSql.ConsultaTabla(sentenciaSql);
+	int valor=0;
+	try {
+			while (consulta.next()) {
+				valor=Integer.parseInt(consulta.getString(1));
+			}
+		}catch (SQLException e) {
+
+					e.printStackTrace();
+	}
+	codigoSql.Desconectar();
+	codigoSql.Desconectar();
+	return valor;
+}//fin proximo	
 	
 
 }

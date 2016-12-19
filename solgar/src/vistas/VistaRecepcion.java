@@ -58,6 +58,7 @@ public class VistaRecepcion extends JDialog {
 	private JButton btnCerrar;
 	private JLabel lblMensaje;
 	private Usuario registroUsuario;
+	private JButton btnAgregarArtefacto;
 
 
 	/**
@@ -261,7 +262,7 @@ public class VistaRecepcion extends JDialog {
 		panel.add(textUsuario);
 		textUsuario.setColumns(30);
 		
-		JButton btnAgregarArtefacto = new JButton("Agregar Artefacto");
+		btnAgregarArtefacto = new JButton("Agregar Artefacto");
 		btnAgregarArtefacto.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnAgregarArtefacto.setToolTipText("Agregar artefactos a la tabla");
 		panel.add(btnAgregarArtefacto);
@@ -295,28 +296,24 @@ public class VistaRecepcion extends JDialog {
 		panelTecnico.setLayout(gbl_panelTecnico);
 		
 		//----------->modelo tabla<-----------
-			 JScrollPane panelScroll=new JScrollPane();
-			 //datosArtefactos.addRow(new String[]{"Nro.", "Tipo Aparato", "informacion", "Detalles","Diagnóstico Tec"}); 
-			 tablaArtefactos= new JTable();
+		JScrollPane panelScroll=new JScrollPane();
+		//datosArtefactos.addRow(new String[]{"Nro.", "Tipo Aparato", "informacion", "Detalles","Diagnóstico Tec"}); 
+		tablaArtefactos= new JTable();
 			 
-			 	 tablaArtefactos.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-			 	 tablaArtefactos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		tablaArtefactos.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		tablaArtefactos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			 	 
-			 tablaArtefactos.setModel(datosArtefactos);
-			 
-			 	
-			  tablaArtefactos.setSelectionBackground(Color.LIGHT_GRAY);
-			  tablaArtefactos.setSelectionForeground(Color.red);
+		tablaArtefactos.setModel(datosArtefactos);
+		tablaArtefactos.setSelectionBackground(Color.LIGHT_GRAY);
+		tablaArtefactos.setSelectionForeground(Color.red);
 			  
-			   tablaArtefactos.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-			   tablaArtefactos.getColumnModel().getColumn(0).setPreferredWidth(50);
-			   tablaArtefactos.getColumnModel().getColumn(1).setPreferredWidth(100);
-			   tablaArtefactos.getColumnModel().getColumn(2).setPreferredWidth(150);
-			   tablaArtefactos.getColumnModel().getColumn(3).setPreferredWidth(150);
-			   tablaArtefactos.getColumnModel().getColumn(4).setPreferredWidth(100);
+		tablaArtefactos.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		tablaArtefactos.getColumnModel().getColumn(0).setPreferredWidth(50);
+		tablaArtefactos.getColumnModel().getColumn(1).setPreferredWidth(100);
+		tablaArtefactos.getColumnModel().getColumn(2).setPreferredWidth(150);
+		tablaArtefactos.getColumnModel().getColumn(3).setPreferredWidth(200);
+		tablaArtefactos.getColumnModel().getColumn(4).setPreferredWidth(200);
 			   
-			    
-			    
 			    
 			    
 		panelScroll.setViewportView(tablaArtefactos);
@@ -389,12 +386,22 @@ public class VistaRecepcion extends JDialog {
 		lblMensaje.setFont(new Font("Tahoma", Font.BOLD, 12));
 		panelMensaje.add(lblMensaje);
 				 
+		//------------------>inicio<------------
+		btnAgregarArtefacto.setEnabled(false);
+		btnRegistrar.setEnabled(false);
+		btnModificar.setEnabled(false);
+		btnEliminar.setEnabled(false);
+		
+		
 		//----------------->enlaces controlador <-------------------
 		ControladorVistaRecepcion eco=new ControladorVistaRecepcion(this);
 		btnCerrar.addActionListener(eco);
+		btnVaciar.addActionListener(eco);
+		btnAgregarArtefacto.addActionListener(eco);
 		
 		textCedula.addKeyListener(eco);
 		
+		textCedula.requestFocus();
 		this.setAlwaysOnTop(true);
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
@@ -478,6 +485,10 @@ public class VistaRecepcion extends JDialog {
 
 	public Usuario getRegistroUsuario() {
 		return registroUsuario;
+	}
+
+	public JButton getBtnAgregarArtefacto() {
+		return btnAgregarArtefacto;
 	}
 	
 
