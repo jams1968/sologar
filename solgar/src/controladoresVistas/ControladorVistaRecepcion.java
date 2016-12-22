@@ -7,8 +7,8 @@ import java.awt.event.KeyListener;
 
 import librerias.Funciones;
 import modelos.Cliente;
+import modelos.TipoAparato;
 import modelos.Usuario;
-import vistas.VistaAgregarArtefacto;
 import vistas.VistaCliente;
 import vistas.VistaRecepcion;
 
@@ -16,10 +16,16 @@ public class ControladorVistaRecepcion implements ActionListener,KeyListener {
 
 	private VistaRecepcion vista;
 	private Cliente registroCliente;
+	private TipoAparato tipoAparato;
 	private Funciones funcion;
-	
+	private int contar;
+	private double montoR,montoMo;
 	
 	public ControladorVistaRecepcion(VistaRecepcion vista) {
+		tipoAparato=new TipoAparato();
+		contar=0;
+		montoR=0;
+		montoMo=0;
 		this.vista=vista;
 		this.registroCliente=new Cliente();
 		funcion=new Funciones();
@@ -32,9 +38,27 @@ public class ControladorVistaRecepcion implements ActionListener,KeyListener {
 			vista.dispose();
 		else if(accion.getSource().equals(vista.getBtnVaciar()))
 			vaciarFormulario();
-		else if(accion.getSource().equals(vista.getBtnAgregarArtefacto()))
-			new VistaAgregarArtefacto();
-		
+		else if(accion.getSource().equals(vista.getBtnAgregarArtefacto())){
+			if((vista.getComboTipoAparatos().getSelectedIndex()>0)&&
+					(!vista.getTextInformacion().getText().trim().isEmpty())&&
+					(!vista.getTextDetalles().getText().trim().isEmpty())&&
+					(!vista.getTextDiagnostico().getText().trim().isEmpty())&&
+					(!vista.getTextManoObra().getText().trim().isEmpty())){
+			
+				contar++;
+				montoMo+=Double.parseDouble(vista.getTextManoObra().getText());
+				montoR+=Double.parseDouble(vista.getTextMontoRepuesto().getText());
+				tipoAparato=(TipoAparato) vista.getComboTipoAparatos().getSelectedItem();
+				vista.getTextTotalManoObra().setText(""+montoMo);
+				vista.getTextTotalMontoRep().setText(""+montoR);
+				vista.getTextMontoTotal().setText("Bs."+(montoMo+montoR));
+				vista.getDatosArtefactos().addRow(new String[]{""+contar,tipoAparato.getTipo(),
+						vista.getTextInformacion().getText(),vista.getTextDetalles().getText(),
+						vista.getTextDiagnostico().getText(),""+vista.getTextMontoRepuesto().getText(),""+vista.getTextManoObra().getText()});
+				
+						vaciarArtefactos();	
+			}
+		}
 		
 	}
 	@Override
@@ -45,6 +69,8 @@ public class ControladorVistaRecepcion implements ActionListener,KeyListener {
 			if(registroCliente.buscar(vista.getTextCedula().getText().trim())){
 				llenarFormularioCliente();
 				vista.getBtnAgregarArtefacto().setEnabled(true);
+				vista.getComboTipoAparatos().setEnabled(true);
+				vista.getComboTipoAparatos().requestFocus();
 				
 				
 			}else{
@@ -78,11 +104,13 @@ public class ControladorVistaRecepcion implements ActionListener,KeyListener {
 		vista.getTextTelefono2().setText(registroCliente.getTelefono2());
 		vista.getTextDireccion().setText(registroCliente.getDireccion());
 		vista.getTextCorreo().setText(registroCliente.getCorreo());
-
+		vista.getFechaEntrega().setDate(null);
 		vista.getBtnAgregarArtefacto().setEnabled(false);
 		vista.getBtnRegistrar().setEnabled(false);
 		vista.getBtnModificar().setEnabled(false);
 		vista.getBtnEliminar().setEnabled(false);
+		
+		
 		
 			
 	}
@@ -95,8 +123,25 @@ public class ControladorVistaRecepcion implements ActionListener,KeyListener {
 		vista.getTextDireccion().setText(null);
 		vista.getTextCorreo().setText(null);
 		
+		vista.getFechaEntrega();
+		
+		vista.borrarTabla(vista.getTablaArtefactos());
+		vaciarArtefactos();
+		vista.getTextTotalManoObra().setText(null);
+		vista.getTextTotalMontoRep().setText(null);
+		vista.getTextMontoTotal().setText(null);
+		
 		registroCliente=new Cliente();
 		vista.getTextCedula().requestFocus();
+	}
+	public void vaciarArtefactos(){
+		vista.getComboTipoAparatos().setSelectedIndex(0);
+		vista.getTextInformacion().setText(null);
+		vista.getTextDetalles().setText(null);
+		vista.getTextDiagnostico().setText(null);
+		vista.getTextMontoRepuesto().setText(null);
+		vista.getTextManoObra().setText(null);
+		
 	}
 
 }
