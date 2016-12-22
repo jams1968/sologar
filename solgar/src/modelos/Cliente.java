@@ -202,7 +202,7 @@ public class Cliente {
 					return false;
 			}
 			else return false;
-		
+		   
 			
 		}
 		// fin delete
