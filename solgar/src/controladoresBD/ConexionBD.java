@@ -41,7 +41,7 @@ public class ConexionBD {
 		
 	//-------------->conectar Base de Datos <-------------------- 
 	public boolean Conectar( ){
-		baseDatos="solgar";
+		baseDatos="bd_sologar";
 		urlBD = "jdbc:mysql://localhost/"+baseDatos;
 		usuario = "root";
 		clave = "";

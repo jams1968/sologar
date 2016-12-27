@@ -134,7 +134,7 @@ public class Cliente {
 					setTelefono1(consulta.getString("telefono1"));
 					setTelefono2(consulta.getString("telefono2"));
 					setDireccion(consulta.getString("direccion"));
-					setCorreo(consulta.getString("correo"));
+					setCorreo(consulta.getString("email"));
 					
 					
 				}
@@ -148,6 +148,36 @@ public class Cliente {
 				return false;
 			else return true;
 		}//fin buscar
+		//-------->buscar<------------
+		public boolean buscarID(int  xDocumento){
+				
+			Repuesto registro=new Repuesto();
+			String sentenciaSql = "SELECT * FROM clientes where id='"+xDocumento+ "'";
+					
+			SqlBD codigoSql = new SqlBD();
+				
+			ResultSet consulta = codigoSql.ConsultaTabla(sentenciaSql);
+			try {
+						
+			while (consulta.next()) {
+				setId(consulta.getInt("id"));
+				setDocumentoIdentidad(consulta.getString("doc_identidad"));
+				setCliente(consulta.getString("cliente"));
+				setTelefono1(consulta.getString("telefono1"));
+				setTelefono2(consulta.getString("telefono2"));
+				setDireccion(consulta.getString("direccion"));
+				setCorreo(consulta.getString("email"));
+				}
+			}catch (SQLException e) {
+
+				e.printStackTrace();
+			}
+				
+			codigoSql.Desconectar();
+			if(this.id==0)
+					return false;
+			else return true;
+		}//fin buscar
 		//------------------>create<---------------------
 		public boolean create(){
 			
@@ -156,8 +186,9 @@ public class Cliente {
 				(telefono1!=null)&&
 				(direccion!=null)){
 				
-					String sentenciaSql="INSERT INTO clientes (doc_identidad,cliente,telefono1,telefono2,direccion,correo)"
-							+ "VALUES ('"+documentoIdentidad+"','"+cliente+"','"+telefono1+"','"+telefono2+"','"+direccion+"','"
+					String sentenciaSql="INSERT INTO clientes (doc_identidad,cliente,telefono1,telefono2,direccion,email)"
+							+ "VALUES ('"+documentoIdentidad+"','"+cliente.toUpperCase()+"','"
+							+telefono1+"','"+telefono2+"','"+direccion.toUpperCase()+"','"
 							+correo+"')";
 					SqlBD codigoSql = new SqlBD();
 					if(codigoSql.agregarRegistro(sentenciaSql))
@@ -176,9 +207,9 @@ public class Cliente {
 				
 				
 				String sentenciaSql="UPDATE clientes SET "
-						+ "cliente='"+ cliente+"', telefono1='"+telefono1
-						+"',telefono2='"+telefono2+"',direccion='"+direccion
-						+"',correo='"+correo+"'";
+						+ "cliente='"+ cliente.toUpperCase()+"', telefono1='"+telefono1
+						+"',telefono2='"+telefono2+"',direccion='"+direccion.toUpperCase()
+						+"',email='"+correo+"'";
 			
 				SqlBD codigoSql = new SqlBD();
 				if(codigoSql.agregarRegistro(sentenciaSql))

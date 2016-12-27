@@ -73,10 +73,36 @@ public class TipoAparato {
 			else return true;
 		}//fin buscar
 	
+	//------------------->buscar>------------
+		public boolean buscarID(int xId){
+			String sentenciaSql = "SELECT * FROM tipos_Aparato where id="+xId ;
+			
+			SqlBD codigoSql = new SqlBD();
+				
+				ResultSet consulta = codigoSql.ConsultaTabla(sentenciaSql);
+				try {
+					
+					while (consulta.next()) {
+						setId(consulta.getInt("id"));
+						setTipo(consulta.getString("tipo"));
+					}
+				}catch (SQLException e) {
+
+						e.printStackTrace();
+				}
+			
+				codigoSql.Desconectar();
+				if(this.id==0)
+					return false;
+				else return true;
+			}//fin buscar
+		
+		
+	
 	//------------------------> create<----------------
 	public boolean create(){
 		if((tipo!=null)){
-			String sentenciaSql="INSERT INTO tipos_aparato (tipo) VALUES ('"+tipo+"')";
+			String sentenciaSql="INSERT INTO tipos_aparato (tipo) VALUES ('"+tipo.toUpperCase()+"')";
 			SqlBD codigoSql = new SqlBD();
 			if(codigoSql.agregarRegistro(sentenciaSql))
 				return true;
@@ -88,7 +114,7 @@ public class TipoAparato {
 	//------------------------>update<----------------
 	public boolean update(){
 		if((tipo!=null)){
-			String sentenciaSql="UPDATE tipos_aparato SET tipo='"+tipo+" where id="+id;
+			String sentenciaSql="UPDATE tipos_aparato SET tipo='"+tipo.toUpperCase()+" where id="+id;
 			SqlBD codigoSql = new SqlBD();
 			if(codigoSql.agregarRegistro(sentenciaSql))
 				return true;

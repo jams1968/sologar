@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import java.awt.Toolkit;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.Date;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -45,6 +46,7 @@ import java.awt.Component;
 import com.toedter.components.JSpinField;
 import com.toedter.calendar.JDateChooser;
 import java.awt.Dimension;
+import javax.swing.JSeparator;
 
 public class VistaRecepcion extends JFrame {
 	private JTextField textNrecibo;
@@ -57,7 +59,7 @@ public class VistaRecepcion extends JFrame {
 	private JTextField textDireccion;
 	private JTextField textCorreo;
 	private JTextField textUsuario;
-	private  DefaultTableModel datosArtefactos;
+	private DefaultTableModel datosArtefactos;
 	private JTable tablaArtefactos;
 	private JButton btnRegistrar;
 	private JButton btnModificar;
@@ -70,7 +72,6 @@ public class VistaRecepcion extends JFrame {
 	private JTextField textInformacion;
 	private JTextField textDetalles;
 	private JTextField textDiagnostico;
-	private JButton btnAgregarArtefacto;
 	private JScrollPane panelScroll;
 	private ComboTipoAparatos comboTipoAparatos;
 	private JTextField textManoObra;
@@ -79,6 +80,7 @@ public class VistaRecepcion extends JFrame {
 	private JTextField textTotalMontoRep;
 	private JTextField textMontoTotal;
 	private JDateChooser fechaEntrega;
+	private JButton btnAgregarArtefacto;
 
 
 	/**
@@ -89,8 +91,9 @@ public class VistaRecepcion extends JFrame {
 			public void run() {
 				try {
 					Usuario registroUsuario=new Usuario();
-					registroUsuario.setNombre("Erick");
-					registroUsuario.setApellido("Guerra");
+					registroUsuario.setId(7);
+					registroUsuario.setNombre("Administrador");
+					registroUsuario.setApellido("Admin");
 					
 					VistaRecepcion dialog = new VistaRecepcion(registroUsuario);
 					dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -296,7 +299,7 @@ public class VistaRecepcion extends JFrame {
 		JPanel panelArtefactos = new JPanel();
 		panelArtefactos.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 255), 2, true), "Agregar Artefactos", TitledBorder.RIGHT, TitledBorder.TOP, null, Color.BLUE));
 		panelRecepcion.add(panelArtefactos, BorderLayout.CENTER);
-		panelArtefactos.setLayout(new BorderLayout(0, 0));
+		panelArtefactos.setLayout(new BorderLayout(0, 4));
 		
 		JPanel panelLinea1_A = new JPanel();
 		FlowLayout flowLayout_4 = (FlowLayout) panelLinea1_A.getLayout();
@@ -330,7 +333,7 @@ public class VistaRecepcion extends JFrame {
 		JPanel panelLinea2_A = new JPanel();
 		FlowLayout flowLayout_5 = (FlowLayout) panelLinea2_A.getLayout();
 		flowLayout_5.setAlignment(FlowLayout.LEFT);
-		panelArtefactos.add(panelLinea2_A, BorderLayout.SOUTH);
+		panelArtefactos.add(panelLinea2_A, BorderLayout.CENTER);
 		
 		JLabel lblDiagnostico = new JLabel("Diagn\u00F3stico T\u00E9cnico:");
 		lblDiagnostico.setFont(new Font("Tahoma", Font.BOLD, 12));
@@ -357,10 +360,10 @@ public class VistaRecepcion extends JFrame {
 		textManoObra.setColumns(10);
 		
 		btnAgregarArtefacto = new JButton("");
-		btnAgregarArtefacto.setRolloverIcon(new ImageIcon(VistaRecepcion.class.getResource("/imagenes/iconos/iconos_32x32/recepcionRegistrar.png")));
-		btnAgregarArtefacto.setToolTipText("Incluir artefacto en el recibo");
+		btnAgregarArtefacto.setToolTipText("Agregar artefactos al recibo");
+		btnAgregarArtefacto.setRolloverIcon(new ImageIcon(VistaRecepcion.class.getResource("/imagenes/iconos/iconos_16x16/check.png")));
+		btnAgregarArtefacto.setIcon(new ImageIcon(VistaRecepcion.class.getResource("/imagenes/iconos/iconos_16x16/plus.png")));
 		btnAgregarArtefacto.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnAgregarArtefacto.setIcon(new ImageIcon(VistaRecepcion.class.getResource("/imagenes/iconos/iconos_32x32/inconoEntregaR.png")));
 		panelLinea2_A.add(btnAgregarArtefacto);
 		
 		JPanel panelTecnico = new JPanel();
@@ -502,22 +505,28 @@ public class VistaRecepcion extends JFrame {
 		panelMontoManoObra.add(textMontoTotal);
 		textMontoTotal.setColumns(10);
 		
+		btnAgregarArtefacto.setEnabled(false);
 		
 		//----------------->enlaces controlador <-------------------
 		ControladorVistaRecepcion eco=new ControladorVistaRecepcion(this);
 		btnCerrar.addActionListener(eco);
 		btnVaciar.addActionListener(eco);
+		btnRegistrar.addActionListener(eco);
 		btnAgregarArtefacto.addActionListener(eco);
+		comboTipoAparatos.addActionListener(eco);
 		
 		textCedula.addKeyListener(eco);
+		textInformacion.addKeyListener(eco);
+		textDetalles.addKeyListener(eco);
+		textDiagnostico.addKeyListener(eco);
+		textMontoRepuesto.addKeyListener(eco);
+		textManoObra.addKeyListener(eco);
 		
 		textCedula.requestFocus();
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);//maximar automaticamente
 		this.setAlwaysOnTop(true);
-		//this.setLocationRelativeTo(null);
-		this.setVisible(true);
 		
-		btnAgregarArtefacto.setEnabled(false);
+		this.setVisible(true);
 		comboTipoAparatos.setEnabled(false);
 	}//fin constructor
 

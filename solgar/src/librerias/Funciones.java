@@ -1,5 +1,6 @@
 package librerias;
 
+import java.io.File;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -65,8 +66,7 @@ public class Funciones {
 			}	
 //---------------> proximo Id<--------------------------
 public int proximoID(String sentenciaSql){
-					
-				
+			
 	SqlBD codigoSql = new SqlBD();
 						
 	ResultSet consulta = codigoSql.ConsultaTabla(sentenciaSql);
@@ -79,10 +79,43 @@ public int proximoID(String sentenciaSql){
 
 					e.printStackTrace();
 	}
-	codigoSql.Desconectar();
-	codigoSql.Desconectar();
-	return valor;
-}//fin proximo	
 	
 
+	return valor;
+}//fin proximo	
+//---------> chequear directorio y crea <-----------------------
+public void chequearCarpeta(String carpeta){
+	//"../reyconca/reportesPdf");
+	File folder = new File(carpeta);
+	if (!folder.isDirectory())
+		folder.mkdir();
 }
+//--------------->cambiar fecha a USA<-------------------
+public String CambiarFechaUSa(String xFecha){
+	String[] dat1= xFecha.split("/");
+	String dia,mes,anno;
+	mes=dat1[1];
+	dia=dat1[0];
+	anno=dat1[2];
+	String fecha2=anno+"/"+mes+"/"+dia;
+	
+	
+	return fecha2;
+	
+}
+//--------------->cambiar fecha a Ven<-------------------
+public String CambiarFechaVen(String xFecha){
+	String[] dat1= xFecha.split("-");
+	String dia,mes,anno;
+	mes=dat1[1];
+	dia=dat1[2];
+	anno=dat1[0];
+	String fecha2=dia+"/"+mes+"/"+anno;
+	
+	
+	return fecha2;
+	
+}
+
+
+}//fin de la clase

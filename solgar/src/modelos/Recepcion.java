@@ -2,24 +2,40 @@ package modelos;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 
 import controladoresBD.SqlBD;
+import librerias.Funciones;
 
 public class Recepcion {
 	private int id;
-	private int recepcion_id;
-	private int tipo_aparato_id;
-	private String diagnostico_cliente;
-	private String detalles_recepcion;
-	private String diagnostico_tecnico;
-	private double precio_repuestos;
-	private double precio_mano_obra;
-	private String detalles_reparacion;
-	private String status;
+	private int cliente_id;
+	private int usuario_id;
+	private String fecha_recepcion;
+	private String fecha_entrega;
+	private Funciones funciones;
 	
-	private String sentecia_sql_id_auto_increment = "SELECT AUTO_INCREMENT FROM information_schema.TABLES "
-			+ "WHERE TABLE_SCHEMA='solgar' AND TABLE_NAME= 'recepciones' ";
+//------------------------>constructores<--------------------
+	
+	public Recepcion(int id, int cliente_id, int usuario_id, String fecha_recepcion, String fecha_entrega) {
+		super();
+		funciones=new Funciones();
+		this.id = id;
+		this.cliente_id = cliente_id;
+		this.usuario_id = usuario_id;
+		this.fecha_recepcion = fecha_recepcion;
+		this.fecha_entrega = fecha_entrega;
+	}
 
+	public Recepcion() {
+		super();
+		funciones=new Funciones();
+		// TODO Auto-generated constructor stub
+	}
+
+	//---------------------getter & setter<--------------
 	public int getId() {
 		return id;
 	}
@@ -28,85 +44,88 @@ public class Recepcion {
 		this.id = id;
 	}
 
-	public int getRecepcion_id() {
-		return recepcion_id;
+	public int getCliente_id() {
+		return cliente_id;
 	}
 
-	public void setRecepcion_id(int recepcion_id) {
-		this.recepcion_id = recepcion_id;
+	public void setCliente_id(int cliente_id) {
+		this.cliente_id = cliente_id;
 	}
 
-	public int getTipo_aparato_id() {
-		return tipo_aparato_id;
+	public int getUsuario_id() {
+		return usuario_id;
 	}
 
-	public void setTipo_aparato_id(int tipo_aparato_id) {
-		this.tipo_aparato_id = tipo_aparato_id;
+	public void setUsuario_id(int usuario_id) {
+		this.usuario_id = usuario_id;
 	}
 
-	public String getDiagnostico_cliente() {
-		return diagnostico_cliente;
+	public String getFecha_recepcion() {
+		return fecha_recepcion;
 	}
 
-	public void setDiagnostico_cliente(String diagnostico_cliente) {
-		this.diagnostico_cliente = diagnostico_cliente;
+	public void setFecha_recepcion(String fecha_recepcion) {
+		this.fecha_recepcion = fecha_recepcion;
 	}
 
-	public String getDetalles_recepcion() {
-		return detalles_recepcion;
+	public String getFecha_entrega() {
+		return fecha_entrega;
 	}
 
-	public void setDetalles_recepcion(String detalles_recepcion) {
-		this.detalles_recepcion = detalles_recepcion;
+	public void setFecha_entrega(String fecha_entrega) {
+		this.fecha_entrega = fecha_entrega;
 	}
-
-	public String getDiagnostico_tecnico() {
-		return diagnostico_tecnico;
-	}
-
-	public void setDiagnostico_tecnico(String diagnostico_tecnico) {
-		this.diagnostico_tecnico = diagnostico_tecnico;
-	}
-
-	public double getPrecio_repuestos() {
-		return precio_repuestos;
-	}
-
-	public void setPrecio_repuestos(double precio_repuestos) {
-		this.precio_repuestos = precio_repuestos;
-	}
-
-	public double getPrecio_mano_obra() {
-		return precio_mano_obra;
-	}
-
-	public void setPrecio_mano_obra(double precio_mano_obra) {
-		this.precio_mano_obra = precio_mano_obra;
-	}
-
-	public String getDetalles_reparacion() {
-		return detalles_reparacion;
-	}
-
-	public void setDetalles_reparacion(String detalles_reparacion) {
-		this.detalles_reparacion = detalles_reparacion;
-	}
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
-	public String getSentecia_sql_id_auto_increment() {
-		return sentecia_sql_id_auto_increment;
-	}
-
-	public void setSentecia_sql_id_auto_increment(String sentecia_sql_id_auto_increment) {
-		this.sentecia_sql_id_auto_increment = sentecia_sql_id_auto_increment;
-	}
+//-------->read<-------------
+public boolean read(int nRecibo){
 	
+	String sentenciaSql = "SELECT * FROM recepciones where id="+nRecibo;
+				
+	SqlBD codigoSql = new SqlBD();
+				
+	ResultSet consulta = codigoSql.ConsultaTabla(sentenciaSql);
+	try {
+		while (consulta.next()) {
+			setId(consulta.getInt("id"));
+			setCliente_id(consulta.getInt("cliente_id"));
+			setUsuario_id(consulta.getInt("usuario_id"));
+			setFecha_recepcion(consulta.getString("fecha_recepcion"));
+			setFecha_entrega(consulta.getString("fecha_entrega"));
+			}
+		}catch (SQLException e) {
+		e.printStackTrace();
+	}
+	codigoSql.Desconectar();
+	if(this.id==0)return false;
+	else return true;
+}//fin read
 
-}
+//------------------>create<---------------------
+public boolean create(){
+	
+	
+	
+	if((id!=0)&&(cliente_id!=0)&&(usuario_id!=0)&&(fecha_recepcion!=null)&&(fecha_entrega!=null)){
+				
+		String sentenciaSql="INSERT INTO recepciones (cliente_id,usuario_id,fecha_recepcion,fecha_entrega)"
+				+ "VALUES ("+cliente_id+","+usuario_id+",'"
+				+funciones.CambiarFechaUSa(fecha_recepcion)+"','"+fecha_entrega+"')";
+		
+		SqlBD codigoSql = new SqlBD();
+		if(codigoSql.agregarRegistro(sentenciaSql))
+			return true;
+		else
+			return false;
+	}
+	else return false;
+}//fin create
+
+	
+	public static void main(String[] args) {
+		Recepcion registro=new Recepcion(1,13,7,"22/12/2016","31/12/2016");
+		
+		
+
+	}
+
+
+}//fin de la clase

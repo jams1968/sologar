@@ -3,6 +3,12 @@
  * objetivo: clase del modelo usuario
  ****************************************************************************/
 package modelos;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import controladoresBD.SqlBD;
+
 public class Usuario{
 	private int id;
 	private String cedula;
@@ -107,6 +113,31 @@ public class Usuario{
 		return id+"-"+nombre+"-"+apellido;
 	}
 	
-	
+	//-------->buscar<------------
+	public boolean buscarID(int  xId){
+					
+		String sentenciaSql = "SELECT * FROM usuarios where id='"+xId+ "'";
+						
+		SqlBD codigoSql = new SqlBD();
+					
+		ResultSet consulta = codigoSql.ConsultaTabla(sentenciaSql);
+		try {
+							
+		while (consulta.next()) {
+			setId(consulta.getInt("id"));
+			setCedula(consulta.getString("cedula"));
+			setNombre(consulta.getString("nombre"));
+			setApellido(consulta.getString("apellido"));
+			}
+		}catch (SQLException e) {
 
-}
+			e.printStackTrace();
+		}
+				
+		codigoSql.Desconectar();
+		if(this.id==0)
+			return false;
+		else return true;
+	}//fin buscar
+
+}//fin de la clase

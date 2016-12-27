@@ -4,11 +4,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Calendar;
 
 import librerias.Funciones;
 import modelos.Cliente;
+import modelos.Recepcion;
+import modelos.Reparacion;
 import modelos.TipoAparato;
 import modelos.Usuario;
+import pdf.reciboPDF;
 import vistas.VistaCliente;
 import vistas.VistaRecepcion;
 
@@ -20,8 +24,13 @@ public class ControladorVistaRecepcion implements ActionListener,KeyListener {
 	private Funciones funcion;
 	private int contar;
 	private double montoR,montoMo;
+	private Recepcion regRecepcion;
+	private Reparacion regReparacion;
+	
 	
 	public ControladorVistaRecepcion(VistaRecepcion vista) {
+		regRecepcion=new Recepcion();
+		regReparacion=new Reparacion();
 		tipoAparato=new TipoAparato();
 		contar=0;
 		montoR=0;
@@ -30,7 +39,8 @@ public class ControladorVistaRecepcion implements ActionListener,KeyListener {
 		this.registroCliente=new Cliente();
 		funcion=new Funciones();
 		vista.getTextNrecibo().setText(""+funcion.proximoID("SELECT AUTO_INCREMENT FROM information_schema.TABLES "
-			+ "WHERE TABLE_SCHEMA='solgar' AND TABLE_NAME= 'recepciones' "));
+			+ "WHERE TABLE_SCHEMA='bd_sologar' AND TABLE_NAME= 'recepciones' "));
+		vista.getTextCedula().requestFocus();
 	}
 	@Override
 	public void actionPerformed(ActionEvent accion) {
@@ -38,7 +48,22 @@ public class ControladorVistaRecepcion implements ActionListener,KeyListener {
 			vista.dispose();
 		else if(accion.getSource().equals(vista.getBtnVaciar()))
 			vaciarFormulario();
+		else if(accion.getSource().equals(vista.getBtnRegistrar())){
+			if(vista.getFechaEntrega().getDate()!=null){
+			llenarModelos();
+			if(regRecepcion.create()){
+				recorrerTabla();
+				vista.getLblMensaje().setText("Recibo almacenado Exitosamente");
+				new reciboPDF(regReparacion.getId());
+				vaciarFormulario();
+			}else
+				vista.getLblMensaje().setText("No se pudo almacenar el recibo");
+			}else
+				vista.getLblMensaje().setText("indique fecha de entrega");
+	   	}//fin registrar
+		
 		else if(accion.getSource().equals(vista.getBtnAgregarArtefacto())){
+		
 			if((vista.getComboTipoAparatos().getSelectedIndex()>0)&&
 					(!vista.getTextInformacion().getText().trim().isEmpty())&&
 					(!vista.getTextDetalles().getText().trim().isEmpty())&&
@@ -57,10 +82,14 @@ public class ControladorVistaRecepcion implements ActionListener,KeyListener {
 						vista.getTextDiagnostico().getText(),""+vista.getTextMontoRepuesto().getText(),""+vista.getTextManoObra().getText()});
 				
 						vaciarArtefactos();	
+						vista.getBtnRegistrar().setEnabled(true);
 			}
+		}// fin agregarArtefacto
+		else if(vista.getComboTipoAparatos().getSelectedIndex()>0){
+			vista.getTextInformacion().requestFocus();
 		}
 		
-	}
+	}// fin action
 	@Override
 	public void keyPressed(KeyEvent accion) {
 		if(accion.getSource().equals(vista.getTextCedula())&&
@@ -85,6 +114,32 @@ public class ControladorVistaRecepcion implements ActionListener,KeyListener {
 			}
 		
 		}//cedula
+		else if(accion.getSource().equals(vista.getTextInformacion())&&
+				(accion.getKeyCode()== KeyEvent.VK_ENTER)&&
+				!(vista.getTextInformacion().getText().trim().isEmpty())){
+				vista.getTextDetalles().requestFocus();
+			
+		}else if(accion.getSource().equals(vista.getTextDetalles())&&
+				(accion.getKeyCode()== KeyEvent.VK_ENTER)&&
+				!(vista.getTextDetalles().getText().trim().isEmpty())){
+				vista.getTextDiagnostico().requestFocus();
+			
+		}else if(accion.getSource().equals(vista.getTextDiagnostico())&&
+				(accion.getKeyCode()== KeyEvent.VK_ENTER)&&
+				!(vista.getTextDiagnostico().getText().trim().isEmpty())){
+				vista.getTextMontoRepuesto().requestFocus();
+			
+		}else if(accion.getSource().equals(vista.getTextMontoRepuesto())&&
+				(accion.getKeyCode()== KeyEvent.VK_ENTER)&&
+				!(vista.getTextMontoRepuesto().getText().trim().isEmpty())){
+				vista.getTextManoObra().requestFocus();
+				
+		}else if(accion.getSource().equals(vista.getTextManoObra())&&
+				(accion.getKeyCode()== KeyEvent.VK_ENTER)&&
+				!(vista.getTextManoObra().getText().trim().isEmpty())){
+				vista.getBtnAgregarArtefacto().requestFocus();
+		}
+		
 		
 	}
 	@Override
@@ -109,10 +164,21 @@ public class ControladorVistaRecepcion implements ActionListener,KeyListener {
 		vista.getBtnRegistrar().setEnabled(false);
 		vista.getBtnModificar().setEnabled(false);
 		vista.getBtnEliminar().setEnabled(false);
+	}
+	//-------------->llenar modelos<---------------
+	public void llenarModelos(){
+		regRecepcion.setId(Integer.parseInt(vista.getTextNrecibo().getText()));
+		regRecepcion.setCliente_id(this.registroCliente.getId());
+		regRecepcion.setUsuario_id(vista.getRegistroUsuario().getId());
+		regRecepcion.setFecha_recepcion(vista.getTextFechaRecibo().getText());
+		
+		String dia=Integer.toString(vista.getFechaEntrega().getCalendar().get(Calendar.DAY_OF_MONTH));
+		String mes=Integer.toString(vista.getFechaEntrega().getCalendar().get(Calendar.MONTH)+1);
+		String anno=Integer.toString(vista.getFechaEntrega().getCalendar().get(Calendar.YEAR));
+		String fecha=""+anno+"/"+mes+"/"+dia;
+		regRecepcion.setFecha_entrega(fecha);
 		
 		
-		
-			
 	}
 	//-------------------->vaciar campos<----------------------
 	public void vaciarFormulario(){
@@ -122,6 +188,8 @@ public class ControladorVistaRecepcion implements ActionListener,KeyListener {
 		vista.getTextTelefono2().setText(null);
 		vista.getTextDireccion().setText(null);
 		vista.getTextCorreo().setText(null);
+		vista.getFechaEntrega().setDate(null);
+		vista.getBtnAgregarArtefacto().setEnabled(false);
 		
 		vista.getFechaEntrega();
 		
@@ -142,6 +210,24 @@ public class ControladorVistaRecepcion implements ActionListener,KeyListener {
 		vista.getTextMontoRepuesto().setText(null);
 		vista.getTextManoObra().setText(null);
 		
+	}
+	public void recorrerTabla(){
+		for(int i=0; i<vista.getTablaArtefactos().getRowCount();i++){
+			System.out.println(i);
+			regReparacion=new Reparacion();
+			regReparacion.setRecepcion_id(Integer.parseInt(vista.getTextNrecibo().getText()));
+			tipoAparato.setTipo((String)vista.getTablaArtefactos().getValueAt(i, 1));
+			tipoAparato.buscar();
+			regReparacion.setTipo_Aparato_id(tipoAparato.getId());
+			regReparacion.setDiagnostico_cliente((String)vista.getTablaArtefactos().getValueAt(i, 2));
+			regReparacion.setDetalles_recepcion((String)vista.getTablaArtefactos().getValueAt(i, 3));
+			regReparacion.setDiagnostico_tecnico((String)vista.getTablaArtefactos().getValueAt(i, 4));
+			regReparacion.setMonto_repuestos(Double.parseDouble((String)vista.getTablaArtefactos().getValueAt(i, 5)));
+			regReparacion.setMonto_mano_obra(Double.parseDouble((String)vista.getTablaArtefactos().getValueAt(i, 6)));
+			regReparacion.setDetalles_reparacion(null);
+			regReparacion.setStatus('P');
+			regReparacion.create();
+		}
 	}
 
 }
