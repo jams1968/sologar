@@ -57,6 +57,7 @@ public class reciboPDF {
 		regCliente.buscarID(regRecibo.getCliente_id());
 		regUsuario.buscarID(regRecibo.getUsuario_id());
 		
+		
 		writer=null;
 		parrafo=null;
 		funciones=new Funciones();
@@ -106,7 +107,7 @@ public class reciboPDF {
 
 			String fechaR = funciones.CambiarFechaVen(regRecibo.getFecha_recepcion());
 			String fechaE = funciones.CambiarFechaVen(regRecibo.getFecha_entrega());
-			
+		
 			try{
 				Image fondo=null;
 				

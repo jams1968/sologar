@@ -4,9 +4,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.JOptionPane;
 
+import librerias.Funciones;
 import modelos.Cliente;
 import modelos.Repuesto;
 import modelos.Usuario;
@@ -16,9 +19,17 @@ public class ControladorVistaCliente implements ActionListener,KeyListener {
 
 	VistaCliente vista;
 	private Cliente nuevoRegistro;
+	private Pattern patronLetras,patronNumero,patronTelefono,patronCorreo;
+	private Matcher validarNumeros,validarLetras,validarTelefono,validarCorreo;
+	private Funciones funcion;
 	
 	public ControladorVistaCliente(VistaCliente vista) {
 		this.vista=vista;
+		patronLetras = Pattern.compile("[A-Za-z ]");
+		patronNumero = Pattern.compile("[0-9]");
+		patronTelefono = Pattern.compile("[0-9()-]");
+		patronCorreo=Pattern.compile("^[A-Za-z0-9]+@[a-z]+\\.[a-z]+");
+		funcion=new Funciones();
 		nuevoRegistro=new Cliente();
 	}
 	@Override
@@ -29,8 +40,11 @@ public class ControladorVistaCliente implements ActionListener,KeyListener {
 		else if (accion.getSource().equals(vista.getBtnRegistrar())) {
 			llenarModelo();
 			  
-			if(!nuevoRegistro.buscar(vista.getTextCedula().getText())&&(nuevoRegistro.create()))
+			if(!nuevoRegistro.buscar(vista.getTextCedula().getText())&&(nuevoRegistro.create())){
 					vista.getLblMensaje().setText("Cliente registrado exitosamente ");
+					vaciarFormulario();
+					
+			}
 				else
 					vista.getLblMensaje().setText("No se pudo registrar el cliente ");
 			
@@ -64,6 +78,30 @@ public class ControladorVistaCliente implements ActionListener,KeyListener {
 			
 			vaciarFormulario();
 		
+		else if(accion.getSource().equals(vista.getRdbtnSi())|| accion.getSource().equals(vista.getRdbtnNo())){
+			if(vista.getRdbtnSi().isSelected()){
+				vista.getTextCorreo().setEditable(true);
+				vista.getTextCorreo().requestFocus();
+			}else if(vista.getRdbtnNo().isSelected()){
+				vista.getTextDireccion().setEditable(true);
+				vista.getTextDireccion().requestFocus();
+			}
+			
+		}
+		else if(accion.getSource().equals(vista.getRdbtnTeleSi())|| accion.getSource().equals(vista.getRdbtnTeleNo())){
+			if(vista.getRdbtnTeleSi().isSelected()){
+				vista.getTextTelefono2().setEditable(true);
+				vista.getTextTelefono2().requestFocus();
+			}else if(vista.getRdbtnTeleNo().isSelected()){
+				vista.getRdbtnSi().setEnabled(true);
+				vista.getRdbtnNo().setEnabled(true);
+				vista.getRdbtnSi().requestFocus();
+			}
+			
+		}
+		
+		
+		
 	}//fin action
 	
 	//-------->keylisterner<-----------------
@@ -72,37 +110,72 @@ public class ControladorVistaCliente implements ActionListener,KeyListener {
 		if(accion.getSource().equals(vista.getTextCedula())&&
 				(accion.getKeyCode()== KeyEvent.VK_ENTER)&&
 				!(vista.getTextCedula().getText().trim().isEmpty())){
-			if(!nuevoRegistro.buscar(vista.getTextCedula().getText().trim())){
-				vista.getTextCliente().setEditable(true);
-				vista.getTextCliente().requestFocus();
-				
-				
-			}else{
-				vista.getLblMensaje().setText("Cedula o rif se encuentra registrado");
-				llenarFormulario(nuevoRegistro);
-				desbloquear();
-				vista.getBtnModificar().setEnabled(true);
-				vista.getBtnEliminar().setEnabled(true);
+			validarNumeros = patronNumero.matcher(vista.getTextCedula().getText().trim());	
+			if(validarNumeros.find()){
+				if(!nuevoRegistro.buscar(vista.getTextCedula().getText().trim())){
+					vista.getTextCliente().setEditable(true);
+					vista.getTextCliente().requestFocus();
+				}else{
+					vista.getLblMensaje().setText("Cédula o Rif se encuentra registrado");
+					llenarFormulario(nuevoRegistro);
+					desbloquear();
+					vista.getBtnModificar().setEnabled(true);
+					vista.getBtnEliminar().setEnabled(true);
+				}
+			}else {
+				vista.getLblMensaje().setText("Valor invalido");
+	
 			}
-		
 		}//cedula
 		else if(accion.getSource().equals(vista.getTextCliente())&&
 				(accion.getKeyCode()== KeyEvent.VK_ENTER)&&
 				!(vista.getTextCliente().getText().trim().isEmpty())){
+			
+			validarLetras = patronLetras.matcher(vista.getTextCliente().getText().trim());	
+			if(validarLetras.find()){
 				vista.getTextTelefono1().setEditable(true);
 				vista.getTextTelefono1().requestFocus();
+			}else vista.getLblMensaje().setText("Valor invalido");
 		}
+				
 		else if(accion.getSource().equals(vista.getTextTelefono1())&&
 				(accion.getKeyCode()== KeyEvent.VK_ENTER)&&
 				!(vista.getTextTelefono1().getText().trim().isEmpty())){
-				vista.getTextTelefono2().setEditable(true);
-				vista.getTextTelefono2().requestFocus();
+				
+			
+			String cadena=vista.getTextTelefono1().getText().trim();
+			String valor=cadena.substring(1,4)+cadena.substring(7,9)+cadena.substring(11,12)+cadena.substring(14,15);
+			validarTelefono = patronTelefono.matcher(valor);	
+		
+			if(validarTelefono.find()){
+				vista.getRdbtnTeleNo().setEnabled(true);
+				vista.getRdbtnTeleSi().setEnabled(true);
+				vista.getRdbtnTeleSi().requestFocus();
+			}else vista.getLblMensaje().setText("Valor invalido");
+			
+			
+			
 		}
 		else if(accion.getSource().equals(vista.getTextTelefono2())&&
 				(accion.getKeyCode()== KeyEvent.VK_ENTER)&&
 				!(vista.getTextTelefono2().getText().trim().isEmpty())){
-				vista.getTextCorreo().setEditable(true);
-				vista.getTextCorreo().requestFocus();
+			
+			String cadena=vista.getTextTelefono2().getText().trim();
+			String valor=cadena.substring(1,4)+cadena.substring(7,9)+cadena.substring(11,12)+cadena.substring(14,15);
+			validarTelefono = patronTelefono.matcher(valor);	
+		
+			if(validarTelefono.find()){
+				vista.getRdbtnTeleNo().setEnabled(true);
+				vista.getRdbtnTeleSi().setEnabled(true);
+				vista.getRdbtnTeleSi().requestFocus();
+				
+			}else vista.getLblMensaje().setText("Valor invalido");
+			
+				
+			/*
+				vista.getRdbtnSi().setEnabled(true);
+				vista.getRdbtnNo().setEnabled(true);
+				vista.getRdbtnSi().requestFocus();*/
 		}
 		else if(accion.getSource().equals(vista.getTextCorreo())&&
 				(accion.getKeyCode()== KeyEvent.VK_ENTER)&&
@@ -182,5 +255,16 @@ public class ControladorVistaCliente implements ActionListener,KeyListener {
 		vista.getBtnRegistrar().setEnabled(false);
 		vista.getBtnModificar().setEnabled(false);
 		vista.getBtnEliminar().setEnabled(false);
+		vista.getRdbtnNo().setEnabled(false);
+		vista.getRdbtnSi().setEnabled(false);
+		vista.getRdbtnNo().setSelected(false);
+		vista.getRdbtnSi().setSelected(false);
+
+		vista.getRdbtnTeleNo().setEnabled(false);
+		vista.getRdbtnTeleSi().setEnabled(false);
+		vista.getRdbtnTeleNo().setSelected(false);
+		vista.getRdbtnTeleSi().setSelected(false);
+		
+		
 	}
 }//fin clase

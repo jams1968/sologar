@@ -61,11 +61,18 @@ public class VentanaInicial extends JFrame{
 	private JSeparator separator_1;
 	private JPanel panelTitulo;
 	private JLabel lblNewLabel;
-	private JMenuItem mntmGraficosEstadisticos;
 	private Usuario registroUsuario;
 	private JMenuItem mntmCambioDeClave;
+	private JMenuItem mntmImprimirRecibo;
+	private JMenu mnGraficos;
+	private JMenuItem mntmTiposAparatosRecibidos;
 	
-		
+	public static void main(String[] args) {
+		Usuario registroUsuario=new Usuario();
+		registroUsuario.setNombre("Jairo");
+		registroUsuario.setApellido("Molina");
+		new VentanaInicial(registroUsuario);
+	}
 	public VentanaInicial(Usuario registroUsuario){
 		this.registroUsuario=registroUsuario;
 		setTitle("Usuario:   "+this.registroUsuario.getNombre()+" "+this.registroUsuario.getApellido());
@@ -237,16 +244,26 @@ public class VentanaInicial extends JFrame{
 		mntmPendientesR.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		mnReportes.add(mntmPendientesR);
 		
+		mntmImprimirRecibo = new JMenuItem("Recibo en PDF");
+		mntmImprimirRecibo.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		mntmImprimirRecibo.setIcon(new ImageIcon(VentanaInicial.class.getResource("/imagenes/iconos/iconos_32x32/page_white_acrobat.png")));
+		mnReportes.add(mntmImprimirRecibo);
+		
 		mntmInventario_1 = new JMenuItem("Inventario");
 		mntmInventario_1.setIcon(new ImageIcon(VentanaInicial.class.getResource("/imagenes/iconos/iconos_32x32/reports-icon2.png")));
 		mntmInventario_1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		mntmInventario_1.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		mnReportes.add(mntmInventario_1);
 		
-		mntmGraficosEstadisticos = new JMenuItem("Gr\u00E1ficos Estad\u00EDsticos");
-		mntmGraficosEstadisticos.setIcon(new ImageIcon(VentanaInicial.class.getResource("/imagenes/iconos/iconos_32x32/chart_pie.png")));
-		mntmGraficosEstadisticos.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		mnReportes.add(mntmGraficosEstadisticos);
+		mnGraficos = new JMenu("Gr\u00E1ficos");
+		mnGraficos.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		mnGraficos.setIcon(new ImageIcon(VentanaInicial.class.getResource("/imagenes/iconos/iconos_32x32/chart_pie.png")));
+		mnReportes.add(mnGraficos);
+		
+		mntmTiposAparatosRecibidos = new JMenuItem("Tipos Aparatos Recibidos");
+		mntmTiposAparatosRecibidos.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		mntmTiposAparatosRecibidos.setIcon(new ImageIcon(VentanaInicial.class.getResource("/imagenes/iconos/iconos_32x32/grafico.png")));
+		mnGraficos.add(mntmTiposAparatosRecibidos);
 		
 		mnUtilidades = new JMenu("Utilidades");
 		mnUtilidades.setMnemonic(KeyEvent.VK_U);
@@ -304,6 +321,8 @@ public class VentanaInicial extends JFrame{
 		mntmTiposAparatos.addActionListener(eco);
 		mntmRecepcion.addActionListener(eco);
 		mntmInventario_1.addActionListener(eco);
+		mntmImprimirRecibo.addActionListener(eco);
+		mntmTiposAparatosRecibidos.addActionListener(eco);
 		
 		
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);//maximar automaticamente
@@ -448,16 +467,18 @@ public class VentanaInicial extends JFrame{
 	}
 
 
-	public JMenuItem getMntmGraficosEstadisticos() {
-		return mntmGraficosEstadisticos;
+
+
+
+	public JLabel getLblNewLabel() {
+		return lblNewLabel;
 	}
-
-
-	public void setMntmGraficosEstadisticos(JMenuItem mntmGraficosEstadisticos) {
-		this.mntmGraficosEstadisticos = mntmGraficosEstadisticos;
+	public JMenu getMnGraficos() {
+		return mnGraficos;
 	}
-
-
+	public JMenuItem getMntmTiposAparatosRecibidos() {
+		return mntmTiposAparatosRecibidos;
+	}
 	public Usuario getRegistroUsuario() {
 		return registroUsuario;
 	}
@@ -480,6 +501,9 @@ public class VentanaInicial extends JFrame{
 
 	public JMenuItem getMntmCambioDeClave() {
 		return mntmCambioDeClave;
+	}
+	public JMenuItem getMntmImprimirRecibo() {
+		return mntmImprimirRecibo;
 	}
 	
 

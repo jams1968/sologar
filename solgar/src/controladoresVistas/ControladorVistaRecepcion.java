@@ -38,8 +38,7 @@ public class ControladorVistaRecepcion implements ActionListener,KeyListener {
 		this.vista=vista;
 		this.registroCliente=new Cliente();
 		funcion=new Funciones();
-		vista.getTextNrecibo().setText(""+funcion.proximoID("SELECT AUTO_INCREMENT FROM information_schema.TABLES "
-			+ "WHERE TABLE_SCHEMA='bd_sologar' AND TABLE_NAME= 'recepciones' "));
+		iniciar();
 		vista.getTextCedula().requestFocus();
 	}
 	@Override
@@ -50,14 +49,15 @@ public class ControladorVistaRecepcion implements ActionListener,KeyListener {
 			vaciarFormulario();
 		else if(accion.getSource().equals(vista.getBtnRegistrar())){
 			if(vista.getFechaEntrega().getDate()!=null){
-			llenarModelos();
-			if(regRecepcion.create()){
-				recorrerTabla();
-				vista.getLblMensaje().setText("Recibo almacenado Exitosamente");
-				new reciboPDF(regReparacion.getId());
-				vaciarFormulario();
-			}else
-				vista.getLblMensaje().setText("No se pudo almacenar el recibo");
+				llenarModelos();
+				if(regRecepcion.create()){
+					recorrerTabla();
+					vista.getLblMensaje().setText("Recibo almacenado Exitosamente");
+					this.vista.setAlwaysOnTop(false);
+					new reciboPDF(regRecepcion.getId());
+					vaciarFormulario();
+				}else
+					vista.getLblMensaje().setText("No se pudo almacenar el recibo");
 			}else
 				vista.getLblMensaje().setText("indique fecha de entrega");
 	   	}//fin registrar
@@ -159,7 +159,7 @@ public class ControladorVistaRecepcion implements ActionListener,KeyListener {
 		vista.getTextTelefono2().setText(registroCliente.getTelefono2());
 		vista.getTextDireccion().setText(registroCliente.getDireccion());
 		vista.getTextCorreo().setText(registroCliente.getCorreo());
-		vista.getFechaEntrega().setDate(null);
+		//vista.getFechaEntrega().setDate(null);
 		vista.getBtnAgregarArtefacto().setEnabled(false);
 		vista.getBtnRegistrar().setEnabled(false);
 		vista.getBtnModificar().setEnabled(false);
@@ -182,6 +182,7 @@ public class ControladorVistaRecepcion implements ActionListener,KeyListener {
 	}
 	//-------------------->vaciar campos<----------------------
 	public void vaciarFormulario(){
+		iniciar();
 		vista.getTextCedula().setText(null);
 		vista.getTextCliente().setText(null);
 		vista.getTextTelefono1().setText(null);
@@ -213,7 +214,7 @@ public class ControladorVistaRecepcion implements ActionListener,KeyListener {
 	}
 	public void recorrerTabla(){
 		for(int i=0; i<vista.getTablaArtefactos().getRowCount();i++){
-			System.out.println(i);
+			
 			regReparacion=new Reparacion();
 			regReparacion.setRecepcion_id(Integer.parseInt(vista.getTextNrecibo().getText()));
 			tipoAparato.setTipo((String)vista.getTablaArtefactos().getValueAt(i, 1));
@@ -229,5 +230,9 @@ public class ControladorVistaRecepcion implements ActionListener,KeyListener {
 			regReparacion.create();
 		}
 	}
-
+public void iniciar(){
+	vista.getTextNrecibo().setText(""+funcion.proximoID("SELECT AUTO_INCREMENT FROM information_schema.TABLES "
+			+ "WHERE TABLE_SCHEMA='bd_sologar' AND TABLE_NAME= 'recepciones' "));
 }
+	
+}//fi de la clase

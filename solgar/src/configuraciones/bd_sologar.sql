@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 27-12-2016 a las 03:40:47
+-- Tiempo de generación: 31-12-2016 a las 06:28:04
 -- Versión del servidor: 5.6.26
 -- Versión de PHP: 5.5.28
 
@@ -19,7 +19,6 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `bd_sologar`
 --
-DROP DATABASE `bd_sologar`;
 CREATE DATABASE IF NOT EXISTS `bd_sologar` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
 USE `bd_sologar`;
 
@@ -37,14 +36,16 @@ CREATE TABLE IF NOT EXISTS `clientes` (
   `telefono2` varchar(16) NOT NULL,
   `direccion` varchar(250) NOT NULL,
   `email` varchar(60) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `clientes`
 --
 
 INSERT INTO `clientes` (`id`, `doc_identidad`, `cliente`, `telefono1`, `telefono2`, `direccion`, `email`) VALUES
-(1, '6331034', 'Jairo Molina', '(0416)-942-12-12', '(0246)-433-60-80', 'Sector Nueva Esperanza, calle 2, N°8, Zona Industrial', 'profesor@jairomolina.com.ve');
+(1, '6331034', 'Jairo Molina', '(0416)-942-12-12', '(0246)-433-60-80', 'Sector Nueva Esperanza, calle 2, N°8, Zona Industrial', 'profesor@jairomolina.com.ve'),
+(2, '17435638', 'NORMARYS ALVARADO', '(0414)-473-76-75', '(0246)-433-60-80', 'CHAGUARAMAS\n', 'yo@jairo.com'),
+(3, '12345678', 'BENITO CAMELAS', '(1234)-567-89-89', '', '21212\n', 'no@j.com');
 
 -- --------------------------------------------------------
 
@@ -77,18 +78,18 @@ CREATE TABLE IF NOT EXISTS `recepciones` (
   `usuario_id` int(11) NOT NULL,
   `fecha_recepcion` date NOT NULL,
   `fecha_entrega` date NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `recepciones`
 --
 
 INSERT INTO `recepciones` (`id`, `cliente_id`, `usuario_id`, `fecha_recepcion`, `fecha_entrega`) VALUES
-(1, 1, 1, '2016-12-23', '2016-12-31'),
-(3, 1, 7, '2016-12-23', '2016-12-31'),
-(4, 1, 7, '2016-12-23', '2016-12-31'),
-(5, 1, 7, '2016-12-24', '2016-12-31'),
-(6, 1, 7, '2016-12-24', '2016-12-31');
+(1, 1, 7, '2016-12-30', '2016-12-31'),
+(2, 2, 7, '2016-12-30', '2016-12-31'),
+(3, 2, 7, '2016-12-30', '2016-12-31'),
+(4, 3, 7, '2016-12-30', '2016-12-31'),
+(5, 1, 1, '2017-01-01', '2017-01-31');
 
 -- --------------------------------------------------------
 
@@ -107,23 +108,21 @@ CREATE TABLE IF NOT EXISTS `reparaciones` (
   `precio_mano_obra` double NOT NULL,
   `detalles_reparacion` varchar(150) COLLATE utf8_swedish_ci NOT NULL,
   `status` varchar(1) COLLATE utf8_swedish_ci NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci;
 
 --
 -- Volcado de datos para la tabla `reparaciones`
 --
 
 INSERT INTO `reparaciones` (`id`, `recepcion_id`, `tipo_aparato_id`, `diagnostico_cliente`, `detalles_recepcion`, `diagnostico_tecnico`, `precio_repuestos`, `precio_mano_obra`, `detalles_reparacion`, `status`) VALUES
-(1, 1, 1, 'es muy lento y se recalienta', 'no tiene el botón encendido', 'cambio bocina', 1, 1, 'null', 'P'),
-(2, 1, 2, 'no gira la cuchilla', 'el cable esta despegado', 'cambio de base y cable AC', 1, 1, 'null', 'P'),
-(3, 3, 3, 'AAA', 'AAA', 'AAA', 111, 111, 'null', 'P'),
-(4, 3, 4, 'DD', 'DD', 'DDD', 44, 44, 'null', 'P'),
-(5, 4, 2, '1', '1', '1', 1, 1, 'null', 'P'),
-(6, 5, 1, 'NO ENCIENDE', 'SIN ASPA', 'CAMBIO DE BOCINA Y ASPA NUEVA', 10000, 12000, 'null', 'P'),
-(7, 1, 3, 'No Calienta', 'sin detalles', 'revisión resistencia', 3000, 5000, '', ''),
-(8, 1, 4, 'no prende', 'sin detalles', 'cambiar carbones', 3500, 4000, '', ''),
-(9, 6, 1, 'NO ENCIENDE', 'SIN DETALLES', 'CAMBIO DEL MOTOR', 18000, 15000, 'null', 'P'),
-(10, 6, 2, 'ECHA HUMO', 'SIN BOTÓN', 'CAMBIO CARBONES Y BOTÓN DE ENCENDIDO', 12000, 5000, 'null', 'P');
+(6, 1, 1, 'v', 'v', 'v', 1, 1, 'a', 'P'),
+(7, 1, 1, 'd', 'd', 'd', 2, 2, 'sa', 'P'),
+(8, 1, 2, 'f', 'f', 'f', 1, 1, 'asas', 'P'),
+(9, 2, 1, 'm', 'm', 'm', 7, 7, '', 'P'),
+(10, 2, 2, 'b', 'b', 'b', 6, 6, '', 'P'),
+(11, 3, 1, 'a', 'f', 'kk', 5, 4, '', 'P'),
+(12, 4, 1, 'sa', 'asa', 'ass', 12, 12, '', 'P'),
+(13, 5, 1, 'a', 'a', 'a', 12, 12, 'a', 'P');
 
 -- --------------------------------------------------------
 
@@ -134,7 +133,7 @@ INSERT INTO `reparaciones` (`id`, `recepcion_id`, `tipo_aparato_id`, `diagnostic
 CREATE TABLE IF NOT EXISTS `tipos_aparato` (
   `id` int(11) NOT NULL,
   `tipo` varchar(60) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `tipos_aparato`
@@ -144,7 +143,9 @@ INSERT INTO `tipos_aparato` (`id`, `tipo`) VALUES
 (1, 'VENTILADOR'),
 (2, 'LICUADORA'),
 (3, 'PLANCHA'),
-(4, 'SECADOR');
+(4, 'SECADOR'),
+(5, 'SANDWICHERA'),
+(6, 'MICROONDAS');
 
 -- --------------------------------------------------------
 
@@ -224,7 +225,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `clientes`
 --
 ALTER TABLE `clientes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT de la tabla `niveles_usuario`
 --
@@ -234,17 +235,17 @@ ALTER TABLE `niveles_usuario`
 -- AUTO_INCREMENT de la tabla `recepciones`
 --
 ALTER TABLE `recepciones`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT de la tabla `reparaciones`
 --
 ALTER TABLE `reparaciones`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=14;
 --
 -- AUTO_INCREMENT de la tabla `tipos_aparato`
 --
 ALTER TABLE `tipos_aparato`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --

@@ -36,8 +36,10 @@ import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import javax.swing.JComboBox;
+import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.Toolkit;
+import javax.swing.JRadioButton;
 
 
 
@@ -59,6 +61,11 @@ public class VistaCliente extends JDialog {
 	private Usuario registroUsuario;
 	private JFormattedTextField textTelefono2;
 	private MaskFormatter mascaraTelefono,mascaraCorreo;
+	private JRadioButton rdbtnNo;
+	private JRadioButton rdbtnSi;
+	private JPanel panel_1;
+	private JRadioButton rdbtnTeleSi;
+	private JRadioButton rdbtnTeleNo;
 
 	/**
 	 * Launch the application.
@@ -94,7 +101,7 @@ public class VistaCliente extends JDialog {
 		
 		JPanel panelDP = new JPanel();
 		panelDP.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Datos Cliente", TitledBorder.RIGHT, TitledBorder.TOP, null, new Color(0, 0, 255)));
-		panelDP.setBounds(0, 0, 689, 253);
+		panelDP.setBounds(0, 0, 689, 268);
 		getContentPane().add(panelDP);
 		panelDP.setLayout(null);
 		
@@ -139,17 +146,17 @@ public class VistaCliente extends JDialog {
 			textTelefono2 = new JFormattedTextField(mascaraTelefono);
 			textTelefono2.setEditable(false);
 			textTelefono2.setColumns(10);
-			textTelefono2.setBounds(307, 59, 109, 25);
+			textTelefono2.setBounds(455, 58, 109, 25);
 			
 			JLabel labelCorreo = new JLabel("Correo:");
 			labelCorreo.setFont(new Font("Tahoma", Font.BOLD, 12));
-			labelCorreo.setBounds(21, 107, 50, 14);
+			labelCorreo.setBounds(145, 123, 50, 14);
 			panelDP.add(labelCorreo);
 			
 			textCorreo = new JTextField();
 			textCorreo.setEditable(false);
 			textCorreo.setColumns(10);
-			textCorreo.setBounds(81, 107, 289, 25);
+			textCorreo.setBounds(205, 123, 289, 25);
 			panelDP.add(textCorreo);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
@@ -157,23 +164,62 @@ public class VistaCliente extends JDialog {
 		}
 		JLabel labelDireccion = new JLabel("Direcci\u00F3n:");
 		labelDireccion.setFont(new Font("Tahoma", Font.BOLD, 12));
-		labelDireccion.setBounds(10, 155, 68, 14);
+		labelDireccion.setBounds(10, 170, 68, 14);
 		panelDP.add(labelDireccion);
 		
 		textDireccion = new JTextArea();
 		textDireccion.setEditable(false);
 		textDireccion.setCaretColor(Color.BLACK);
 		textDireccion.setBorder(new LineBorder(Color.GRAY, 1, true));
-		textDireccion.setBounds(73, 156, 573, 86);
+		textDireccion.setBounds(73, 171, 573, 86);
 		panelDP.add(textDireccion);
 		
 		JLabel lblOtroTelfono = new JLabel("otro Tel\u00E9fono:");
 		lblOtroTelfono.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblOtroTelfono.setBounds(206, 62, 98, 14);
+		lblOtroTelfono.setBounds(354, 61, 98, 14);
 		panelDP.add(lblOtroTelfono);
 		
 		
 		panelDP.add(textTelefono2);
+		
+		JPanel panel = new JPanel();
+		panel.setBorder(new TitledBorder(null, "Posee Correo", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel.setBounds(10, 114, 109, 45);
+		panelDP.add(panel);
+		
+		rdbtnSi = new JRadioButton("Si");
+		panel.add(rdbtnSi);
+		
+		rdbtnNo = new JRadioButton("No");
+		panel.add(rdbtnNo);
+		ButtonGroup grupoCorreo=new ButtonGroup();
+		grupoCorreo.add(rdbtnSi);
+		grupoCorreo.add(rdbtnNo);
+		rdbtnSi.setEnabled(false);
+		rdbtnNo.setEnabled(false);
+		rdbtnNo.setSelected(false);
+		rdbtnSi.setSelected(false);
+		
+		panel_1 = new JPanel();
+		panel_1.setBorder(new TitledBorder(null, "Posee otro Tel\u00E9fono", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_1.setBounds(192, 61, 143, 45);
+		panelDP.add(panel_1);
+		
+		rdbtnTeleSi = new JRadioButton("Si");
+		panel_1.add(rdbtnTeleSi);
+		
+		rdbtnTeleNo = new JRadioButton("No");
+		panel_1.add(rdbtnTeleNo);
+		
+		ButtonGroup grupoTelefono2=new ButtonGroup();
+		grupoTelefono2.add(rdbtnTeleSi);
+		grupoTelefono2.add(rdbtnTeleNo);
+		
+		rdbtnTeleSi.setEnabled(false);
+		rdbtnTeleNo.setEnabled(false);
+		rdbtnTeleNo.setSelected(false);
+		rdbtnTeleSi.setSelected(false);
+		
 		
 		panelMensaje = new JPanel();
 		panelMensaje.setBorder(new TitledBorder(null, "Mensaje del Sistema", TitledBorder.RIGHT, TitledBorder.TOP, null, Color.BLUE));
@@ -259,6 +305,10 @@ public class VistaCliente extends JDialog {
 		btnModificar.addActionListener(eco);
 		btnEliminar.addActionListener(eco);
 		btnReportePantalla.addActionListener(eco);
+		rdbtnNo.addActionListener(eco);
+		rdbtnSi.addActionListener(eco);
+		rdbtnTeleSi.addActionListener(eco);
+		rdbtnTeleNo.addActionListener(eco);
 		
 		textCedula.addKeyListener(eco);
 		textCliente.addKeyListener(eco);
@@ -355,6 +405,22 @@ public class VistaCliente extends JDialog {
 
 	public MaskFormatter getMascaraCorreo() {
 		return mascaraCorreo;
+	}
+
+	public JRadioButton getRdbtnNo() {
+		return rdbtnNo;
+	}
+
+	public JRadioButton getRdbtnSi() {
+		return rdbtnSi;
+	}
+
+	public JRadioButton getRdbtnTeleSi() {
+		return rdbtnTeleSi;
+	}
+
+	public JRadioButton getRdbtnTeleNo() {
+		return rdbtnTeleNo;
 	}
 	
 }//fin  de la clase
