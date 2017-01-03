@@ -14,6 +14,7 @@ import modelos.Cliente;
 import modelos.Repuesto;
 import modelos.Usuario;
 import vistas.VistaCliente;
+import vistasReportes.VistaReporteClientesPP;
 
 public class ControladorVistaCliente implements ActionListener,KeyListener {
 
@@ -37,6 +38,8 @@ public class ControladorVistaCliente implements ActionListener,KeyListener {
 		if(accion.getSource().equals(vista.getCancelButton())){
 			vista.dispose();
 		}// fin cerrar
+		else if(accion.getSource().equals(vista.getBtnReportePantalla()))
+			new VistaReporteClientesPP();
 		else if (accion.getSource().equals(vista.getBtnRegistrar())) {
 			llenarModelo();
 			  
@@ -165,9 +168,9 @@ public class ControladorVistaCliente implements ActionListener,KeyListener {
 			validarTelefono = patronTelefono.matcher(valor);	
 		
 			if(validarTelefono.find()){
-				vista.getRdbtnTeleNo().setEnabled(true);
-				vista.getRdbtnTeleSi().setEnabled(true);
-				vista.getRdbtnTeleSi().requestFocus();
+				vista.getRdbtnNo().setEnabled(true);
+				vista.getRdbtnSi().setEnabled(true);
+				vista.getRdbtnSi().requestFocus();
 				
 			}else vista.getLblMensaje().setText("Valor invalido");
 			

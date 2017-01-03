@@ -3,6 +3,7 @@ package controladoresVistas;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import graficos.VistaGraficoRepuestos;
 import vistasReportes.VistaReporteRepuestosPP;
 
 public class ControladorVistaReporteRepuestosPP implements ActionListener {
@@ -18,7 +19,11 @@ public class ControladorVistaReporteRepuestosPP implements ActionListener {
 		if(accion.getSource().equals(vista.getBtnRetornar())){
 			vista.dispose();
 		}// fin cerrar
+		else if(accion.getSource().equals(vista.getBtnGrafico())){
+			new VistaGraficoRepuestos().toFront();
+		}
 		
 	}
+		
 
 }

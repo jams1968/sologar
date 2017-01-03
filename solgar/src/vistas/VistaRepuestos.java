@@ -284,7 +284,7 @@ public class VistaRepuestos extends JDialog {
 		
 		
 		
-		this.setAlwaysOnTop(true);
+	
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		this.setVisible(true);

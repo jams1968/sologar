@@ -9,8 +9,9 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import controladoresBD.SqlBD;
+import controladoresVistas.ControladorVistaReporteClientesPP;
 import controladoresVistas.ControladorVistaReporteRepuestosPP;
-
+import modelos.Cliente;
 import modelos.Repuesto;
 import vistas.VistaLogin;
 
@@ -37,7 +38,7 @@ import javax.swing.BoxLayout;
 
 import java.awt.Toolkit;
 
-public class VistaReporteRepuestosPP extends JDialog {
+public class VistaReporteClientesPP extends JDialog {
 
 	private JButton btnPdf, btnRetornar;
 	private JTable tablaRepuestos;
@@ -45,7 +46,6 @@ public class VistaReporteRepuestosPP extends JDialog {
 	JScrollPane scrollPane;
 	
 	private DefaultTableModel datosTabla;
-	private JButton btnGrafico;
 
 
 	/**
@@ -58,14 +58,13 @@ public class VistaReporteRepuestosPP extends JDialog {
 	 * }
 	 */
 
-	public VistaReporteRepuestosPP() {
+	public VistaReporteClientesPP() {
 		
-		setTitle("INVENTARIO DE REPUESTOS");
-		setIconImage(Toolkit.getDefaultToolkit()
-				.getImage(VistaReporteRepuestosPP.class.getResource("/imagenes/iconos/logojams2.png")));
+		setTitle("CLIENTES REGISTRADOS");
+		setIconImage(Toolkit.getDefaultToolkit().getImage(VistaReporteClientesPP.class.getResource("/imagenes/iconos/ventilador.png")));
 		setBounds(100, 100, 1113, 540);
 
-		JLabel lblTitulo = new JLabel("INVENTARIO DE REPUESTOS");
+		JLabel lblTitulo = new JLabel("REPORTE CLIENTES REGISTRADOS");
 		lblTitulo.setForeground(Color.BLUE);
 		lblTitulo.setFont(new Font("Tahoma", Font.BOLD, 18));
 		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
@@ -88,26 +87,19 @@ public class VistaReporteRepuestosPP extends JDialog {
 		panelPie.add(panelBotonera);
 		panelBotonera.setBackground(Color.GRAY);
 
-		btnGrafico = new JButton("");
-		btnGrafico.setRolloverIcon(new ImageIcon(VistaReporteRepuestosPP.class.getResource("/imagenes/iconos/iconos_32x32/chart_pie.png")));
-		btnGrafico.setToolTipText("Gr\u00E1fico del Inventario de Repuestos");
-		btnGrafico.setIcon(new ImageIcon(VistaReporteRepuestosPP.class.getResource("/imagenes/iconos/iconos_32x32/grafico.png")));
-		btnGrafico.setCursor(new Cursor(12));
-		panelBotonera.add(btnGrafico);
-
 		btnPdf = new JButton("");
-		btnPdf.setRolloverIcon(new ImageIcon(VistaReporteRepuestosPP.class.getResource("/imagenes/iconos/iconos_32x32/old-versions.png")));
+		btnPdf.setRolloverIcon(new ImageIcon(VistaReporteClientesPP.class.getResource("/imagenes/iconos/iconos_32x32/old-versions.png")));
 		panelBotonera.add(btnPdf);
 		btnPdf.setToolTipText("Genera Reporte en PDF");
-		btnPdf.setIcon(new ImageIcon(VistaReporteRepuestosPP.class.getResource("/imagenes/iconos/iconos_32x32/print.png")));
+		btnPdf.setIcon(new ImageIcon(VistaReporteClientesPP.class.getResource("/imagenes/iconos/iconos_32x32/print.png")));
 		btnPdf.setCursor(new Cursor(12));
 
 		btnRetornar = new JButton("");
-		btnRetornar.setRolloverIcon(new ImageIcon(VistaReporteRepuestosPP.class.getResource("/imagenes/iconos/iconos_32x32/door_out.png")));
+		btnRetornar.setRolloverIcon(new ImageIcon(VistaReporteClientesPP.class.getResource("/imagenes/iconos/iconos_32x32/door_out.png")));
 		panelBotonera.add(btnRetornar);
 		btnRetornar.setToolTipText("Salir del Reprote");
 		btnRetornar.setIcon(
-				new ImageIcon(VistaReporteRepuestosPP.class.getResource("/imagenes/iconos/iconos_32x32/door.png")));
+				new ImageIcon(VistaReporteClientesPP.class.getResource("/imagenes/iconos/iconos_32x32/door.png")));
 		btnRetornar.setCursor(new Cursor(12));
 
 		this.setLocationRelativeTo(null);
@@ -117,9 +109,8 @@ public class VistaReporteRepuestosPP extends JDialog {
 		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		this.setResizable(false);
 		// enlaces
-		ControladorVistaReporteRepuestosPP eco = new ControladorVistaReporteRepuestosPP(this);
+		ControladorVistaReporteClientesPP eco = new ControladorVistaReporteClientesPP(this);
 		btnRetornar.addActionListener(eco);
-		btnGrafico.addActionListener(eco);
 		btnPdf.addActionListener(eco);
 
 		
@@ -130,15 +121,14 @@ public class VistaReporteRepuestosPP extends JDialog {
 	// **************>llenar tabla general<------------------------
 	public void llenarTabla(int opcion, int clave) {
 
-		Repuesto registro = new Repuesto();
+		Cliente registro = new Cliente();
 		// datosTabla = new DefaultTableModel();
 
 		datosTabla = new DefaultTableModel(new Object[][] {},
-				new String[] { "CÓDIGO", "REPUESTO", "MARCA", "CANTIDAD", "PRECIO","DESCRIPCION","TIPO APARATO" });
+				new String[] { "Nro.", "DOC. IDENTIDAD", "CLIENTE", "TELÉFONO", "EMAIL" });
 
 		String sentenciaSql = null;
-		sentenciaSql = "SELECT * FROM repuestos a JOIN tipos_aparato b on a.tipo_aparato_id = b.id "
-				+ "order by (a.repuesto) ";
+		sentenciaSql = "SELECT * FROM clientes order by (cliente)";
 		
 		
 		SqlBD codigoSql = new SqlBD();
@@ -149,20 +139,16 @@ public class VistaReporteRepuestosPP extends JDialog {
 
 			while (consulta.next()) {
 				registro.setId(consulta.getInt("id"));
-				registro.setCodigo(consulta.getString("codigo"));
-				registro.setRepuesto(consulta.getString("repuesto"));
-				registro.setMarca(consulta.getString("marca"));
-				registro.setCantidad(consulta.getInt("cantidad"));
-				registro.setPrecio_venta(consulta.getDouble("precio_venta"));
-				registro.setDescripcion(consulta.getString("descripcion"));
-				registro.setAparato_tipo(consulta.getString("tipo"));
+				registro.setDocumentoIdentidad(consulta.getString("doc_identidad"));
+				registro.setCliente(consulta.getString("cliente"));
+				registro.setTelefono1(consulta.getString("telefono1"));
+				registro.setCorreo(consulta.getString("email"));
+				c2++;
 								
 				
-				datosTabla.insertRow(c, new String[] { registro.getCodigo(), registro.getRepuesto(),
-						"" + registro.getMarca(), "" + registro.getCantidad(),""+ registro.getPrecio_venta(),
-						registro.getDescripcion(), registro.getAparato_tipo()});
+				datosTabla.insertRow(c, new String[] {""+c2, registro.getDocumentoIdentidad(), registro.getCliente(),
+						 registro.getTelefono1(), "" + registro.getCorreo()});
 
-				c2++;
 			}
 
 		} catch (SQLException e) {
@@ -175,9 +161,9 @@ public class VistaReporteRepuestosPP extends JDialog {
 		tablaRepuestos.setSelectionBackground(Color.LIGHT_GRAY);
 		tablaRepuestos.setSelectionForeground(Color.red);
 		tablaRepuestos.getColumnModel().getColumn(0).setPreferredWidth(0);
-		tablaRepuestos.getColumnModel().getColumn(2).setPreferredWidth(5);
-		tablaRepuestos.getColumnModel().getColumn(3).setPreferredWidth(20);
-		tablaRepuestos.getColumnModel().getColumn(4).setPreferredWidth(100);
+		tablaRepuestos.getColumnModel().getColumn(1).setPreferredWidth(5);
+		tablaRepuestos.getColumnModel().getColumn(2).setPreferredWidth(20);
+		tablaRepuestos.getColumnModel().getColumn(3).setPreferredWidth(100);
 
 		DefaultTableCellRenderer Alinear = new DefaultTableCellRenderer();
 		Alinear.setHorizontalAlignment(SwingConstants.CENTER);
@@ -213,12 +199,10 @@ public class VistaReporteRepuestosPP extends JDialog {
 		return datosTabla;
 	}
 
-	public JButton getBtnGrafico() {
-		return btnGrafico;
-	}
+
 
 	public static void main(String[] args) {
-		new VistaReporteRepuestosPP();
+		new VistaReporteClientesPP();
 	}
 
 }// fin de la clase

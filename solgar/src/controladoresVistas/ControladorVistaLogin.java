@@ -105,6 +105,7 @@ public Usuario buscarUsuario(String xLogin,String xClave){
 	try {
 		
 		while (consulta.next()) {
+			registro.setId(consulta.getInt("id"));
 			registro.setCedula(consulta.getString("cedula"));
 			registro.setNombre(consulta.getString("nombre"));
 			registro.setApellido(consulta.getString("apellido"));

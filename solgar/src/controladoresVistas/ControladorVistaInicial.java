@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JOptionPane;
 
+import graficos.VistaGraficoRepuestos;
 import vistas.VentanaInicial;
 import vistas.VistaCambioClave;
 import vistas.VistaCliente;
@@ -71,6 +72,10 @@ public class ControladorVistaInicial implements ActionListener{
 		}
 		else if (accion.getSource().equals(vista.getMntmTiposAparatosRecibidos())){
 			new VistaRangoFecha();
+			
+		}
+		else if (accion.getSource().equals(vista.getMntmRepuestosEnInventario())){
+			new VistaGraficoRepuestos();
 			
 		}
 		

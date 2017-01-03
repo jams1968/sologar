@@ -12,6 +12,7 @@ import java.awt.Font;
 import com.toedter.calendar.JDateChooser;
 
 import controladoresVistas.ControladorVistaRangoFechas;
+import java.awt.Cursor;
 
 public class VistaRangoFecha extends JDialog {
 
@@ -49,22 +50,29 @@ public class VistaRangoFecha extends JDialog {
 		{
 			JPanel panelFechas = new JPanel();
 			contentPanel.add(panelFechas, BorderLayout.CENTER);
+			panelFechas.setLayout(null);
 			{
 				JLabel lblDesde = new JLabel("Desde:");
+				lblDesde.setBounds(36, 7, 41, 15);
 				lblDesde.setFont(new Font("Tahoma", Font.BOLD, 12));
 				panelFechas.add(lblDesde);
 			}
 			{
 				fecha1 = new JDateChooser();
+				fecha1.getCalendarButton().setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+				fecha1.setBounds(81, 5, 124, 20);
 				panelFechas.add(fecha1);
 			}
 			{
 				JLabel lblFecha2 = new JLabel("Hasta:");
+				lblFecha2.setBounds(215, 7, 39, 15);
 				lblFecha2.setFont(new Font("Tahoma", Font.BOLD, 12));
 				panelFechas.add(lblFecha2);
 			}
 			{
 				fecha2 = new JDateChooser();
+				fecha2.getCalendarButton().setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+				fecha2.setBounds(259, 5, 124, 20);
 				panelFechas.add(fecha2);
 			}
 		}
@@ -74,12 +82,14 @@ public class VistaRangoFecha extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				okButton = new JButton("OK");
+				okButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
 			}
 			{
 				cancelButton = new JButton("Cancel");
+				cancelButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
 			}

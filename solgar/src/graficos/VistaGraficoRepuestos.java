@@ -1,14 +1,17 @@
 package graficos;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Calendar;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
@@ -18,18 +21,12 @@ import com.toedter.calendar.JDateChooser;
 
 import controladoresBD.SqlBD;
 import controladoresVistas.ControladorVistaGraficoAparatosRecibidos;
+import controladoresVistas.ControladorVistaGraficoRepuestos;
 import librerias.Funciones;
 import modelos.Grafico;
 import modelos.GraficoBarra;
 
-import javax.swing.ImageIcon;
-import java.awt.Cursor;
-import java.awt.Dimension;
-
-import javax.swing.JLabel;
-import java.awt.Color;
-
-public class VistaGraficoAparatosRecibidos extends JDialog {
+public class VistaGraficoRepuestos extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private JButton btnCerrar;
@@ -38,54 +35,34 @@ public class VistaGraficoAparatosRecibidos extends JDialog {
 	/**
 	 * Launch the application.
 	 */
-	/*public static void main(String[] args) {
+	public static void main(String[] args) {
 		try {
-			VistaGraficoAparatosRecibidos dialog = new VistaGraficoAparatosRecibidos();
+			VistaGraficoRepuestos dialog = new VistaGraficoRepuestos();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}*/
+	}
 
 	/**
 	 * Create the dialog.
 	 */
-	public VistaGraficoAparatosRecibidos(String fecha1,String fecha2) {
-		Funciones funcion=new Funciones();
-		String f1=funcion.CambiarFechaVen(fecha1);
-		String f2=funcion.CambiarFechaVen(fecha2);
+	public VistaGraficoRepuestos() {
 		this.setSize(800, 600);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(new BorderLayout(0, 0));
 		{
-			JPanel panelCabecera = new JPanel();
-			contentPanel.add(panelCabecera, BorderLayout.NORTH);
-			
-			
-			
-			{
-				JLabel lblTipoDeAparatos = new JLabel("TIPO DE APARATOS RECIBIDOS DESDE: "+f1+" HASTA: "+f2);
-				lblTipoDeAparatos.setForeground(Color.BLUE);
-				lblTipoDeAparatos.setFont(new Font("Tahoma", Font.BOLD, 16));
-				panelCabecera.add(lblTipoDeAparatos);
-				
-				
-				
-			}
+			Funciones funcion=new Funciones();
 			
 		}
 		{
 			JPanel panelGrafico = new JPanel();
 			
 			contentPanel.add(panelGrafico, BorderLayout.CENTER);
-			String sentenciaSql="SELECT *,count(a.id) as subTotal FROM reparaciones a  "
-					+ "join  recepciones b on a.recepcion_id = b.id "
-					+ "join tipos_aparato c on a.tipo_aparato_id= c.id "
-					+ "WHERE b.fecha_recepcion BETWEEN '"+fecha1+"' and '"+fecha2
-					+ "' GROUP BY a.tipo_aparato_id";
+			String sentenciaSql="SELECT repuesto,sum(cantidad) as subTotal FROM repuestos GROUP by codigo";
 			
 			
 			SqlBD codigoSql = new SqlBD();
@@ -97,7 +74,7 @@ public class VistaGraficoAparatosRecibidos extends JDialog {
 			try {
 				while (consulta.next()) {
 					valor=consulta.getInt("subTotal");
-					nombre=consulta.getString("c.tipo");
+					nombre=consulta.getString("repuesto");
 					
 					datos.addValue(valor, nombre, "");
 				}
@@ -106,8 +83,8 @@ public class VistaGraficoAparatosRecibidos extends JDialog {
 				e.printStackTrace();
 			}
 			Grafico data=new Grafico();
-			data.setTitulo("Aparatos por Tipo Recibido por fecha"+f1+" HASTA: "+f2);
-			data.setAbcisa("Tipo de Aparatos");
+			data.setTitulo("Cantidad por  Repuestos en el Inventario");
+			data.setAbcisa("Repuestos");
 			data.setOrdenada("Cantidad");
 			data.setOrientacion(1);
 			data.setData(datos);
@@ -136,10 +113,10 @@ public class VistaGraficoAparatosRecibidos extends JDialog {
 		}
 		
 		//------------>enlaces <---------------
-		ControladorVistaGraficoAparatosRecibidos eco=new ControladorVistaGraficoAparatosRecibidos(this);
+		ControladorVistaGraficoRepuestos eco=new ControladorVistaGraficoRepuestos(this);
 		btnCerrar.addActionListener(eco);
 		
-		
+		this.isAlwaysOnTop();
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
 	}//fin del constructor

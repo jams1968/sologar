@@ -99,11 +99,11 @@ public class Reparacion {
 	public boolean create(){
 		
 		if((recepcion_id!=0)&&(tipo_Aparato_id!=0)&&(diagnostico_cliente!=null)&&(detalles_recepcion!=null)
-				&&(diagnostico_tecnico!=null)&&(monto_repuestos!=0)&&(monto_mano_obra!=0)){
+				&&(diagnostico_tecnico!=null)){
 			String sentenciaSql="INSERT INTO reparaciones (recepcion_id,tipo_aparato_id,diagnostico_cliente,"
 					+ "detalles_recepcion,diagnostico_tecnico,precio_repuestos,precio_mano_obra,detalles_reparacion,"
 					+ "status)"+ "VALUES ("+recepcion_id+","+tipo_Aparato_id+",'"+diagnostico_cliente.toUpperCase()+"','"
-					+detalles_recepcion.toUpperCase()+"','"+diagnostico_tecnico.toUpperCase()+"',"+monto_repuestos+","+monto_mano_obra+",'"
+					+detalles_recepcion.toUpperCase()+"','"+diagnostico_tecnico.toUpperCase()+"',"+0+","+0+",'"
 					+detalles_reparacion+"','"+status+"')";
 			
 			SqlBD codigoSql = new SqlBD();

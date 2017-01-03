@@ -23,7 +23,6 @@ public class ControladorVistaRecepcion implements ActionListener,KeyListener {
 	private TipoAparato tipoAparato;
 	private Funciones funcion;
 	private int contar;
-	private double montoR,montoMo;
 	private Recepcion regRecepcion;
 	private Reparacion regReparacion;
 	
@@ -33,8 +32,6 @@ public class ControladorVistaRecepcion implements ActionListener,KeyListener {
 		regReparacion=new Reparacion();
 		tipoAparato=new TipoAparato();
 		contar=0;
-		montoR=0;
-		montoMo=0;
 		this.vista=vista;
 		this.registroCliente=new Cliente();
 		funcion=new Funciones();
@@ -67,19 +64,13 @@ public class ControladorVistaRecepcion implements ActionListener,KeyListener {
 			if((vista.getComboTipoAparatos().getSelectedIndex()>0)&&
 					(!vista.getTextInformacion().getText().trim().isEmpty())&&
 					(!vista.getTextDetalles().getText().trim().isEmpty())&&
-					(!vista.getTextDiagnostico().getText().trim().isEmpty())&&
-					(!vista.getTextManoObra().getText().trim().isEmpty())){
+					(!vista.getTextDiagnostico().getText().trim().isEmpty())){
 			
 				contar++;
-				montoMo+=Double.parseDouble(vista.getTextManoObra().getText());
-				montoR+=Double.parseDouble(vista.getTextMontoRepuesto().getText());
 				tipoAparato=(TipoAparato) vista.getComboTipoAparatos().getSelectedItem();
-				vista.getTextTotalManoObra().setText(""+montoMo);
-				vista.getTextTotalMontoRep().setText(""+montoR);
-				vista.getTextMontoTotal().setText("Bs."+(montoMo+montoR));
 				vista.getDatosArtefactos().addRow(new String[]{""+contar,tipoAparato.getTipo(),
 						vista.getTextInformacion().getText(),vista.getTextDetalles().getText(),
-						vista.getTextDiagnostico().getText(),""+vista.getTextMontoRepuesto().getText(),""+vista.getTextManoObra().getText()});
+						vista.getTextDiagnostico().getText()});
 				
 						vaciarArtefactos();	
 						vista.getBtnRegistrar().setEnabled(true);
@@ -127,17 +118,8 @@ public class ControladorVistaRecepcion implements ActionListener,KeyListener {
 		}else if(accion.getSource().equals(vista.getTextDiagnostico())&&
 				(accion.getKeyCode()== KeyEvent.VK_ENTER)&&
 				!(vista.getTextDiagnostico().getText().trim().isEmpty())){
-				vista.getTextMontoRepuesto().requestFocus();
-			
-		}else if(accion.getSource().equals(vista.getTextMontoRepuesto())&&
-				(accion.getKeyCode()== KeyEvent.VK_ENTER)&&
-				!(vista.getTextMontoRepuesto().getText().trim().isEmpty())){
-				vista.getTextManoObra().requestFocus();
-				
-		}else if(accion.getSource().equals(vista.getTextManoObra())&&
-				(accion.getKeyCode()== KeyEvent.VK_ENTER)&&
-				!(vista.getTextManoObra().getText().trim().isEmpty())){
 				vista.getBtnAgregarArtefacto().requestFocus();
+			
 		}
 		
 		
@@ -196,10 +178,7 @@ public class ControladorVistaRecepcion implements ActionListener,KeyListener {
 		
 		vista.borrarTabla(vista.getTablaArtefactos());
 		vaciarArtefactos();
-		vista.getTextTotalManoObra().setText(null);
-		vista.getTextTotalMontoRep().setText(null);
-		vista.getTextMontoTotal().setText(null);
-		
+			
 		registroCliente=new Cliente();
 		vista.getTextCedula().requestFocus();
 	}
@@ -208,8 +187,7 @@ public class ControladorVistaRecepcion implements ActionListener,KeyListener {
 		vista.getTextInformacion().setText(null);
 		vista.getTextDetalles().setText(null);
 		vista.getTextDiagnostico().setText(null);
-		vista.getTextMontoRepuesto().setText(null);
-		vista.getTextManoObra().setText(null);
+		
 		
 	}
 	public void recorrerTabla(){
@@ -223,8 +201,6 @@ public class ControladorVistaRecepcion implements ActionListener,KeyListener {
 			regReparacion.setDiagnostico_cliente((String)vista.getTablaArtefactos().getValueAt(i, 2));
 			regReparacion.setDetalles_recepcion((String)vista.getTablaArtefactos().getValueAt(i, 3));
 			regReparacion.setDiagnostico_tecnico((String)vista.getTablaArtefactos().getValueAt(i, 4));
-			regReparacion.setMonto_repuestos(Double.parseDouble((String)vista.getTablaArtefactos().getValueAt(i, 5)));
-			regReparacion.setMonto_mano_obra(Double.parseDouble((String)vista.getTablaArtefactos().getValueAt(i, 6)));
 			regReparacion.setDetalles_reparacion(null);
 			regReparacion.setStatus('P');
 			regReparacion.create();

@@ -66,6 +66,8 @@ public class VentanaInicial extends JFrame{
 	private JMenuItem mntmImprimirRecibo;
 	private JMenu mnGraficos;
 	private JMenuItem mntmTiposAparatosRecibidos;
+	private JSeparator separator_2;
+	private JMenuItem mntmRepuestosEnInventario;
 	
 	public static void main(String[] args) {
 		Usuario registroUsuario=new Usuario();
@@ -255,6 +257,9 @@ public class VentanaInicial extends JFrame{
 		mntmInventario_1.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		mnReportes.add(mntmInventario_1);
 		
+		separator_2 = new JSeparator();
+		mnReportes.add(separator_2);
+		
 		mnGraficos = new JMenu("Gr\u00E1ficos");
 		mnGraficos.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		mnGraficos.setIcon(new ImageIcon(VentanaInicial.class.getResource("/imagenes/iconos/iconos_32x32/chart_pie.png")));
@@ -264,6 +269,11 @@ public class VentanaInicial extends JFrame{
 		mntmTiposAparatosRecibidos.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		mntmTiposAparatosRecibidos.setIcon(new ImageIcon(VentanaInicial.class.getResource("/imagenes/iconos/iconos_32x32/grafico.png")));
 		mnGraficos.add(mntmTiposAparatosRecibidos);
+		
+		mntmRepuestosEnInventario = new JMenuItem("Repuestos en Inventario");
+		mntmRepuestosEnInventario.setIcon(new ImageIcon(VentanaInicial.class.getResource("/imagenes/iconos/iconos_32x32/grafico.png")));
+		mntmRepuestosEnInventario.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		mnGraficos.add(mntmRepuestosEnInventario);
 		
 		mnUtilidades = new JMenu("Utilidades");
 		mnUtilidades.setMnemonic(KeyEvent.VK_U);
@@ -323,6 +333,7 @@ public class VentanaInicial extends JFrame{
 		mntmInventario_1.addActionListener(eco);
 		mntmImprimirRecibo.addActionListener(eco);
 		mntmTiposAparatosRecibidos.addActionListener(eco);
+		mntmRepuestosEnInventario.addActionListener(eco);
 		
 		
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);//maximar automaticamente
@@ -504,6 +515,9 @@ public class VentanaInicial extends JFrame{
 	}
 	public JMenuItem getMntmImprimirRecibo() {
 		return mntmImprimirRecibo;
+	}
+	public JMenuItem getMntmRepuestosEnInventario() {
+		return mntmRepuestosEnInventario;
 	}
 	
 

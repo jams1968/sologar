@@ -74,11 +74,6 @@ public class VistaRecepcion extends JFrame {
 	private JTextField textDiagnostico;
 	private JScrollPane panelScroll;
 	private ComboTipoAparatos comboTipoAparatos;
-	private JTextField textManoObra;
-	private JTextField textTotalManoObra;
-	private JTextField textMontoRepuesto;
-	private JTextField textTotalMontoRep;
-	private JTextField textMontoTotal;
 	private JDateChooser fechaEntrega;
 	private JButton btnAgregarArtefacto;
 
@@ -91,9 +86,9 @@ public class VistaRecepcion extends JFrame {
 			public void run() {
 				try {
 					Usuario registroUsuario=new Usuario();
-					registroUsuario.setId(7);
-					registroUsuario.setNombre("Administrador");
-					registroUsuario.setApellido("Admin");
+					registroUsuario.setId(1);
+					registroUsuario.setNombre("ERICK");
+					registroUsuario.setApellido("GUERRA");
 					
 					VistaRecepcion dialog = new VistaRecepcion(registroUsuario);
 					dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -299,10 +294,11 @@ public class VistaRecepcion extends JFrame {
 		JPanel panelArtefactos = new JPanel();
 		panelArtefactos.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 255), 2, true), "Agregar Artefactos", TitledBorder.RIGHT, TitledBorder.TOP, null, Color.BLUE));
 		panelRecepcion.add(panelArtefactos, BorderLayout.CENTER);
-		panelArtefactos.setLayout(new BorderLayout(0, 4));
+		panelArtefactos.setLayout(new BorderLayout(0, 0));
 		
 		JPanel panelLinea1_A = new JPanel();
 		FlowLayout flowLayout_4 = (FlowLayout) panelLinea1_A.getLayout();
+		flowLayout_4.setVgap(1);
 		flowLayout_4.setAlignment(FlowLayout.LEFT);
 		panelArtefactos.add(panelLinea1_A, BorderLayout.NORTH);
 		
@@ -332,6 +328,7 @@ public class VistaRecepcion extends JFrame {
 		
 		JPanel panelLinea2_A = new JPanel();
 		FlowLayout flowLayout_5 = (FlowLayout) panelLinea2_A.getLayout();
+		flowLayout_5.setVgap(0);
 		flowLayout_5.setAlignment(FlowLayout.LEFT);
 		panelArtefactos.add(panelLinea2_A, BorderLayout.CENTER);
 		
@@ -342,22 +339,6 @@ public class VistaRecepcion extends JFrame {
 		textDiagnostico = new JTextField();
 		panelLinea2_A.add(textDiagnostico);
 		textDiagnostico.setColumns(50);
-		
-		JLabel lblMontoRepuestos = new JLabel("Monto Repuestos:");
-		lblMontoRepuestos.setFont(new Font("Tahoma", Font.BOLD, 12));
-		panelLinea2_A.add(lblMontoRepuestos);
-		
-		textMontoRepuesto = new JTextField();
-		panelLinea2_A.add(textMontoRepuesto);
-		textMontoRepuesto.setColumns(10);
-		
-		JLabel lblPrecioManoObra = new JLabel("Precio Mano de Obra:");
-		lblPrecioManoObra.setFont(new Font("Tahoma", Font.BOLD, 12));
-		panelLinea2_A.add(lblPrecioManoObra);
-		
-		textManoObra = new JTextField();
-		panelLinea2_A.add(textManoObra);
-		textManoObra.setColumns(10);
 		
 		btnAgregarArtefacto = new JButton("");
 		btnAgregarArtefacto.setToolTipText("Agregar artefactos al recibo");
@@ -372,7 +353,7 @@ public class VistaRecepcion extends JFrame {
 		
 			
 		 datosArtefactos= new DefaultTableModel(new Object[][] {},
-						new String[] {"Nro.", "Tipo Aparato", "Informacion Cliente", "Detalles del Aparato","Diagnóstico Tecnico","Bs. Repuestos","Bs. Mano Obra"}){
+						new String[] {"Nro.", "Tipo Aparato", "Informacion Cliente", "Detalles del Aparato","Diagnóstico Tecnico"}){
 			 	private static final long serialVersionUID = 1L;
 
 			 	public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -398,11 +379,9 @@ public class VistaRecepcion extends JFrame {
 		tablaArtefactos.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		tablaArtefactos.getColumnModel().getColumn(0).setPreferredWidth(50);
 		tablaArtefactos.getColumnModel().getColumn(1).setPreferredWidth(250);
-		tablaArtefactos.getColumnModel().getColumn(2).setPreferredWidth(300);
-		tablaArtefactos.getColumnModel().getColumn(3).setPreferredWidth(330);
-		tablaArtefactos.getColumnModel().getColumn(4).setPreferredWidth(450);
-		tablaArtefactos.getColumnModel().getColumn(5).setPreferredWidth(100);
-		tablaArtefactos.getColumnModel().getColumn(6).setPreferredWidth(100);
+		tablaArtefactos.getColumnModel().getColumn(2).setPreferredWidth(400);
+		tablaArtefactos.getColumnModel().getColumn(3).setPreferredWidth(400);
+		tablaArtefactos.getColumnModel().getColumn(4).setPreferredWidth(481);
 		panelTecnico.setLayout(new BorderLayout(0, 0));
 			   
 			    
@@ -480,31 +459,6 @@ public class VistaRecepcion extends JFrame {
 		flowLayout_6.setAlignment(FlowLayout.RIGHT);
 		panelPie.add(panelMontoManoObra, BorderLayout.NORTH);
 		
-		JLabel lblTotalMontoRep = new JLabel("Total en Repuestos:");
-		lblTotalMontoRep.setFont(new Font("Tahoma", Font.BOLD, 12));
-		panelMontoManoObra.add(lblTotalMontoRep);
-		
-		textTotalMontoRep = new JTextField();
-		panelMontoManoObra.add(textTotalMontoRep);
-		textTotalMontoRep.setColumns(10);
-		
-		JLabel lblMontoManoObra = new JLabel("Total  Mano de Obra:");
-		lblMontoManoObra.setFont(new Font("Tahoma", Font.BOLD, 12));
-		panelMontoManoObra.add(lblMontoManoObra);
-		
-		textTotalManoObra = new JTextField();
-		panelMontoManoObra.add(textTotalManoObra);
-		textTotalManoObra.setColumns(10);
-		
-		JLabel lblTotalRecibo = new JLabel("Monto Total:");
-		lblTotalRecibo.setFont(new Font("Tahoma", Font.BOLD, 12));
-		panelMontoManoObra.add(lblTotalRecibo);
-		
-		textMontoTotal = new JTextField();
-		textMontoTotal.setFont(new Font("Tahoma", Font.BOLD, 12));
-		panelMontoManoObra.add(textMontoTotal);
-		textMontoTotal.setColumns(10);
-		
 		btnAgregarArtefacto.setEnabled(false);
 		
 		//----------------->enlaces controlador <-------------------
@@ -519,13 +473,11 @@ public class VistaRecepcion extends JFrame {
 		textInformacion.addKeyListener(eco);
 		textDetalles.addKeyListener(eco);
 		textDiagnostico.addKeyListener(eco);
-		textMontoRepuesto.addKeyListener(eco);
-		textManoObra.addKeyListener(eco);
 		
 		textCedula.requestFocus();
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);//maximar automaticamente
 		this.setAlwaysOnTop(true);
-		
+		//this.pack();
 		this.setVisible(true);
 		comboTipoAparatos.setEnabled(false);
 	}//fin constructor
@@ -644,26 +596,7 @@ public class VistaRecepcion extends JFrame {
 		return comboTipoAparatos;
 	}
 
-	public JTextField getTextManoObra() {
-		return textManoObra;
-	}
-
-	public JTextField getTextTotalManoObra() {
-		return textTotalManoObra;
-	}
-
-	public JTextField getTextMontoRepuesto() {
-		return textMontoRepuesto;
-	}
-
-	public JTextField getTextTotalMontoRep() {
-		return textTotalMontoRep;
-	}
-
-	public JTextField getTextMontoTotal() {
-		return textMontoTotal;
-	}
-
+	
 	public JDateChooser getFechaEntrega() {
 		return fechaEntrega;
 	}

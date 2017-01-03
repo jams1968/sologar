@@ -32,7 +32,7 @@ import modelos.TipoAparato;
 import modelos.Usuario;
 import vistas.VistaRecepcion;
 
-public class reciboPDF {
+public class entregaPDF {
 	private PdfPTable tablaDetalle;
 	private PdfPCell cell;
 	private Document documento;
@@ -47,7 +47,7 @@ public class reciboPDF {
 	private Paragraph detalle,detalle2;
 	private Paragraph lineaBlanco;
 	
-	public reciboPDF(int nRecibo){
+	public entregaPDF(int nRecibo){
 		regRecibo=new Recepcion();
 		regCliente=new Cliente();
 		regUsuario=new Usuario();
@@ -277,7 +277,7 @@ public class reciboPDF {
 				documento.add(detalle);
 				documento.add(lineaBlanco);
 				//-------------------->artefactos<-----------
-				tablaDetalle=new PdfPTable(5);
+				tablaDetalle=new PdfPTable(7);
 				tablaDetalle.setWidthPercentage(100);
 				
 				celda=new PdfPCell(new Paragraph("N°",FontFactory.getFont("arial",10,Font.NORMAL)));
@@ -305,8 +305,17 @@ public class reciboPDF {
 				celda.setHorizontalAlignment(Element.ALIGN_CENTER);
 				celda.setBackgroundColor(BaseColor.LIGHT_GRAY);
 				tablaDetalle.addCell(celda);
-				//documento.add(tablaDetalle);
+				documento.add(tablaDetalle);
 				
+				celda=new PdfPCell(new Paragraph("Repuestos Bs",FontFactory.getFont("arial",10,Font.NORMAL)));
+				celda.setHorizontalAlignment(Element.ALIGN_CENTER);
+				celda.setBackgroundColor(BaseColor.LIGHT_GRAY);
+				tablaDetalle.addCell(celda);
+				
+				celda=new PdfPCell(new Paragraph("Mano Obra Bs",FontFactory.getFont("arial",10,Font.NORMAL)));
+				celda.setHorizontalAlignment(Element.ALIGN_CENTER);
+				celda.setBackgroundColor(BaseColor.LIGHT_GRAY);
+				tablaDetalle.addCell(celda);
 				
 				
 				//------------>detalle aparatos<-------------
@@ -318,7 +327,9 @@ public class reciboPDF {
 					
 					ResultSet consulta = codigoSql.ConsultaTabla(sentenciaSql);
 					int contador=0;
-					
+					double mRep,mMo;
+					mRep=0;
+					mMo=0;
 					try {
 						
 						while (consulta.next()) {
@@ -329,7 +340,10 @@ public class reciboPDF {
 							regReparacion.setDiagnostico_cliente(consulta.getString("diagnostico_cliente"));
 							regReparacion.setDetalles_recepcion(consulta.getString("detalles_recepcion"));
 							regReparacion.setDiagnostico_tecnico(consulta.getString("diagnostico_tecnico"));
-						
+							regReparacion.setMonto_repuestos(consulta.getDouble("precio_repuestos"));
+							regReparacion.setMonto_mano_obra(consulta.getDouble("precio_mano_obra"));
+							mRep+=regReparacion.getMonto_repuestos();
+							mMo+=regReparacion.getMonto_mano_obra();
 							contador++;
 							celda=new PdfPCell(new Paragraph(""+contador,FontFactory.getFont("arial",10,Font.NORMAL)));
 							celda.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -351,7 +365,13 @@ public class reciboPDF {
 							celda.setHorizontalAlignment(Element.ALIGN_CENTER);
 							tablaDetalle.addCell(celda);
 							
+							celda=new PdfPCell(new Paragraph(""+regReparacion.getMonto_repuestos(),FontFactory.getFont("arial",10,Font.NORMAL)));
+							celda.setHorizontalAlignment(Element.ALIGN_CENTER);
+							tablaDetalle.addCell(celda);
 							
+							celda=new PdfPCell(new Paragraph(""+regReparacion.getMonto_mano_obra(),FontFactory.getFont("arial",10,Font.NORMAL)));
+							celda.setHorizontalAlignment(Element.ALIGN_CENTER);
+							tablaDetalle.addCell(celda);
 							
 						}
 					}catch (SQLException e) {
@@ -360,12 +380,31 @@ public class reciboPDF {
 					}
 				
 					codigoSql.Desconectar();
-					float[] medidaCeldas4 ={1,3,4,4,4};
+					float[] medidaCeldas4 ={1,5,4,4,4,3,3};
 					tablaDetalle.setWidths(medidaCeldas4);
 					
 					documento.add(tablaDetalle);
 					
+					tablaDetalle=new PdfPTable(3);
+					tablaDetalle.setWidthPercentage(100);
+					celda=new PdfPCell(new Paragraph("Total Repuestos Bs.:"+mRep,FontFactory.getFont("arial",10,Font.BOLD)));
+					celda.setHorizontalAlignment(Element.ALIGN_RIGHT);
+					celda.setBackgroundColor(BaseColor.LIGHT_GRAY);
+					tablaDetalle.addCell(celda);
 					
+					celda=new PdfPCell(new Paragraph("Total Mano Obra Bs.:"+mMo,FontFactory.getFont("arial",10,Font.BOLD)));
+					celda.setHorizontalAlignment(Element.ALIGN_RIGHT);
+					celda.setBackgroundColor(BaseColor.LIGHT_GRAY);
+					tablaDetalle.addCell(celda);
+					
+					celda=new PdfPCell(new Paragraph("Total Recibo Bs.:"+(mRep+mMo),FontFactory.getFont("arial",10,Font.BOLD)));
+					celda.setHorizontalAlignment(Element.ALIGN_RIGHT);
+					celda.setBackgroundColor(BaseColor.LIGHT_GRAY);
+					tablaDetalle.addCell(celda);
+					
+					float[] medidaCeldas5 ={5,5,5};
+					tablaDetalle.setWidths(medidaCeldas5);
+					documento.add(tablaDetalle);
 					
 					documento.add(lineaBlanco);
 					documento.add(lineaBlanco);
@@ -389,7 +428,7 @@ public class reciboPDF {
 
 
 	public static void main(String[] args) {
-		new reciboPDF(1);
+		new entregaPDF(4);
 
 	}
 
