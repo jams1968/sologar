@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import graficos.VistaGraficoRepuestos;
+import pdf.repuestosPDF;
 import vistasReportes.VistaReporteRepuestosPP;
 
 public class ControladorVistaReporteRepuestosPP implements ActionListener {
@@ -21,6 +22,9 @@ public class ControladorVistaReporteRepuestosPP implements ActionListener {
 		}// fin cerrar
 		else if(accion.getSource().equals(vista.getBtnGrafico())){
 			new VistaGraficoRepuestos().toFront();
+		}
+		else if(accion.getSource().equals(vista.getBtnPdf())){
+			new repuestosPDF();
 		}
 		
 	}

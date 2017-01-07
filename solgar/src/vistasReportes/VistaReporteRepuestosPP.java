@@ -10,7 +10,7 @@ import javax.swing.table.DefaultTableModel;
 
 import controladoresBD.SqlBD;
 import controladoresVistas.ControladorVistaReporteRepuestosPP;
-
+import librerias.FormatoTabla;
 import modelos.Repuesto;
 import vistas.VistaLogin;
 
@@ -61,8 +61,7 @@ public class VistaReporteRepuestosPP extends JDialog {
 	public VistaReporteRepuestosPP() {
 		
 		setTitle("INVENTARIO DE REPUESTOS");
-		setIconImage(Toolkit.getDefaultToolkit()
-				.getImage(VistaReporteRepuestosPP.class.getResource("/imagenes/iconos/logojams2.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(VistaReporteRepuestosPP.class.getResource("/imagenes/iconos/ventilador.png")));
 		setBounds(100, 100, 1113, 540);
 
 		JLabel lblTitulo = new JLabel("INVENTARIO DE REPUESTOS");
@@ -161,6 +160,7 @@ public class VistaReporteRepuestosPP extends JDialog {
 				datosTabla.insertRow(c, new String[] { registro.getCodigo(), registro.getRepuesto(),
 						"" + registro.getMarca(), "" + registro.getCantidad(),""+ registro.getPrecio_venta(),
 						registro.getDescripcion(), registro.getAparato_tipo()});
+				
 
 				c2++;
 			}
@@ -170,7 +170,9 @@ public class VistaReporteRepuestosPP extends JDialog {
 			e.printStackTrace();
 		}
 
+		FormatoTabla ft = new FormatoTabla(3);
 		tablaRepuestos = new JTable(datosTabla);
+		tablaRepuestos.setDefaultRenderer (Object.class, ft );
 
 		tablaRepuestos.setSelectionBackground(Color.LIGHT_GRAY);
 		tablaRepuestos.setSelectionForeground(Color.red);
@@ -184,6 +186,7 @@ public class VistaReporteRepuestosPP extends JDialog {
 		tablaRepuestos.getColumnModel().getColumn(3).setCellRenderer(Alinear);
 		tablaRepuestos.getColumnModel().getColumn(2).setCellRenderer(Alinear);
 		scrollPane = new JScrollPane(tablaRepuestos);
+		scrollPane.setToolTipText("color rojo indica repuestos con cantidad inferior a 5");
 		scrollPane.setViewportBorder(new LineBorder(Color.BLUE, 3, true));
 
 		getContentPane().add(scrollPane, BorderLayout.CENTER);
