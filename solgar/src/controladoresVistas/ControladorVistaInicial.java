@@ -16,6 +16,7 @@ import vistas.VistaCliente;
 import vistas.VistaPorNroRecibo;
 import vistas.VistaRangoFecha;
 import vistas.VistaRecepcion;
+import vistas.VistaReparacion;
 import vistas.VistaRepuestos;
 import vistas.VistaTipoAparato;
 import vistas.VistaUsuario;
@@ -62,6 +63,12 @@ public class ControladorVistaInicial implements ActionListener{
 			new VistaRecepcion(vista.getRegistroUsuario());
 			
 		}
+		else if (accion.getSource().equals(vista.getMntmPendientes())||
+				(accion.getSource().equals(vista.getBtnServicios()))){
+			new VistaReparacion();
+			
+		}
+		
 		else if (accion.getSource().equals(vista.getMntmInventario_1())){
 			new VistaReporteRepuestosPP();
 			

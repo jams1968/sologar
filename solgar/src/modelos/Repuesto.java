@@ -102,7 +102,7 @@ public class Repuesto {
 
 	@Override
 	public String toString() {
-		return id+"-"+codigo+"-"+repuesto;
+		return codigo+"-"+repuesto+"-"+cantidad+"-"+aparato_tipo;
 	}
 	//------------------>create<---------------------
 	public boolean create(){

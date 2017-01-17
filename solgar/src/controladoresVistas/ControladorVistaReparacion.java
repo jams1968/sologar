@@ -12,7 +12,7 @@ import modelos.TipoAparato;
 import modelos.Usuario;
 import vistas.VistaReparacion;
 
-public class ControladorrVistaReparacion implements KeyListener,ActionListener  {
+public class ControladorVistaReparacion implements KeyListener,ActionListener  {
 	
 	private VistaReparacion vista;
 	private Recepcion regRecepcion;
@@ -21,7 +21,7 @@ public class ControladorrVistaReparacion implements KeyListener,ActionListener  
 	private Cliente regCliente;
 	private Usuario regUsuario;
 	
-	public ControladorrVistaReparacion(VistaReparacion vista) {
+	public ControladorVistaReparacion(VistaReparacion vista) {
 		this.vista=vista;
 		regRecepcion=new Recepcion();
 		regReparacion=new Reparacion();
@@ -94,6 +94,10 @@ public class ControladorrVistaReparacion implements KeyListener,ActionListener  
 		vista.getTextInformacion().setText(regReparacion.getDiagnostico_cliente());
 		vista.getTextDetalles().setText(regReparacion.getDetalles_recepcion());
 		vista.getTextDiagnostico().setText(regReparacion.getDiagnostico_tecnico());
+		if (regReparacion.getStatus()=='P')
+			vista.getComboStatus().setSelectedIndex(0);
+		else
+			vista.getComboStatus().setSelectedIndex(1);
 	}
 
 
