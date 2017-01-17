@@ -1,11 +1,16 @@
 package modelos;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import controladoresBD.SqlBD;
 
 public class Reparacion {
 	private int id;
 	private int recepcion_id;
+	private int numero;
 	private int tipo_Aparato_id;
+	private String tipo;
 	private String diagnostico_cliente;
 	private String detalles_recepcion;
 	private String diagnostico_tecnico;
@@ -17,6 +22,10 @@ public class Reparacion {
 	public Reparacion() {
 		super();
 		// TODO Auto-generated constructor stub
+	}
+	public Reparacion(int numero,String tipo) {
+		this.numero=numero;
+		this.tipo=tipo;
 	}
 	public Reparacion(int id, int recepcion_id, int tipo_Aparato_id, String diagnostico_cliente,
 			String detalles_recepcion, String diagnostico_tecnico, double monto_repuestos, double monto_mano_obra,
@@ -94,6 +103,27 @@ public class Reparacion {
 	public void setStatus(char status) {
 		this.status = status;
 	}
+	
+	public int getNumero() {
+		return numero;
+	}
+	public void setNumero(int numero) {
+		this.numero = numero;
+	}
+	
+	public String getTipo() {
+		return tipo;
+	}
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+	@Override
+	public String toString() {
+		
+		
+		// TODO Auto-generated method stub
+		return this.getNumero()+"-"+this.getTipo();
+	}
 	//------------>create<------------------
 	
 	public boolean create(){
@@ -118,6 +148,33 @@ public class Reparacion {
 		else return false;
 	
 	}//fin create
+	
+	//---------->read por Nro Recibo<------------
+	/*public boolean read(int nRecibo){
+		String sentenciaSql = "SELECT * FROM reparaciones where recepcion_id="+nRecibo;
+		
+		SqlBD codigoSql = new SqlBD();
+					
+		ResultSet consulta = codigoSql.ConsultaTabla(sentenciaSql);
+		(recepcion_id,tipo_aparato_id,diagnostico_cliente,"
+				+ "detalles_recepcion,diagnostico_tecnico,precio_repuestos,precio_mano_obra,detalles_reparacion,"
+				+ "status)
+		try {
+			while (consulta.next()) {
+				setId(consulta.getInt("id"));
+				setRecepcion_id(consulta.getInt("recepcion_id"));
+				setTipo_Aparato_id(consulta.getInt("tipo_aparato_id"));
+				
+				
+				}
+			}catch (SQLException e) {
+			e.printStackTrace();
+		}
+		codigoSql.Desconectar();
+		if(this.id==0)return false;
+		else return true;
+		
+	}*///fin read Nrecibo
 	
 
 }//fin clase
