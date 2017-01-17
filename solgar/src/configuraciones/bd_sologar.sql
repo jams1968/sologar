@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 31-12-2016 a las 06:28:04
+-- Tiempo de generación: 17-01-2017 a las 23:25:02
 -- Versión del servidor: 5.6.26
 -- Versión de PHP: 5.5.28
 
@@ -36,16 +36,15 @@ CREATE TABLE IF NOT EXISTS `clientes` (
   `telefono2` varchar(16) NOT NULL,
   `direccion` varchar(250) NOT NULL,
   `email` varchar(60) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `clientes`
 --
 
 INSERT INTO `clientes` (`id`, `doc_identidad`, `cliente`, `telefono1`, `telefono2`, `direccion`, `email`) VALUES
-(1, '6331034', 'Jairo Molina', '(0416)-942-12-12', '(0246)-433-60-80', 'Sector Nueva Esperanza, calle 2, N°8, Zona Industrial', 'profesor@jairomolina.com.ve'),
-(2, '17435638', 'NORMARYS ALVARADO', '(0414)-473-76-75', '(0246)-433-60-80', 'CHAGUARAMAS\n', 'yo@jairo.com'),
-(3, '12345678', 'BENITO CAMELAS', '(1234)-567-89-89', '', '21212\n', 'no@j.com');
+(1, '6331034', 'JAIRO A. MOLINA S.', '(0416)-942-12-12', '(0246)-433-60-80', 'SECTOR NUEVA ESPERANZA, CALLE 2, N°8, ZONA INDUSTRIAL', 'profesor@jairomolina.com.ve'),
+(4, '17435638', 'NORMARYS ALVARADO', '(0414)-473-76-75', '(0246)-433-60-80', 'CHAGUARAMAS\n', 'goliandra@hotmail.com');
 
 -- --------------------------------------------------------
 
@@ -78,18 +77,14 @@ CREATE TABLE IF NOT EXISTS `recepciones` (
   `usuario_id` int(11) NOT NULL,
   `fecha_recepcion` date NOT NULL,
   `fecha_entrega` date NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `recepciones`
 --
 
 INSERT INTO `recepciones` (`id`, `cliente_id`, `usuario_id`, `fecha_recepcion`, `fecha_entrega`) VALUES
-(1, 1, 7, '2016-12-30', '2016-12-31'),
-(2, 2, 7, '2016-12-30', '2016-12-31'),
-(3, 2, 7, '2016-12-30', '2016-12-31'),
-(4, 3, 7, '2016-12-30', '2016-12-31'),
-(5, 1, 1, '2017-01-01', '2017-01-31');
+(1, 1, 1, '2017-01-01', '2017-01-26');
 
 -- --------------------------------------------------------
 
@@ -104,25 +99,60 @@ CREATE TABLE IF NOT EXISTS `reparaciones` (
   `diagnostico_cliente` varchar(150) COLLATE utf8_swedish_ci NOT NULL,
   `detalles_recepcion` varchar(150) COLLATE utf8_swedish_ci NOT NULL,
   `diagnostico_tecnico` varchar(150) COLLATE utf8_swedish_ci NOT NULL,
-  `precio_repuestos` double NOT NULL,
+  `precio_repuestos` double DEFAULT NULL,
   `precio_mano_obra` double NOT NULL,
   `detalles_reparacion` varchar(150) COLLATE utf8_swedish_ci NOT NULL,
   `status` varchar(1) COLLATE utf8_swedish_ci NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci;
 
 --
 -- Volcado de datos para la tabla `reparaciones`
 --
 
 INSERT INTO `reparaciones` (`id`, `recepcion_id`, `tipo_aparato_id`, `diagnostico_cliente`, `detalles_recepcion`, `diagnostico_tecnico`, `precio_repuestos`, `precio_mano_obra`, `detalles_reparacion`, `status`) VALUES
-(6, 1, 1, 'v', 'v', 'v', 1, 1, 'a', 'P'),
-(7, 1, 1, 'd', 'd', 'd', 2, 2, 'sa', 'P'),
-(8, 1, 2, 'f', 'f', 'f', 1, 1, 'asas', 'P'),
-(9, 2, 1, 'm', 'm', 'm', 7, 7, '', 'P'),
-(10, 2, 2, 'b', 'b', 'b', 6, 6, '', 'P'),
-(11, 3, 1, 'a', 'f', 'kk', 5, 4, '', 'P'),
-(12, 4, 1, 'sa', 'asa', 'ass', 12, 12, '', 'P'),
-(13, 5, 1, 'a', 'a', 'a', 12, 12, 'a', 'P');
+(1, 1, 1, 'MUY LENTO AL FUNCIONAR', 'SIN DETALLES', 'CAMBIO DE BOCINA Y MANTENIMIENTO DE ENGRANAJE', 0, 0, 'null', 'P'),
+(2, 1, 2, 'DESLIZA AL LICUAR', 'NO POSEE BOTÓN DE ENCENDIDO', 'CAMBIO DEL CUADRANTE Y COLCOAR BOTÓN DE ENCENDIDO', 0, 0, 'null', 'P'),
+(3, 1, 3, 'NO CALIENTA', 'SIN DETALLES', 'CAMBIO RESISTENCIA', 0, 0, 'null', 'P'),
+(4, 1, 5, 'NO SOSTIENE EL PAN', 'SIN DETALLES', 'CHEQUEO DE RESISTENCIA', 0, 0, 'null', 'P');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `repuestos`
+--
+
+CREATE TABLE IF NOT EXISTS `repuestos` (
+  `id` int(11) NOT NULL,
+  `codigo` varchar(20) NOT NULL,
+  `repuesto` varchar(60) NOT NULL,
+  `marca` varchar(60) NOT NULL,
+  `cantidad` int(11) NOT NULL,
+  `precio_venta` double NOT NULL,
+  `descripcion` varchar(100) NOT NULL,
+  `tipo_Aparato_id` int(11) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `repuestos`
+--
+
+INSERT INTO `repuestos` (`id`, `codigo`, `repuesto`, `marca`, `cantidad`, `precio_venta`, `descripcion`, `tipo_Aparato_id`) VALUES
+(1, 'b1', 'bocina cobre', 'susuky', 4, 1000, 'bocina frontal', 1),
+(2, 'c1', 'aspas', 'fm', 3, 5000, 'aspa pequeña negra', 1),
+(3, 'e1', 'resistencia', 'sm', 10, 3000, 'plancha de ropa', 3);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `repuestos_reparaciones`
+--
+
+CREATE TABLE IF NOT EXISTS `repuestos_reparaciones` (
+  `id` int(11) NOT NULL,
+  `reparacion_id` int(11) NOT NULL,
+  `repuestos_id` int(11) NOT NULL,
+  `cantidad` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -204,6 +234,19 @@ ALTER TABLE `reparaciones`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `repuestos`
+--
+ALTER TABLE `repuestos`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `codigo` (`codigo`);
+
+--
+-- Indices de la tabla `repuestos_reparaciones`
+--
+ALTER TABLE `repuestos_reparaciones`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `tipos_aparato`
 --
 ALTER TABLE `tipos_aparato`
@@ -225,7 +268,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `clientes`
 --
 ALTER TABLE `clientes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT de la tabla `niveles_usuario`
 --
@@ -235,12 +278,22 @@ ALTER TABLE `niveles_usuario`
 -- AUTO_INCREMENT de la tabla `recepciones`
 --
 ALTER TABLE `recepciones`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT de la tabla `reparaciones`
 --
 ALTER TABLE `reparaciones`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+--
+-- AUTO_INCREMENT de la tabla `repuestos`
+--
+ALTER TABLE `repuestos`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT de la tabla `repuestos_reparaciones`
+--
+ALTER TABLE `repuestos_reparaciones`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `tipos_aparato`
 --
