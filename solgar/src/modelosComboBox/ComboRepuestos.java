@@ -26,6 +26,13 @@ public class ComboRepuestos extends JComboBox<Repuesto> {
 		SqlBD codigoSql = new SqlBD();
 		
 		codigoSql.Conectar();
+		regRepuesto=new Repuesto();
+		regRepuesto.setCodigo("");
+		regRepuesto.setRepuesto("Seleccione Repuesto a usar");
+		regRepuesto.setCantidad(0);
+		regRepuesto.setAparato_tipo("");
+		this.addItem(regRepuesto);
+		
 		
 		ResultSet consulta = codigoSql.ConsultaTabla(sentenciaSql);
 		try {

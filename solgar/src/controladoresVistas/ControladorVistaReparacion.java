@@ -6,8 +6,10 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import modelos.Cliente;
+import modelos.DetallesReparacion;
 import modelos.Recepcion;
 import modelos.Reparacion;
+import modelos.Repuesto;
 import modelos.TipoAparato;
 import modelos.Usuario;
 import vistas.VistaReparacion;
@@ -20,6 +22,9 @@ public class ControladorVistaReparacion implements KeyListener,ActionListener  {
 	private TipoAparato tipoAparato;
 	private Cliente regCliente;
 	private Usuario regUsuario;
+	private Repuesto regRepuesto;
+	private DetallesReparacion regDetalle;
+	private int contar,fila;
 	
 	public ControladorVistaReparacion(VistaReparacion vista) {
 		this.vista=vista;
@@ -28,6 +33,10 @@ public class ControladorVistaReparacion implements KeyListener,ActionListener  {
 		tipoAparato=new TipoAparato();
 		regCliente=new Cliente();
 		regUsuario=new Usuario();
+		regRepuesto=new Repuesto();
+		regDetalle= new DetallesReparacion();
+		contar=0;
+		fila=0;
 	}
 	
 	@Override
@@ -38,9 +47,29 @@ public class ControladorVistaReparacion implements KeyListener,ActionListener  {
 				
 				regReparacion=(Reparacion) vista.getComboArtefactosRecibo().getSelectedItem();
 				llenarArtefactos();
+				vista.getComboRepuestos().setEnabled(true);
+				vista.getComboRepuestos().requestFocus();
 				
-		
+		}else if(accion.getSource().equals(vista.getComboRepuestos())&&(vista.getComboRepuestos().getSelectedIndex()>0)){
+			regRepuesto=(Repuesto) vista.getComboRepuestos().getSelectedItem();
+			vista.getTextCodigo().setText(regRepuesto.getCodigo());
+			vista.getTextRepuesto().setText(regRepuesto.getRepuesto());
+			vista.getTextCantidadActual().setText(""+regRepuesto.getCantidad());
+			vista.getTextPrecio().setText(""+regRepuesto.getPrecio_venta());
+			vista.getTextCantidadUsar().setEditable(true);
+			vista.getTextCantidadUsar().requestFocus();
 			
+		}else if(accion.getSource().equals(vista.getBtnAgregarRepuesto())){
+			contar++;
+			vista.getDatosTabla().insertRow(fila, new String[] {""+contar,vista.getTextCodigo().getText(),
+																	vista.getTextRepuesto().getText(),
+																	vista.getTextCantidadUsar().getText(),
+																	vista.getTextPrecio().getText(),
+																	vista.getTextMonto().getText()});
+			fila++;
+			
+			vaciarRepuestos();
+			vista.getComboRepuestos().requestFocus();
 		}
 		
 	}
@@ -64,12 +93,24 @@ public class ControladorVistaReparacion implements KeyListener,ActionListener  {
 					
 					regUsuario.buscarID(regRecepcion.getUsuario_id());
 					vista.getTextTecnico().setText(regUsuario.getNombre()+" "+regUsuario.getApellido());
-					
+					vista.getComboArtefactosRecibo().setEnabled(true);
 					vista.getComboArtefactosRecibo().llenar(Integer.parseInt(vista.getTextNrecibo().getText()));
-					
+					vista.getComboArtefactosRecibo().requestFocus();
 				}
 				
+		}if(accion.getSource().equals(vista.getTextCantidadUsar())&&
+				(accion.getKeyCode()== KeyEvent.VK_ENTER)&&
+				!(vista.getTextCantidadUsar().getText().trim().isEmpty())){
+			vista.getTextMonto().setText(""+(regRepuesto.getPrecio_venta()*Integer.parseInt(vista.getTextCantidadUsar().getText())));
+			vista.getTextDetallesRep().setEditable(true);
+			vista.getTextDetallesRep().requestFocus();
+			
+		}else if(accion.getSource().equals(vista.getTextDetallesRep())&&
+				(accion.getKeyCode()== KeyEvent.VK_ENTER)){
+			vista.getBtnAgregarRepuesto().requestFocus();
+			vista.getBtnAgregarRepuesto().setEnabled(true);
 		}
+			
 		
 	}
 
@@ -99,6 +140,16 @@ public class ControladorVistaReparacion implements KeyListener,ActionListener  {
 		else
 			vista.getComboStatus().setSelectedIndex(1);
 	}
-
+	public void vaciarRepuestos(){
+		vista.getComboRepuestos().setSelectedIndex(0);
+		vista.getTextCodigo().setText(null);
+		vista.getTextRepuesto().setText(null);
+		vista.getTextCantidadActual().setText(null);
+		vista.getTextCantidadUsar().setText(null);
+		vista.getTextPrecio().setText(null);
+		vista.getTextMonto().setText(null);
+	}
+//---------->guardar<--------------
+	
 
 }//fin clases

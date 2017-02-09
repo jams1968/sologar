@@ -325,7 +325,7 @@ public class VistaCliente extends JDialog {
 		this.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 		
 		this.setLocationRelativeTo(null);
-		//this.setAlwaysOnTop(true);
+		this.setAlwaysOnTop(true);
 		this.setVisible(true);
 	
 	}//fin del constructor

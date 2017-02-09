@@ -84,6 +84,9 @@ public class ControladorVistaInicial implements ActionListener{
 		else if (accion.getSource().equals(vista.getMntmRepuestosEnInventario())){
 			new VistaGraficoRepuestos();
 			
+		}else if (accion.getSource().equals(vista.getBtnServicios())||(accion.getSource().equals(vista.getMntmPendientes()))){
+			new VistaReparacion();
+			
 		}
 		
 		

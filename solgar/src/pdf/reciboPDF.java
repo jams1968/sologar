@@ -105,8 +105,11 @@ public class reciboPDF {
 		
 			titulo= "RECIBO N°:"+ regRecibo.getId();
 
-			String fechaR = funciones.CambiarFechaVen(regRecibo.getFecha_recepcion());
-			String fechaE = funciones.CambiarFechaVen(regRecibo.getFecha_entrega());
+			String fechaR = 
+					//regRecibo.getFecha_recepcion();
+					funciones.CambiarFechaVen(regRecibo.getFecha_recepcion());
+			String fechaE =// regRecibo.getFecha_entrega();
+					funciones.CambiarFechaVen(regRecibo.getFecha_entrega());
 		
 			try{
 				Image fondo=null;
@@ -389,7 +392,7 @@ public class reciboPDF {
 
 
 	public static void main(String[] args) {
-		new reciboPDF(1);
+		new reciboPDF(2);
 
 	}
 

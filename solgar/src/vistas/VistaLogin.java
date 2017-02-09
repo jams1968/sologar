@@ -189,6 +189,8 @@ public class VistaLogin extends JDialog {
 	}
 
 	public static void main(String[] args) {
+		 new VistaLogin();
+		/*
 		try {
 		    for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
 		        if ("Nimbus".equals(info.getName())) {
@@ -199,7 +201,7 @@ public class VistaLogin extends JDialog {
 		    }
 		} catch (Exception e) {
 		    // If Nimbus is not available, you can set the GUI to another look and feel.
-		}
+		}*/
 		
 	}
 

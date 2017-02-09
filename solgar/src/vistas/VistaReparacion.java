@@ -7,6 +7,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 import java.awt.Toolkit;
 import javax.swing.JLabel;
@@ -16,9 +17,12 @@ import javax.swing.JTextField;
 import com.toedter.calendar.JDateChooser;
 
 import controladoresVistas.ControladorVistaReparacion;
+import librerias.FormatoTabla;
+import modelos.DetallesReparacion;
 
 import java.awt.Dimension;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
 import java.awt.GridBagLayout;
@@ -31,6 +35,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import modelosComboBox.ComboRepuestos;
+import javax.swing.ListSelectionModel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 
 public class VistaReparacion extends JFrame {
 	private JTextField textNrecibo;
@@ -49,6 +56,18 @@ public class VistaReparacion extends JFrame {
 	private JTextField textDetalles;
 	private JButton btnReparacion;
 	private JComboBox comboStatus;
+	private DefaultTableModel datosTabla;
+	private JTextField textCodigo;
+	private JTextField textRepuesto;
+	private ComboRepuestos comboRepuestos;
+	private JTextField textCantidadActual;
+	private JTextField textCantidadUsar;
+	private JTextField textPrecio;
+	private JTextField textMonto;
+	private JButton btnAgregarRepuesto;
+	private JTable tablaRepuestoReparacion;
+	private JTextArea textDetallesRep;
+	
 
 	/**
 	 * Launch the application.
@@ -117,9 +136,9 @@ public class VistaReparacion extends JFrame {
 			getContentPane().add(panelRecepcion, BorderLayout.CENTER);
 			GridBagLayout gbl_panelRecepcion = new GridBagLayout();
 			gbl_panelRecepcion.columnWidths = new int[]{1596, 0};
-			gbl_panelRecepcion.rowHeights = new int[]{117, 596, 30, 0};
+			gbl_panelRecepcion.rowHeights = new int[]{117, 101, 52, 74, 325, 0};
 			gbl_panelRecepcion.columnWeights = new double[]{0.0, Double.MIN_VALUE};
-			gbl_panelRecepcion.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
+			gbl_panelRecepcion.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 			panelRecepcion.setLayout(gbl_panelRecepcion);
 			{
 				JPanel panelCliente = new JPanel();
@@ -262,15 +281,14 @@ public class VistaReparacion extends JFrame {
 				JPanel panelArtefactos = new JPanel();
 				panelArtefactos.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 255), 2, true), "Agregar Artefactos", TitledBorder.RIGHT, TitledBorder.TOP, null, Color.BLUE));
 				GridBagConstraints gbc_panelArtefactos = new GridBagConstraints();
-				gbc_panelArtefactos.anchor = GridBagConstraints.WEST;
-				gbc_panelArtefactos.fill = GridBagConstraints.VERTICAL;
+				gbc_panelArtefactos.fill = GridBagConstraints.BOTH;
 				gbc_panelArtefactos.insets = new Insets(0, 0, 5, 0);
 				gbc_panelArtefactos.gridx = 0;
 				gbc_panelArtefactos.gridy = 1;
 				panelRecepcion.add(panelArtefactos, gbc_panelArtefactos);
 				GridBagLayout gbl_panelArtefactos = new GridBagLayout();
 				gbl_panelArtefactos.columnWidths = new int[]{1584, 0};
-				gbl_panelArtefactos.rowHeights = new int[]{30, 544, 0};
+				gbl_panelArtefactos.rowHeights = new int[]{41, 39, 0};
 				gbl_panelArtefactos.columnWeights = new double[]{0.0, Double.MIN_VALUE};
 				gbl_panelArtefactos.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
 				panelArtefactos.setLayout(gbl_panelArtefactos);
@@ -279,8 +297,7 @@ public class VistaReparacion extends JFrame {
 					FlowLayout fl_panelLinea1 = (FlowLayout) panelLinea1.getLayout();
 					fl_panelLinea1.setAlignment(FlowLayout.LEFT);
 					GridBagConstraints gbc_panelLinea1 = new GridBagConstraints();
-					gbc_panelLinea1.anchor = GridBagConstraints.NORTH;
-					gbc_panelLinea1.fill = GridBagConstraints.HORIZONTAL;
+					gbc_panelLinea1.fill = GridBagConstraints.BOTH;
 					gbc_panelLinea1.insets = new Insets(0, 0, 5, 0);
 					gbc_panelLinea1.gridx = 0;
 					gbc_panelLinea1.gridy = 0;
@@ -292,6 +309,7 @@ public class VistaReparacion extends JFrame {
 					}
 					{
 						comboArtefactosRecibo = new ComboArtefactosRecibo();
+						comboArtefactosRecibo.setEnabled(false);
 						comboArtefactosRecibo.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 						panelLinea1.add(comboArtefactosRecibo);
 					}
@@ -359,6 +377,7 @@ public class VistaReparacion extends JFrame {
 				FlowLayout flowLayout = (FlowLayout) panelRepuestos.getLayout();
 				flowLayout.setAlignment(FlowLayout.LEFT);
 				GridBagConstraints gbc_panelRepuestos = new GridBagConstraints();
+				gbc_panelRepuestos.insets = new Insets(0, 0, 5, 0);
 				gbc_panelRepuestos.anchor = GridBagConstraints.NORTH;
 				gbc_panelRepuestos.fill = GridBagConstraints.HORIZONTAL;
 				gbc_panelRepuestos.gridx = 0;
@@ -370,9 +389,151 @@ public class VistaReparacion extends JFrame {
 					panelRepuestos.add(lblRepuestos);
 				}
 				{
-					ComboRepuestos comboRepuestos = new ComboRepuestos();
+					comboRepuestos = new ComboRepuestos();
+					comboRepuestos.setEnabled(false);
+					comboRepuestos.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 					comboRepuestos.llenar();
 					panelRepuestos.add(comboRepuestos);
+				}
+				{
+					JLabel lblCodigo = new JLabel("C\u00F3digo:");
+					lblCodigo.setFont(new Font("Tahoma", Font.BOLD, 12));
+					panelRepuestos.add(lblCodigo);
+				}
+				{
+					textCodigo = new JTextField();
+					textCodigo.setEditable(false);
+					panelRepuestos.add(textCodigo);
+					textCodigo.setColumns(10);
+				}
+				{
+					JLabel lblRepuesto = new JLabel("Repuesto:");
+					lblRepuesto.setFont(new Font("Tahoma", Font.BOLD, 12));
+					panelRepuestos.add(lblRepuesto);
+				}
+				{
+					textRepuesto = new JTextField();
+					textRepuesto.setEditable(false);
+					panelRepuestos.add(textRepuesto);
+					textRepuesto.setColumns(20);
+				}
+				{
+					JLabel lblCantidadActual = new JLabel("Cantidad Actual:");
+					lblCantidadActual.setFont(new Font("Tahoma", Font.BOLD, 12));
+					panelRepuestos.add(lblCantidadActual);
+				}
+				{
+					textCantidadActual = new JTextField();
+					textCantidadActual.setEditable(false);
+					panelRepuestos.add(textCantidadActual);
+					textCantidadActual.setColumns(4);
+				}
+				{
+					JLabel lblCantidadUsar = new JLabel("Cantidad a Usar:");
+					lblCantidadUsar.setFont(new Font("Tahoma", Font.BOLD, 12));
+					panelRepuestos.add(lblCantidadUsar);
+				}
+				{
+					textCantidadUsar = new JTextField();
+					textCantidadUsar.setEditable(false);
+					panelRepuestos.add(textCantidadUsar);
+					textCantidadUsar.setColumns(4);
+				}
+				{
+					JLabel lblPrecioRepuesto = new JLabel("Precio:");
+					lblPrecioRepuesto.setFont(new Font("Tahoma", Font.BOLD, 12));
+					panelRepuestos.add(lblPrecioRepuesto);
+				}
+				{
+					textPrecio = new JTextField();
+					textPrecio.setEditable(false);
+					panelRepuestos.add(textPrecio);
+					textPrecio.setColumns(10);
+				}
+				{
+					JLabel labelSubMonto = new JLabel("Monto:");
+					labelSubMonto.setFont(new Font("Tahoma", Font.BOLD, 12));
+					panelRepuestos.add(labelSubMonto);
+				}
+				{
+					textMonto = new JTextField();
+					textMonto.setEditable(false);
+					panelRepuestos.add(textMonto);
+					textMonto.setColumns(10);
+				}
+			}
+			{
+				JPanel panelDetalles = new JPanel();
+				FlowLayout flowLayout = (FlowLayout) panelDetalles.getLayout();
+				flowLayout.setAlignment(FlowLayout.LEFT);
+				GridBagConstraints gbc_panelDetalles = new GridBagConstraints();
+				gbc_panelDetalles.fill = GridBagConstraints.BOTH;
+				gbc_panelDetalles.insets = new Insets(0, 0, 5, 0);
+				gbc_panelDetalles.gridx = 0;
+				gbc_panelDetalles.gridy = 3;
+				panelRecepcion.add(panelDetalles, gbc_panelDetalles);
+				{
+					JLabel lblDetalle = new JLabel("Detalles Reparaci\u00F3n");
+					lblDetalle.setFont(new Font("Tahoma", Font.BOLD, 12));
+					panelDetalles.add(lblDetalle);
+				}
+				{
+					textDetallesRep = new JTextArea();
+					textDetallesRep.setEditable(false);
+					textDetallesRep.setBorder(new LineBorder(Color.LIGHT_GRAY, 1, true));
+					textDetallesRep.setColumns(100);
+					textDetallesRep.setRows(3);
+					panelDetalles.add(textDetallesRep);
+				}
+				{
+					btnAgregarRepuesto = new JButton("");
+					btnAgregarRepuesto.setEnabled(false);
+					panelDetalles.add(btnAgregarRepuesto);
+					btnAgregarRepuesto.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+					btnAgregarRepuesto.setRolloverIcon(new ImageIcon(VistaReparacion.class.getResource("/imagenes/iconos/iconos_32x32/iconoRepuesto.png")));
+					btnAgregarRepuesto.setIcon(new ImageIcon(VistaReparacion.class.getResource("/imagenes/iconos/iconos_32x32/plus.png")));
+				}
+				
+			}
+			{
+				JPanel panelAgregado = new JPanel();
+				
+				
+				GridBagConstraints gbc_panelAgregado = new GridBagConstraints();
+				gbc_panelAgregado.fill = GridBagConstraints.BOTH;
+				gbc_panelAgregado.gridx = 0;
+				gbc_panelAgregado.gridy = 4;
+				panelRecepcion.add(panelAgregado, gbc_panelAgregado);
+				panelAgregado.setLayout(new BorderLayout(0, 0));
+				{
+					JPanel panelTitulo = new JPanel();
+					panelAgregado.add(panelTitulo, BorderLayout.NORTH);
+					{
+						JLabel lblTitulo = new JLabel("Repuestos para la Reparaci\u00F3n");
+						lblTitulo.setFont(new Font("Tahoma", Font.BOLD, 14));
+						panelTitulo.add(lblTitulo);
+					}
+				}
+				{
+					JPanel panelTabla = new JPanel();
+					panelAgregado.add(panelTabla, BorderLayout.NORTH);
+					{
+						datosTabla = new DefaultTableModel(new Object[][] {},
+								new String[] { "Nro.", "C\u00F3digo", "Repuesto", "Precio", "Cantidad", "Monto" });
+						panelTabla.setLayout(new BorderLayout(0, 0));
+						
+						
+						tablaRepuestoReparacion = new JTable(datosTabla);
+						panelTabla.add(tablaRepuestoReparacion);
+						tablaRepuestoReparacion.setBorder(new LineBorder(Color.BLUE, 2, true));
+
+						
+						{
+							JScrollPane scrollPaneTabla = new JScrollPane(tablaRepuestoReparacion);
+							panelTabla.add(scrollPaneTabla);
+						}
+						
+					}
 				}
 			}
 		}
@@ -397,11 +558,28 @@ public class VistaReparacion extends JFrame {
 		ControladorVistaReparacion eco= new ControladorVistaReparacion(this);
 		comboArtefactosRecibo.addActionListener(eco);
 		textNrecibo.addKeyListener(eco);
+		comboRepuestos.addActionListener(eco);
+		btnAgregarRepuesto.addActionListener(eco);
 		
+		textCantidadUsar.addKeyListener(eco);
+		textDetallesRep.addKeyListener(eco);
+		//this.pack();
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);//maximar automaticamente
 		this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		this.setVisible(true);
 	}//fin constructor
+
+	public DefaultTableModel getDatosTabla() {
+		return datosTabla;
+	}
+
+	public JButton getBtnAgregarRepuesto() {
+		return btnAgregarRepuesto;
+	}
+
+	public JTable getTablaRepuestoReparacion() {
+		return tablaRepuestoReparacion;
+	}
 
 	public JTextField getTextNrecibo() {
 		return textNrecibo;
@@ -466,6 +644,46 @@ public class VistaReparacion extends JFrame {
 	public JComboBox getComboStatus() {
 		return comboStatus;
 	}
+
+
+
+	public JTextField getTextCodigo() {
+		return textCodigo;
+	}
+
+	public JTextField getTextRepuesto() {
+		return textRepuesto;
+	}
+
+	public ComboRepuestos getComboRepuestos() {
+		return comboRepuestos;
+	}
+
+	public JTextField getTextCantidadActual() {
+		return textCantidadActual;
+	}
+
+	public JTextField getTextField() {
+		return textCantidadUsar;
+	}
+
+	public JTextField getTextCantidadUsar() {
+		return textCantidadUsar;
+	}
+
+	public JTextField getTextPrecio() {
+		return textPrecio;
+	}
+
+	public JTextField getTextMonto() {
+		return textMonto;
+	}
+
+	public JTextArea getTextDetallesRep() {
+		return textDetallesRep;
+	}
+	
+	
 	
 
 }//fin de la clase

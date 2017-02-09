@@ -45,10 +45,9 @@ public class VentanaInicial extends JFrame{
 	private JMenu mnArtefactos;
 	private JMenuItem mntmRecepcion;
 	private JMenuItem mntmEntrega;
-	private JMenuItem mntmDevolucion;
 	private JSeparator separator;
 	private JMenu mnServicios;
-	private JMenuItem mntmPendientes;
+	private JMenuItem mntmReparar;
 	private JMenuItem mntmReparados;
 	private JMenu mnUtilidades;
 	private JMenuItem mntmAutor;
@@ -206,23 +205,17 @@ public class VentanaInicial extends JFrame{
 		separator = new JSeparator();
 		mnArtefactos.add(separator);
 		
-		mntmDevolucion = new JMenuItem("Devoluci\u00F3n");
-		mntmDevolucion.setIcon(new ImageIcon(VentanaInicial.class.getResource("/imagenes/iconos/iconos_32x32/refresh.png")));
-		mntmDevolucion.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		mntmDevolucion.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		mnArtefactos.add(mntmDevolucion);
-		
 		mnServicios = new JMenu("Servicios");
 		mnServicios.setMnemonic(KeyEvent.VK_S);
 		mnServicios.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		mnServicios.setFont(new Font("Segoe UI", Font.BOLD, 14));
 		menuBarra.add(mnServicios);
 		
-		mntmPendientes = new JMenuItem("Pendientes");
-		mntmPendientes.setIcon(new ImageIcon(VentanaInicial.class.getResource("/imagenes/iconos/iconos_32x32/config.png")));
-		mntmPendientes.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		mntmPendientes.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		mnServicios.add(mntmPendientes);
+		mntmReparar = new JMenuItem("Reparar");
+		mntmReparar.setIcon(new ImageIcon(VentanaInicial.class.getResource("/imagenes/iconos/iconos_32x32/config.png")));
+		mntmReparar.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		mntmReparar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		mnServicios.add(mntmReparar);
 		
 		mntmReparados = new JMenuItem("Reparados");
 		mntmReparados.setIcon(new ImageIcon(VentanaInicial.class.getResource("/imagenes/iconos/iconos_32x32/check.png")));
@@ -323,6 +316,7 @@ public class VentanaInicial extends JFrame{
 		btnRecepcion.addActionListener(eco);
 		btnClientes.addActionListener(eco);
 		btnServicios.addActionListener(eco);
+	
 		
 		mntmSalirDelSistema.addActionListener(eco);
 		mntmUsuarios.addActionListener(eco);
@@ -335,7 +329,7 @@ public class VentanaInicial extends JFrame{
 		mntmImprimirRecibo.addActionListener(eco);
 		mntmTiposAparatosRecibidos.addActionListener(eco);
 		mntmRepuestosEnInventario.addActionListener(eco);
-		mntmPendientes.addActionListener(eco);
+		mntmReparar.addActionListener(eco);
 		
 		
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);//maximar automaticamente
@@ -418,10 +412,7 @@ public class VentanaInicial extends JFrame{
 	}
 
 
-	public JMenuItem getMntmDevolucion() {
-		return mntmDevolucion;
-	}
-
+	
 
 	public JMenu getMnServicios() {
 		return mnServicios;
@@ -429,7 +420,7 @@ public class VentanaInicial extends JFrame{
 
 
 	public JMenuItem getMntmPendientes() {
-		return mntmPendientes;
+		return mntmReparar;
 	}
 
 

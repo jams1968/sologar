@@ -136,6 +136,7 @@ public class Reparacion {
 					+detalles_recepcion.toUpperCase()+"','"+diagnostico_tecnico.toUpperCase()+"',"+0+","+0+",'"
 					+detalles_reparacion+"','"+status+"')";
 			
+			
 			SqlBD codigoSql = new SqlBD();
 			if(codigoSql.agregarRegistro(sentenciaSql)){
 				return true;

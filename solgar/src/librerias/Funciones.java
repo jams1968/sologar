@@ -105,7 +105,7 @@ public String CambiarFechaUSa(String xFecha){
 }
 //--------------->cambiar fecha a Ven<-------------------
 public String CambiarFechaVen(String xFecha){
-	String[] dat1= xFecha.split("/");
+	String[] dat1= xFecha.split("-");
 	String dia,mes,anno;
 	mes=dat1[1];
 	dia=dat1[2];

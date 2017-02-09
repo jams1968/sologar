@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.swing.JOptionPane;
 
 import controladoresBD.SqlBD;
 import librerias.Funciones;
@@ -102,14 +103,13 @@ public boolean read(int nRecibo){
 //------------------>create<---------------------
 public boolean create(){
 	
-	
-	
-	if((id!=0)&&(cliente_id!=0)&&(usuario_id!=0)&&(fecha_recepcion!=null)&&(fecha_entrega!=null)){
-				
+	if((cliente_id!=0)&&(usuario_id!=0)&&(fecha_recepcion!=null)&&(fecha_entrega!=null)){
+			
 		String sentenciaSql="INSERT INTO recepciones (cliente_id,usuario_id,fecha_recepcion,fecha_entrega)"
 				+ "VALUES ("+cliente_id+","+usuario_id+",'"
 				+funciones.CambiarFechaUSa(fecha_recepcion)+"','"+fecha_entrega+"')";
-		
+		//System.out.println(sentenciaSql);
+		//JOptionPane.showMessageDialog(null,sentenciaSql);
 		SqlBD codigoSql = new SqlBD();
 		if(codigoSql.agregarRegistro(sentenciaSql))
 			return true;
