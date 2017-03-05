@@ -209,7 +209,7 @@ public class Cliente {
 				String sentenciaSql="UPDATE clientes SET "
 						+ "cliente='"+ cliente.toUpperCase()+"', telefono1='"+telefono1
 						+"',telefono2='"+telefono2+"',direccion='"+direccion.toUpperCase()
-						+"',email='"+correo+"'";
+						+"',email='"+correo+"' where doc_identidad='"+this.documentoIdentidad+"'";
 			
 				SqlBD codigoSql = new SqlBD();
 				if(codigoSql.agregarRegistro(sentenciaSql))

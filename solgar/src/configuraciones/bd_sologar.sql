@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 17-01-2017 a las 23:25:02
+-- Tiempo de generación: 09-02-2017 a las 04:37:47
 -- Versión del servidor: 5.6.26
 -- Versión de PHP: 5.5.28
 
@@ -77,14 +77,17 @@ CREATE TABLE IF NOT EXISTS `recepciones` (
   `usuario_id` int(11) NOT NULL,
   `fecha_recepcion` date NOT NULL,
   `fecha_entrega` date NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `recepciones`
 --
 
 INSERT INTO `recepciones` (`id`, `cliente_id`, `usuario_id`, `fecha_recepcion`, `fecha_entrega`) VALUES
-(1, 1, 1, '2017-01-01', '2017-01-26');
+(1, 1, 1, '2017-01-01', '2017-01-26'),
+(2, 4, 1, '2017-02-08', '2017-02-24'),
+(3, 4, 2, '2017-02-08', '2017-02-23'),
+(4, 4, 2, '2017-02-08', '2017-02-23');
 
 -- --------------------------------------------------------
 
@@ -103,7 +106,7 @@ CREATE TABLE IF NOT EXISTS `reparaciones` (
   `precio_mano_obra` double NOT NULL,
   `detalles_reparacion` varchar(150) COLLATE utf8_swedish_ci NOT NULL,
   `status` varchar(1) COLLATE utf8_swedish_ci NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci;
 
 --
 -- Volcado de datos para la tabla `reparaciones`
@@ -113,7 +116,10 @@ INSERT INTO `reparaciones` (`id`, `recepcion_id`, `tipo_aparato_id`, `diagnostic
 (1, 1, 1, 'MUY LENTO AL FUNCIONAR', 'SIN DETALLES', 'CAMBIO DE BOCINA Y MANTENIMIENTO DE ENGRANAJE', 0, 0, 'null', 'P'),
 (2, 1, 2, 'DESLIZA AL LICUAR', 'NO POSEE BOTÓN DE ENCENDIDO', 'CAMBIO DEL CUADRANTE Y COLCOAR BOTÓN DE ENCENDIDO', 0, 0, 'null', 'P'),
 (3, 1, 3, 'NO CALIENTA', 'SIN DETALLES', 'CAMBIO RESISTENCIA', 0, 0, 'null', 'P'),
-(4, 1, 5, 'NO SOSTIENE EL PAN', 'SIN DETALLES', 'CHEQUEO DE RESISTENCIA', 0, 0, 'null', 'P');
+(4, 1, 5, 'NO SOSTIENE EL PAN', 'SIN DETALLES', 'CHEQUEO DE RESISTENCIA', 0, 0, 'null', 'P'),
+(5, 2, 2, 'ASA', 'ASAS', 'ASAS', 0, 0, 'null', 'P'),
+(6, 3, 1, 'ASAS', 'ASAS', 'ASAS', 0, 0, 'null', 'P'),
+(7, 4, 1, 'ASS', 'AS', 'ASAS', 0, 0, 'null', 'P');
 
 -- --------------------------------------------------------
 
@@ -278,12 +284,12 @@ ALTER TABLE `niveles_usuario`
 -- AUTO_INCREMENT de la tabla `recepciones`
 --
 ALTER TABLE `recepciones`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT de la tabla `reparaciones`
 --
 ALTER TABLE `reparaciones`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT de la tabla `repuestos`
 --

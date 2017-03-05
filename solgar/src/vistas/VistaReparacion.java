@@ -56,7 +56,7 @@ public class VistaReparacion extends JFrame {
 	private JTextField textDetalles;
 	private JButton btnReparacion;
 	private JComboBox comboStatus;
-	private DefaultTableModel datosTabla;
+	
 	private JTextField textCodigo;
 	private JTextField textRepuesto;
 	private ComboRepuestos comboRepuestos;
@@ -65,8 +65,12 @@ public class VistaReparacion extends JFrame {
 	private JTextField textPrecio;
 	private JTextField textMonto;
 	private JButton btnAgregarRepuesto;
-	private JTable tablaRepuestoReparacion;
+	
 	private JTextArea textDetallesRep;
+	private JTable tablaRepuestoReparacion;
+	private DefaultTableModel datosTabla;
+	private JScrollPane scrollPaneTabla;
+	private JButton btnSalir;
 	
 
 	/**
@@ -88,7 +92,7 @@ public class VistaReparacion extends JFrame {
 	public VistaReparacion() {
 		setTitle("REPARACI\u00D3N DE ARTEFACTOS");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(VistaReparacion.class.getResource("/imagenes/iconos/iconos_32x32/ventilador2.png")));
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 1346, 500);
 		getContentPane().setLayout(new BorderLayout());
 		{
 			JPanel panelCabecera = new JPanel();
@@ -136,7 +140,7 @@ public class VistaReparacion extends JFrame {
 			getContentPane().add(panelRecepcion, BorderLayout.CENTER);
 			GridBagLayout gbl_panelRecepcion = new GridBagLayout();
 			gbl_panelRecepcion.columnWidths = new int[]{1596, 0};
-			gbl_panelRecepcion.rowHeights = new int[]{117, 101, 52, 74, 325, 0};
+			gbl_panelRecepcion.rowHeights = new int[]{96, 101, 52, 74, 280, 0};
 			gbl_panelRecepcion.columnWeights = new double[]{0.0, Double.MIN_VALUE};
 			gbl_panelRecepcion.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 			panelRecepcion.setLayout(gbl_panelRecepcion);
@@ -213,16 +217,6 @@ public class VistaReparacion extends JFrame {
 					}
 				}
 				{
-					JPanel panel_linea2 = new JPanel();
-					GridBagConstraints gbc_panel_linea2 = new GridBagConstraints();
-					gbc_panel_linea2.fill = GridBagConstraints.BOTH;
-					gbc_panel_linea2.gridwidth = 2;
-					gbc_panel_linea2.insets = new Insets(0, 0, 5, 0);
-					gbc_panel_linea2.gridx = 0;
-					gbc_panel_linea2.gridy = 1;
-					panelCliente.add(panel_linea2, gbc_panel_linea2);
-				}
-				{
 					JPanel panel_linea3 = new JPanel();
 					FlowLayout fl_panel_linea3 = (FlowLayout) panel_linea3.getLayout();
 					fl_panel_linea3.setAlignment(FlowLayout.LEFT);
@@ -266,15 +260,6 @@ public class VistaReparacion extends JFrame {
 						panel_linea3.add(textTecnico);
 						textTecnico.setColumns(20);
 					}
-				}
-				{
-					JPanel panel_linea4 = new JPanel();
-					GridBagConstraints gbc_panel_linea4 = new GridBagConstraints();
-					gbc_panel_linea4.fill = GridBagConstraints.BOTH;
-					gbc_panel_linea4.gridwidth = 2;
-					gbc_panel_linea4.gridx = 0;
-					gbc_panel_linea4.gridy = 3;
-					panelCliente.add(panel_linea4, gbc_panel_linea4);
 				}
 			}
 			{
@@ -524,13 +509,14 @@ public class VistaReparacion extends JFrame {
 						
 						
 						tablaRepuestoReparacion = new JTable(datosTabla);
-						panelTabla.add(tablaRepuestoReparacion);
+						//panelTabla.add(tablaRepuestoReparacion);
 						tablaRepuestoReparacion.setBorder(new LineBorder(Color.BLUE, 2, true));
 
 						
 						{
-							JScrollPane scrollPaneTabla = new JScrollPane(tablaRepuestoReparacion);
+							scrollPaneTabla = new JScrollPane(tablaRepuestoReparacion);
 							panelTabla.add(scrollPaneTabla);
+							
 						}
 						
 					}
@@ -551,6 +537,13 @@ public class VistaReparacion extends JFrame {
 					btnReparacion.setRolloverIcon(new ImageIcon(VistaReparacion.class.getResource("/imagenes/iconos/iconos_32x32/plus.png")));
 					btnReparacion.setIcon(new ImageIcon(VistaReparacion.class.getResource("/imagenes/iconos/iconos_32x32/iconoRepuesto.png")));
 				}
+				{
+					btnSalir = new JButton("");
+					btnSalir.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+					btnSalir.setRolloverIcon(new ImageIcon(VistaReparacion.class.getResource("/imagenes/iconos/iconos_32x32/door_out.png")));
+					btnSalir.setIcon(new ImageIcon(VistaReparacion.class.getResource("/imagenes/iconos/iconos_32x32/door.png")));
+					panel.add(btnSalir);
+				}
 			}
 		}
 		
@@ -560,6 +553,7 @@ public class VistaReparacion extends JFrame {
 		textNrecibo.addKeyListener(eco);
 		comboRepuestos.addActionListener(eco);
 		btnAgregarRepuesto.addActionListener(eco);
+		btnSalir.addActionListener(eco);
 		
 		textCantidadUsar.addKeyListener(eco);
 		textDetallesRep.addKeyListener(eco);
@@ -567,6 +561,7 @@ public class VistaReparacion extends JFrame {
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);//maximar automaticamente
 		this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		this.setVisible(true);
+		
 	}//fin constructor
 
 	public DefaultTableModel getDatosTabla() {
@@ -681,6 +676,10 @@ public class VistaReparacion extends JFrame {
 
 	public JTextArea getTextDetallesRep() {
 		return textDetallesRep;
+	}
+
+	public JButton getBtnSalir() {
+		return btnSalir;
 	}
 	
 	

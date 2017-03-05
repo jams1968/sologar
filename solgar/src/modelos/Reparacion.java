@@ -150,16 +150,32 @@ public class Reparacion {
 	
 	}//fin create
 	
+	//--------------> update <----------
+	public boolean update(){
+		
+		String sentenciaSql="UPDATE reparaciones SET "
+				+ "precio_repuestos="+ this.monto_repuestos+", precio_mano_obra="+this.monto_mano_obra
+				+",detalles_reparacion='"+this.detalles_reparacion+"',status='"+this.status+"'"+
+				"where (id ="+this.id+" and recepcion_id="+this.recepcion_id+" and tipo_aparato_id ="+
+				this.tipo_Aparato_id+")";
+		System.out.println(sentenciaSql);
+		SqlBD codigoSql = new SqlBD();
+		if(codigoSql.agregarRegistro(sentenciaSql))
+			return true;
+		else
+			return false;
+		
+		
+	}
+	
 	//---------->read por Nro Recibo<------------
-	/*public boolean read(int nRecibo){
+	public boolean read(int nRecibo){
 		String sentenciaSql = "SELECT * FROM reparaciones where recepcion_id="+nRecibo;
 		
 		SqlBD codigoSql = new SqlBD();
 					
 		ResultSet consulta = codigoSql.ConsultaTabla(sentenciaSql);
-		(recepcion_id,tipo_aparato_id,diagnostico_cliente,"
-				+ "detalles_recepcion,diagnostico_tecnico,precio_repuestos,precio_mano_obra,detalles_reparacion,"
-				+ "status)
+		
 		try {
 			while (consulta.next()) {
 				setId(consulta.getInt("id"));
@@ -175,7 +191,7 @@ public class Reparacion {
 		if(this.id==0)return false;
 		else return true;
 		
-	}*///fin read Nrecibo
+	}//fin read Nrecibo
 	
 
 }//fin clase

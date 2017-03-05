@@ -43,7 +43,7 @@ public class ComboArtefactosRecibo extends JComboBox<Reparacion> {
 				regReparacion = new Reparacion();
 				regReparacion.setNumero(contador);
 				
-				
+				regReparacion.setId(consulta.getInt("id"));
 				regReparacion.setTipo_Aparato_id(consulta.getInt("tipo_aparato_id"));
 				tipoAparato.setId(regReparacion.getTipo_Aparato_id());
 				tipoAparato.buscarID(regReparacion.getTipo_Aparato_id());
