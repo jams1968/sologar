@@ -193,5 +193,17 @@ public class Reparacion {
 		
 	}//fin read Nrecibo
 	
+	//-------->read<-------------
+	public ResultSet read2(int nRecibo){
+		
+		String sentenciaSql = "SELECT * FROM reparaciones where recepcion_id="+nRecibo;
+		System.out.println(sentenciaSql);
+		SqlBD codigoSql = new SqlBD();
+					
+		ResultSet consulta = codigoSql.ConsultaTabla(sentenciaSql);
+		
+		//codigoSql.Desconectar();
+		return consulta;
 
+	}//fin read
 }//fin clase

@@ -34,15 +34,36 @@ public class RepuestosReparaciones {
 		return cantidad;
 	}
 	
+	public void setId(int id) {
+		this.id = id;
+	}
+
+
+	public void setReparacion_id(int reparacion_id) {
+		this.reparacion_id = reparacion_id;
+	}
+
+
+	public void setRepuestos_id(int repuestos_id) {
+		this.repuestos_id = repuestos_id;
+	}
+
+
+	public void setCantidad(int cantidad) {
+		this.cantidad = cantidad;
+	}
+
+
 	public boolean create(){
-		String sentenciaSql="INSERT INTO repuestos_reparaciones (id,reparacion_id,repuestos_id,cantidad,)"+
-	"VALUES ("+this.id+","+this.reparacion_id+","+this.repuestos_id+","+this.cantidad+")";
-		
+		String sentenciaSql="INSERT INTO repuestos_reparaciones (reparacion_id,repuestos_id,cantidad)"+
+	"VALUES ("+this.reparacion_id+","+this.repuestos_id+","+this.cantidad+")";
+		//System.out.println(sentenciaSql);
 		SqlBD codigoSql = new SqlBD();
 		if(codigoSql.agregarRegistro(sentenciaSql))
 			return true;
 		else
 			return false;
 	}
+	
 
 }//fin de la clase

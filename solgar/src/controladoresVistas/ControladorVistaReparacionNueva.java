@@ -12,9 +12,9 @@ import modelos.DetallesReparacion;
 import modelos.Recepcion;
 import modelos.Reparacion;
 import modelos.Repuesto;
+import modelos.RepuestosReparaciones;
 import modelos.TipoAparato;
 import modelos.Usuario;
-import vistas.VistaReparacion;
 import vistas.VistaReparacionNueva;
 
 public class ControladorVistaReparacionNueva implements KeyListener,ActionListener,FocusListener  {
@@ -26,6 +26,7 @@ public class ControladorVistaReparacionNueva implements KeyListener,ActionListen
 	private Cliente regCliente;
 	private Usuario regUsuario;
 	private Repuesto regRepuesto;
+	private RepuestosReparaciones regRepuestosReparaciones;
 	private DetallesReparacion regDetalle;
 	private int contar,fila;
 	
@@ -82,8 +83,10 @@ public class ControladorVistaReparacionNueva implements KeyListener,ActionListen
 			
 		}else if(accion.getSource().equals(vista.getBtnGuardar())){
 			guardarModeloReparaciones();
-			if(regReparacion.update())
+			if(regReparacion.update()){
 				vista.getLblMensaje().setText("Reparación actualizada exitosamente");
+				recorrerTabla();
+			}
 			else
 				vista.getLblMensaje().setText("No se pudo actualizar la reparación");
 		}
@@ -154,10 +157,6 @@ public class ControladorVistaReparacionNueva implements KeyListener,ActionListen
 		
 	}
 
-	public void llenarCamposRecepcion(){
-		
-	}
-	
 	//---------->llenar campos artefactos<-------------
 	public void llenarArtefactos(){
 		vista.getTextInformacion().setText(regReparacion.getDiagnostico_cliente());
@@ -233,6 +232,23 @@ public class ControladorVistaReparacionNueva implements KeyListener,ActionListen
 		
 	     vista.getTextMontoGeneral().setText(""+(suma+sumaMo));
 	      
+	}
+	public void recorrerTabla(){
+
+		for(int i=0; i<vista.getTablaRepuestoReparacion().getRowCount();i++){
+			regRepuestosReparaciones =new RepuestosReparaciones();
+			regRepuestosReparaciones.setReparacion_id(Integer.parseInt(vista.getTextNrecibo().getText()));
+							
+			regRepuesto = new Repuesto();
+			regRepuesto.buscar((String)vista.getTablaRepuestoReparacion().getValueAt(i, 1));
+			regRepuestosReparaciones.setRepuestos_id(regRepuesto.getId());
+			String valor=(String) vista.getTablaRepuestoReparacion().getValueAt(i, 3);
+			regRepuestosReparaciones.setCantidad(Integer.parseInt(valor));
+			regRepuestosReparaciones.create();
+			regRepuesto.setCantidad(regRepuesto.getCantidad()-Integer.parseInt(valor));
+			regRepuesto.update();
+		
+		}
 	}
 	
 

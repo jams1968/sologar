@@ -316,7 +316,7 @@ public class VentanaInicial extends JFrame{
 		btnRecepcion.addActionListener(eco);
 		btnClientes.addActionListener(eco);
 		btnServicios.addActionListener(eco);
-	
+		btnEntrega.addActionListener(eco);
 		
 		mntmSalirDelSistema.addActionListener(eco);
 		mntmUsuarios.addActionListener(eco);
@@ -330,6 +330,7 @@ public class VentanaInicial extends JFrame{
 		mntmTiposAparatosRecibidos.addActionListener(eco);
 		mntmRepuestosEnInventario.addActionListener(eco);
 		mntmReparar.addActionListener(eco);
+		mntmEntrega.addActionListener(eco);
 		
 		
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);//maximar automaticamente

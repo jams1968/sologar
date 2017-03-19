@@ -13,10 +13,11 @@ import graficos.VistaGraficoRepuestos;
 import vistas.VentanaInicial;
 import vistas.VistaCambioClave;
 import vistas.VistaCliente;
+import vistas.VistaEntrega;
 import vistas.VistaPorNroRecibo;
 import vistas.VistaRangoFecha;
 import vistas.VistaRecepcion;
-import vistas.VistaReparacion;
+import vistas.VistaReparacionNueva;
 import vistas.VistaRepuestos;
 import vistas.VistaTipoAparato;
 import vistas.VistaUsuario;
@@ -65,7 +66,7 @@ public class ControladorVistaInicial implements ActionListener{
 		}
 		else if (accion.getSource().equals(vista.getMntmPendientes())||
 				(accion.getSource().equals(vista.getBtnServicios()))){
-			new VistaReparacion();
+			new VistaReparacionNueva();
 			
 		}
 		
@@ -85,7 +86,10 @@ public class ControladorVistaInicial implements ActionListener{
 			new VistaGraficoRepuestos();
 			
 		}else if (accion.getSource().equals(vista.getBtnServicios())||(accion.getSource().equals(vista.getMntmPendientes()))){
-			new VistaReparacion();
+			new VistaReparacionNueva();
+			
+		}else if (accion.getSource().equals(vista.getBtnEntrega())||(accion.getSource().equals(vista.getMntmEntrega()))){
+			new VistaEntrega();
 			
 		}
 		

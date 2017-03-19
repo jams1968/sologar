@@ -15,14 +15,9 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.RowSpec;
 
-import controladoresVistas.ControladorVistaReparacion;
 import controladoresVistas.ControladorVistaReparacionNueva;
 
-import com.jgoodies.forms.layout.FormSpecs;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import javax.swing.border.TitledBorder;
@@ -485,7 +480,7 @@ public class VistaReparacionNueva extends JDialog {
 						new Object[][] {
 						},
 						new String[] {
-							"Nro.", "C\u00F3digo", "Repuesto", "Precio", "Cantidad", "Monto"
+							"Nro.", "C\u00F3digo", "Repuesto", "Cantidad", "Precio", "Monto"
 						}
 					);
 					tablaRepuestoReparacion.setModel(datosTabla);
